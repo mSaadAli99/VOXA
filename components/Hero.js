@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import SpecularButton from "@/components/SpecularButton";
 import styles from "./Hero.module.css";
 
 const CONFIG = {
@@ -189,35 +190,74 @@ export default function Hero() {
     <div
       ref={wrapRef}
       className={styles.wrap}
+      data-snap-section
+      data-snap-protect
       style={{
         "--cols": CONFIG.COLS,
         "--rows": CONFIG.ROWS,
       }}
     >
       <section className={`${styles.hero} logo-hero`}>
-        <div className={styles.stage}>
-          <div
-            ref={gridRef}
-            id="shatterGrid"
-            className={styles.grid}
-            aria-hidden="true"
-          >
-            {TILES.map((tile, index) => (
-              <div
-                key={tile.key}
-                data-tile
-                data-index={index}
-                className={styles.tile}
-                style={{ backgroundImage: `url(${CONFIG.LOGO_SRC})` }}
-              />
-            ))}
+        <div className={styles.inner}>
+          <div className={styles.copy}>
+            <h1 className={styles.headline}>
+              Turns conversations into execution.
+            </h1>
+            <p className={styles.body}>
+              VOXA is a voice agent platform. It handles your business&apos;s
+              phone calls — qualifying leads, confirming orders, following up
+              with customers — automatically, and turns every call into
+              structured data your team can use.
+            </p>
+            <div className={styles.ctaWrap}>
+              <SpecularButton
+                href="#talk"
+                size="md"
+                radius={999}
+                tint="#01002a"
+                tintOpacity={1}
+                blur={0}
+                textColor="#ffffff"
+                lineColor="#ffffff"
+                baseColor="#ffffff"
+                intensity={2.4}
+                shineSize={55}
+                shineFade={22}
+                thickness={2.8}
+                speed={0.55}
+                followMouse
+                proximity={250}
+                autoAnimate
+              >
+                Talk to us
+              </SpecularButton>
+            </div>
           </div>
-          <img
-            ref={intactRef}
-            src={CONFIG.LOGO_SRC}
-            alt="VOXA"
-            className={styles.intact}
-          />
+
+          <div className={styles.stage}>
+            <div
+              ref={gridRef}
+              id="shatterGrid"
+              className={styles.grid}
+              aria-hidden="true"
+            >
+              {TILES.map((tile, index) => (
+                <div
+                  key={tile.key}
+                  data-tile
+                  data-index={index}
+                  className={styles.tile}
+                  style={{ backgroundImage: `url(${CONFIG.LOGO_SRC})` }}
+                />
+              ))}
+            </div>
+            <img
+              ref={intactRef}
+              src={CONFIG.LOGO_SRC}
+              alt=""
+              className={styles.intact}
+            />
+          </div>
         </div>
       </section>
     </div>

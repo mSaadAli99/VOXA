@@ -1,3 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #01002a;
+  --color-steel: #314057;
+  --color-cream: #f8f0e5;
+  --font-display: "Genera Grotesk", "GeneraGrotesk", sans-serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+}
+
 *,
 *::before,
 *::after {
@@ -11,12 +21,55 @@ body {
   min-height: 100%;
 }
 
+html {
+  --font-display: "Genera Grotesk", "GeneraGrotesk", sans-serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+  scroll-behavior: auto;
+}
+
 body {
   background: #000000;
   color: #ffffff;
-  font-family: inherit;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 main {
   min-height: 100vh;
+}
+
+@font-face {
+  font-family: "Genera Grotesk";
+  src:
+    local("Genera Grotesk Bold"),
+    local("GeneraGrotesk-Bold"),
+    url("/fonts/GeneraGrotesk-Bold.woff2") format("woff2"),
+    url("/fonts/GeneraGrotesk-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Genera Grotesk";
+  src:
+    local("Genera Grotesk Regular"),
+    local("GeneraGrotesk-Regular"),
+    url("/fonts/GeneraGrotesk-Regular.woff2") format("woff2"),
+    url("/fonts/GeneraGrotesk-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }

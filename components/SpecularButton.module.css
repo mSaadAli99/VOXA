@@ -1,0 +1,70 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+  outline: none;
+  color: var(--sb-text-color);
+  border-radius: var(--sb-radius);
+  background: color-mix(in srgb, var(--sb-tint) calc(var(--sb-tint-opacity) * 100%), transparent);
+  backdrop-filter: blur(var(--sb-blur));
+  box-shadow: inset 0 0 0 1.5px #ffffff;
+  transition: transform 0.15s ease;
+}
+
+.sm {
+  font-size: 0.85rem;
+  padding: 10px 22px;
+}
+
+.md {
+  font-size: 0.875rem;
+  padding: 13px 22px;
+}
+
+.lg {
+  font-size: 0.95rem;
+  padding: 16px 32px;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.fx {
+  pointer-events: none;
+  position: absolute;
+  inset: -20px;
+  z-index: 1;
+}
+
+.fx canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  position: relative;
+  z-index: 2;
+}
