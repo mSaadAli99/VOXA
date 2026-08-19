@@ -52,6 +52,47 @@ export default function OfficeWalk() {
         delay: 0.12,
       });
 
+      const heroTrack = root.querySelector("[data-hero-track]");
+      const heroZoom = root.querySelector("[data-hero-zoom]");
+      const heroCopy = root.querySelector("[data-hero-copy]");
+      if (heroTrack && heroZoom) {
+        const mobile = window.matchMedia("(max-width: 767px)");
+        const zoomTrigger = {
+          trigger: heroTrack,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.15,
+          invalidateOnRefresh: true,
+        };
+
+        gsap.fromTo(
+          heroZoom,
+          { scale: 1 },
+          {
+            scale: mobile.matches ? 1.15 : 1.4,
+            ease: "power2.inOut",
+            force3D: true,
+            transformOrigin: "50% 48%",
+            scrollTrigger: zoomTrigger,
+          },
+        );
+
+        if (heroCopy) {
+          gsap.to(heroCopy, {
+            opacity: 0,
+            y: -24,
+            ease: "power2.in",
+            scrollTrigger: {
+              trigger: heroTrack,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 1.15,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+      }
+
       gsap.utils.toArray("[data-reveal]").forEach((el) => {
         gsap.from(el, {
           opacity: 0,
@@ -85,20 +126,24 @@ export default function OfficeWalk() {
 
   return (
     <div ref={rootRef} className={styles.walk}>
+      <div className={styles.heroTrack} data-hero-track data-snap-protect>
       <section
         className={`${styles.section} ${styles.hero}`}
         id="hero"
-        data-snap-section
       >
         <div
-          className={styles.bg}
+          className={`${styles.bg} ${styles.heroBg}`}
+          data-hero-zoom
           style={{ backgroundImage: "url(/images/hero-entrance.png)" }}
         />
         <div
           className={styles.overlay}
           style={{ background: "rgba(0,0,0,0.35)" }}
         />
-        <div className={`${styles.inner} ${styles.innerCenter}`}>
+        <div
+          className={`${styles.inner} ${styles.innerCenter}`}
+          data-hero-copy
+        >
           <div data-hero-fade>
             <Image
               src="/logomark.png"
@@ -123,6 +168,7 @@ export default function OfficeWalk() {
           </Link>
         </div>
       </section>
+      </div>
 
       <section
         className={styles.section}

@@ -1,0 +1,214 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  overflow: hidden;
+  opacity: 1;
+  backdrop-filter: blur(18px) saturate(1.05);
+  -webkit-backdrop-filter: blur(18px) saturate(1.05);
+  transition: opacity 800ms ease, backdrop-filter 800ms ease;
+}
+
+.overlay.leaving {
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0) saturate(1);
+  -webkit-backdrop-filter: blur(0) saturate(1);
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+
+.logos {
+  position: relative;
+  z-index: 2;
+  width: min(82vw, 560px);
+  aspect-ratio: 4.4 / 1;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  transform: translateY(-50%);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.logoNavy {
+  opacity: 1;
+  transition: opacity 1.6s ease;
+}
+
+.logoCream {
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.bursting .logoNavy,
+.reduced .logoNavy,
+.leaving .logoNavy {
+  opacity: 0;
+}
+
+.bursting .logoCream,
+.reduced .logoCream,
+.leaving .logoCream {
+  opacity: 1;
+}
+
+.gooSvg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.filter {
+  --color-1: #01002a;
+  --color-2: #f8f0e5;
+  --color-3: #314057;
+  --color-4: #ffffff;
+  --color-5: #f8f0e5;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: min(96vw, 780px);
+  height: min(96vw, 780px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  filter: url("#voxa-goo");
+}
+
+.filter :global(.particle),
+.filter :global(.point) {
+  display: block;
+  opacity: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  transform-origin: center;
+}
+
+.filter :global(.particle) {
+  --time: 2.2s;
+  position: absolute;
+  top: calc(50% - 14px);
+  left: calc(50% - 14px);
+  animation: particle calc(var(--time)) ease 1 -80ms;
+}
+
+.filter :global(.point) {
+  background: var(--color);
+  opacity: 1;
+  animation: point calc(var(--time)) ease 1 -80ms;
+}
+
+@keyframes particle {
+  0% {
+    transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y)));
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  70% {
+    transform: rotate(calc(var(--rotate) * 0.5))
+      translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
+    opacity: 1;
+    animation-timing-function: ease;
+  }
+
+  85% {
+    transform: rotate(calc(var(--rotate) * 0.66))
+      translate(var(--end-x), var(--end-y));
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(calc(var(--rotate) * 1.2))
+      translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5));
+    opacity: 0;
+  }
+}
+
+@keyframes point {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  25% {
+    transform: scale(calc(var(--scale) * 0.25));
+  }
+
+  38% {
+    opacity: 1;
+  }
+
+  65% {
+    transform: scale(var(--scale));
+    opacity: 1;
+    animation-timing-function: ease;
+  }
+
+  85% {
+    transform: scale(var(--scale));
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.skip {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
+  border: 0;
+  background: transparent;
+  color: #f8f0e5;
+  text-shadow: 0 1px 10px rgba(1, 0, 42, 0.55);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  cursor: pointer;
+  padding: 8px 4px;
+  transition: opacity 0.2s ease;
+}
+
+.skip:hover,
+.skip:focus-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoNavy,
+  .logoCream,
+  .overlay {
+    transition: opacity 500ms ease;
+  }
+
+  .filter {
+    display: none;
+  }
+}

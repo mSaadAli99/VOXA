@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.heroTrack {
+  position: relative;
+  height: 260vh;
+}
+
 .section {
   position: sticky;
   top: 0;
@@ -32,6 +37,11 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.heroBg {
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .overlay {
@@ -222,10 +232,21 @@
 }
 
 @media (max-width: 767px) {
+  .heroTrack {
+    height: 180vh;
+  }
+
   .section {
     position: relative;
     height: 80vh;
     min-height: 80vh;
+  }
+
+  .heroTrack .hero {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 100vh;
   }
 
   .bg {

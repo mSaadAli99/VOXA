@@ -50,6 +50,10 @@ main {
   min-height: 100vh;
 }
 
+.site-root {
+  opacity: 1;
+}
+
 @font-face {
   font-family: "Genera Grotesk";
   src:

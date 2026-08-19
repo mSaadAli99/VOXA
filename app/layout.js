@@ -1,6 +1,7 @@
 import { DM_Sans } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import SmoothSnapScroll from "@/components/SmoothSnapScroll";
+import VOXAPageLoader from "@/components/VOXAPageLoader";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -19,9 +20,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${dmSans.className}`}>
-        <Navbar />
-        <SmoothSnapScroll />
-        {children}
+        <VOXAPageLoader />
+        <div className="site-root">
+          <Navbar />
+          <SmoothSnapScroll />
+          {children}
+        </div>
       </body>
     </html>
   );
