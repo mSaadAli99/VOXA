@@ -1,15 +1,9 @@
-import Hero from "@/components/Hero";
-import WhatVoxaDoes from "@/components/WhatVoxaDoes";
-import OurProducts from "@/components/OurProducts";
-import OurSolutions from "@/components/OurSolutions";
+import OfficeWalk from "@/components/OfficeWalk";
 
 export default function HomePage() {
   return (
     <main>
-      <Hero />
-      <WhatVoxaDoes />
-      <OurProducts />
-      <OurSolutions />
+      <OfficeWalk />
     </main>
   );
 }

@@ -8,9 +8,9 @@ import styles from "./Navbar.module.css";
 
 const links = [
   { href: "/", label: "Homepage" },
-  { href: "/about", label: "About" },
-  { href: "/solutions", label: "Solutions" },
-  { href: "/products", label: "Products" },
+  { href: "/#what-voxa-does", label: "About" },
+  { href: "/#our-solutions", label: "Solutions" },
+  { href: "/#our-products", label: "Products" },
   { href: "/technology", label: "Technology" },
 ];
 
@@ -46,6 +46,9 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <Link href="/#talk" className={styles.cta} onClick={() => setOpen(false)}>
+            Talk to us
+          </Link>
         </div>
 
         <button

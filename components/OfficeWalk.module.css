@@ -1,0 +1,272 @@
+.walk {
+  position: relative;
+}
+
+.section {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  color: #f8f0e5;
+}
+
+.hero {
+  z-index: 1;
+}
+
+.section:nth-child(2) {
+  z-index: 2;
+}
+
+.section:nth-child(3) {
+  z-index: 3;
+}
+
+.section:nth-child(4) {
+  z-index: 4;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 108px 24px 48px;
+  box-sizing: border-box;
+}
+
+.innerCenter {
+  align-items: center;
+  text-align: center;
+}
+
+.innerCenterNarrow {
+  align-items: center;
+  text-align: center;
+}
+
+.innerLeft {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.innerRight {
+  align-items: flex-end;
+  text-align: left;
+}
+
+.mark {
+  width: 88px;
+  height: auto;
+  margin-bottom: 28px;
+  filter: brightness(0) invert(1) sepia(1) saturate(0.35) hue-rotate(5deg);
+}
+
+.label {
+  margin: 0 0 16px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f8f0e5;
+}
+
+.headline,
+.headlineSm {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #f8f0e5;
+}
+
+.headline {
+  max-width: 16ch;
+  font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.headlineSm {
+  max-width: 18ch;
+  font-size: clamp(1.85rem, 3.4vw, 2.85rem);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.lede,
+.body {
+  margin: 1.15rem 0 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #f8f0e5;
+}
+
+.lede {
+  max-width: 38rem;
+}
+
+.body {
+  max-width: 35rem;
+}
+
+.innerLeft .headlineSm,
+.innerLeft .body {
+  max-width: 560px;
+}
+
+.innerCenterNarrow .headlineSm,
+.innerCenterNarrow .body {
+  max-width: 600px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: #01002a;
+  color: #f8f0e5;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: #314057;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 340px));
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 28px;
+}
+
+.innerRight .grid {
+  margin-left: 0;
+}
+
+.innerCenter .grid {
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 340px;
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.55);
+  box-sizing: border-box;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #f8f0e5;
+}
+
+.cardBody {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #f8f0e5;
+}
+
+.cardLink {
+  display: inline-flex;
+  margin-top: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #f8f0e5;
+}
+
+.cardLink:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .section {
+    position: relative;
+    height: 80vh;
+    min-height: 80vh;
+  }
+
+  .bg {
+    background-attachment: scroll;
+  }
+
+  .inner {
+    padding: 96px 20px 40px;
+  }
+
+  .headline {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+  }
+
+  .headlineSm {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .lede,
+  .body {
+    font-size: 0.95rem;
+  }
+
+  .innerLeft,
+  .innerRight,
+  .innerCenter,
+  .innerCenterNarrow {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .card {
+    max-width: none;
+  }
+
+  .mark {
+    width: 64px;
+  }
+}
