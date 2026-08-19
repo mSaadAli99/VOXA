@@ -188,6 +188,7 @@ export default function AccordionGallery({
     <div
       ref={rootRef}
       className={`${styles.root} ${vertical ? styles.vertical : ""} ${className}`}
+      data-office-ui
       style={{
         gap: `${gap}px`,
         height: vertical ? `${Math.round(height * 1.6)}px` : `${height}px`,

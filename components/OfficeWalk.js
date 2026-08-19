@@ -151,10 +151,12 @@ export default function OfficeWalk() {
         <div
           className={`${styles.bg} ${styles.heroBg}`}
           data-hero-zoom
+          data-office-photo
           style={{ backgroundImage: "url(/images/hero-entrance.png)" }}
         />
         <div
           className={styles.overlay}
+          data-office-dim
           style={{ background: "rgba(0,0,0,0.35)" }}
         />
         <div
@@ -218,10 +220,12 @@ export default function OfficeWalk() {
       >
         <div
           className={styles.bg}
+          data-office-photo
           style={{ backgroundImage: "url(/images/what-voxa-does.png)" }}
         />
         <div
           className={styles.overlay}
+          data-office-dim
           style={{ background: "rgba(0,0,0,0.4)" }}
         />
         <div className={`${styles.inner} ${styles.innerLeft}`}>
@@ -269,10 +273,12 @@ export default function OfficeWalk() {
             <section className={styles.section} id="our-products">
               <div
                 className={styles.bg}
+                data-office-photo
                 style={{ backgroundImage: "url(/images/our-products.png)" }}
               />
               <div
                 className={styles.overlay}
+          data-office-dim
                 style={{ background: "rgba(0,0,0,0.35)" }}
               />
               <div className={`${styles.inner} ${styles.innerCenter}`}>
@@ -317,10 +323,12 @@ export default function OfficeWalk() {
             <section className={styles.section} id="our-solutions">
               <div
                 className={styles.bg}
+                data-office-photo
                 style={{ backgroundImage: "url(/images/our-solutions.png)" }}
               />
               <div
                 className={styles.overlay}
+          data-office-dim
                 style={{ background: "rgba(0,0,0,0.3)" }}
               />
               <div className={`${styles.inner} ${styles.innerCenter}`}>
