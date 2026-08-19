@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Color, Mesh, Program, Renderer, Triangle } from "ogl";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./SpecularButton.module.css";
 
 const PAD = 20;
@@ -258,7 +259,20 @@ export default function SpecularButton({
   const content = (
     <>
       <span ref={fxRef} aria-hidden="true" className={styles.fx} />
-      <span className={styles.label}>{children}</span>
+      {typeof children === "string" ? (
+        <ScrollReveal
+          as="span"
+          className={styles.label}
+          baseOpacity={0.1}
+          enableBlur
+          baseRotation={3}
+          blurStrength={4}
+        >
+          {children}
+        </ScrollReveal>
+      ) : (
+        <span className={styles.label}>{children}</span>
+      )}
     </>
   );
 

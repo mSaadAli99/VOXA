@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import SpecularButton from "@/components/SpecularButton";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./Hero.module.css";
 
 const CONFIG = {
@@ -200,15 +201,26 @@ export default function Hero() {
       <section className={`${styles.hero} logo-hero`}>
         <div className={styles.inner}>
           <div className={styles.copy}>
-            <h1 className={styles.headline}>
+            <ScrollReveal
+              as="h1"
+              className={styles.headline}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            >
               Turns conversations into execution.
-            </h1>
-            <p className={styles.body}>
-              VOXA is a voice agent platform. It handles your business&apos;s
-              phone calls — qualifying leads, confirming orders, following up
-              with customers — automatically, and turns every call into
-              structured data your team can use.
-            </p>
+            </ScrollReveal>
+            <ScrollReveal
+              as="p"
+              className={styles.body}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            >
+              VOXA is a voice agent platform. It handles your business&apos;s phone calls — qualifying leads, confirming orders, following up with customers — automatically, and turns every call into structured data your team can use.
+            </ScrollReveal>
             <div className={styles.ctaWrap}>
               <SpecularButton
                 href="#talk"

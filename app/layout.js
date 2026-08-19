@@ -1,5 +1,6 @@
 import { DM_Sans } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import SmoothSnapScroll from "@/components/SmoothSnapScroll";
 import VOXAPageLoader from "@/components/VOXAPageLoader";
 import "./globals.css";
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <SmoothSnapScroll />
           {children}
+          <Footer />
         </div>
       </body>
     </html>

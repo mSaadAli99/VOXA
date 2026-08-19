@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "@/lib/gsap";
 import BorderGlow from "@/components/BorderGlow";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./OurProducts.module.css";
 
 const products = [
@@ -87,7 +88,16 @@ export default function OurProducts() {
       <div className={styles.sticky}>
         <div ref={trackRef} className={styles.track}>
           <div className={styles.panel}>
-            <h2 className={styles.heading}>Our products</h2>
+            <ScrollReveal
+              as="h2"
+              className={styles.heading}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            >
+              Our products
+            </ScrollReveal>
           </div>
           <div className={styles.panel}>
             <div className={styles.grid}>
@@ -106,11 +116,37 @@ export default function OurProducts() {
                   colors={["#f8f0e5", "#ffffff", "#314057"]}
                 >
                   <article className={styles.card} id={product.id}>
-                    <h3 className={styles.title}>{product.title}</h3>
-                    <p className={styles.body}>{product.body}</p>
-                    <Link href={product.href} className={styles.link}>
-                      See product <span aria-hidden="true">→</span>
-                    </Link>
+                    <ScrollReveal
+                      as="h3"
+                      className={styles.title}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      {product.title}
+                    </ScrollReveal>
+                    <ScrollReveal
+                      as="p"
+                      className={styles.body}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      {product.body}
+                    </ScrollReveal>
+                    <ScrollReveal
+                      as={Link}
+                      href={product.href}
+                      className={styles.link}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      See product →
+                    </ScrollReveal>
                   </article>
                 </BorderGlow>
               ))}

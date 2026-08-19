@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./Navbar.module.css";
 
 const links = [
@@ -36,19 +37,33 @@ export default function Navbar() {
           <ul className={styles.links}>
             {links.map((link) => (
               <li key={link.href}>
-                <Link
+                <ScrollReveal
+                  as={Link}
                   href={link.href}
                   className={`${styles.link} ${pathname === link.href ? styles.active : ""}`}
                   onClick={() => setOpen(false)}
+                  baseOpacity={0.1}
+                  enableBlur
+                  baseRotation={3}
+                  blurStrength={4}
                 >
                   {link.label}
-                </Link>
+                </ScrollReveal>
               </li>
             ))}
           </ul>
-          <Link href="/#talk" className={styles.cta} onClick={() => setOpen(false)}>
+          <ScrollReveal
+            as={Link}
+            href="/#talk"
+            className={styles.cta}
+            onClick={() => setOpen(false)}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+          >
             Talk to us
-          </Link>
+          </ScrollReveal>
         </div>
 
         <button

@@ -1,0 +1,129 @@
+.footer {
+  position: relative;
+  z-index: 4;
+  background: linear-gradient(180deg, #01002a 0%, #314057 100%);
+  color: #f8f0e5;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px 32px;
+  box-sizing: border-box;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logoImage {
+  height: 22px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px 28px;
+  list-style: none;
+}
+
+.link {
+  font-family: var(--font-body);
+  color: #f8f0e5;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.88;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 1;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: #01002a;
+  color: #f8f0e5;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: #01002a;
+  color: #ffffff;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in srgb, #f8f0e5 18%, transparent);
+}
+
+.copy,
+.tag {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #f8f0e5;
+  opacity: 0.72;
+}
+
+.tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+@media (max-width: 767px) {
+  .inner {
+    padding: 40px 20px 28px;
+  }
+
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .links {
+    justify-content: flex-start;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "@/lib/gsap";
 import BorderGlow from "@/components/BorderGlow";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./OurSolutions.module.css";
 
 const solutions = [
@@ -87,7 +88,16 @@ export default function OurSolutions() {
       <div className={styles.sticky}>
         <div ref={trackRef} className={styles.track}>
           <div className={styles.panel}>
-            <h2 className={styles.heading}>Our solutions</h2>
+            <ScrollReveal
+              as="h2"
+              className={styles.heading}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            >
+              Our solutions
+            </ScrollReveal>
           </div>
           <div className={styles.panel}>
             <div className={styles.grid}>
@@ -106,11 +116,37 @@ export default function OurSolutions() {
                   colors={["#f8f0e5", "#ffffff", "#314057"]}
                 >
                   <article className={styles.card} id={solution.id}>
-                    <h3 className={styles.title}>{solution.title}</h3>
-                    <p className={styles.body}>{solution.body}</p>
-                    <Link href={solution.href} className={styles.link}>
-                      See solution <span aria-hidden="true">→</span>
-                    </Link>
+                    <ScrollReveal
+                      as="h3"
+                      className={styles.title}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      {solution.title}
+                    </ScrollReveal>
+                    <ScrollReveal
+                      as="p"
+                      className={styles.body}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      {solution.body}
+                    </ScrollReveal>
+                    <ScrollReveal
+                      as={Link}
+                      href={solution.href}
+                      className={styles.link}
+                      baseOpacity={0.1}
+                      enableBlur
+                      baseRotation={3}
+                      blurStrength={4}
+                    >
+                      See solution →
+                    </ScrollReveal>
                   </article>
                 </BorderGlow>
               ))}

@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import ScrollReveal from "@/components/ScrollReveal";
+import AccordionGallery from "@/components/AccordionGallery";
 import styles from "./OfficeWalk.module.css";
 
 const products = [
@@ -11,11 +13,13 @@ const products = [
     title: "VOXA Voice Agent Platform",
     body: "An AI voice agent for real estate and e-commerce businesses. It handles lead qualification, order confirmation, and customer follow-up calls.",
     href: "/products#voice-agent",
+    image: "/images/our-products.png",
   },
   {
     title: "VOXA Communications Suite",
     body: "A complete calling platform for contact centers and enterprises — telephony, CRM, omni-channel support, and AI automation in one system.",
     href: "/products#communications-suite",
+    image: "/images/infrastructure.png",
   },
 ];
 
@@ -24,11 +28,13 @@ const solutions = [
     title: "Real Estate",
     body: "Every lead answered and qualified within seconds, day or night.",
     href: "/solutions#real-estate",
+    image: "/images/our-solutions.png",
   },
   {
     title: "E-Commerce",
     body: "Every order confirmed before dispatch. Every delivery followed up automatically.",
     href: "/solutions#e-commerce",
+    image: "/images/what-voxa-does.png",
   },
 ];
 
@@ -93,35 +99,46 @@ export default function OfficeWalk() {
         }
       }
 
-      gsap.utils.toArray("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: -20,
-          duration: 0.75,
-          ease: "power2.out",
+      const horizon = root.querySelector("[data-horizon]");
+      const horizonRow = root.querySelector("[data-horizon-row]");
+      if (
+        horizon &&
+        horizonRow &&
+        !window.matchMedia("(max-width: 767px)").matches
+      ) {
+        gsap.to(horizonRow, {
+          x: () => -window.innerWidth,
+          ease: "none",
+          force3D: true,
           scrollTrigger: {
-            trigger: el.closest("section"),
-            start: "top 70%",
+            trigger: horizon,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            invalidateOnRefresh: true,
           },
         });
-      });
-
-      gsap.utils.toArray("[data-stagger]").forEach((group) => {
-        gsap.from(group.querySelectorAll("[data-stagger-item]"), {
-          opacity: 0,
-          y: -20,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: group.closest("section"),
-            start: "top 70%",
-          },
-        });
-      });
+      }
     }, root);
 
-    return () => ctx.revert();
+    const applyHash = () => {
+      const horizon = root.querySelector("[data-horizon]");
+      if (!horizon) return;
+      if (window.location.hash === "#our-solutions") {
+        const y = horizon.offsetTop + horizon.offsetHeight - window.innerHeight;
+        window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+      }
+    };
+
+    const refresh = window.setTimeout(() => {
+      ScrollTrigger.refresh();
+      applyHash();
+    }, 50);
+
+    return () => {
+      window.clearTimeout(refresh);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -154,18 +171,42 @@ export default function OfficeWalk() {
               priority
             />
           </div>
-          <h1 data-hero-fade className={styles.headline}>
+          <ScrollReveal
+            as="h1"
+            className={styles.headline}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+            transformOrigin="50% 50%"
+          >
             Turns conversations into execution.
-          </h1>
-          <p data-hero-fade className={styles.lede}>
-            VOXA is a voice agent platform. It handles your business&apos;s
-            phone calls — qualifying leads, confirming orders, following up —
-            automatically, and turns every call into structured data your team
-            can use.
-          </p>
-          <Link data-hero-fade id="talk" href="#talk" className={styles.cta}>
+          </ScrollReveal>
+          <ScrollReveal
+            as="p"
+            className={styles.lede}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+            transformOrigin="50% 50%"
+          >
+            VOXA is a voice agent platform. It handles your business&apos;s phone calls — qualifying leads, confirming orders, following up — automatically, and turns every call into structured data your team can use.
+          </ScrollReveal>
+          <ScrollReveal
+            as={Link}
+            href="#talk"
+            id="talk"
+            className={styles.cta}
+            data-hero-fade
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+            transformOrigin="50% 50%"
+          >
             Talk to us
-          </Link>
+          </ScrollReveal>
         </div>
       </section>
       </div>
@@ -184,82 +225,145 @@ export default function OfficeWalk() {
           style={{ background: "rgba(0,0,0,0.4)" }}
         />
         <div className={`${styles.inner} ${styles.innerLeft}`}>
-          <p data-reveal className={styles.label}>
+          <ScrollReveal
+            as="p"
+            className={styles.label}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+          >
             What VOXA does
-          </p>
-          <h2 data-reveal className={styles.headlineSm}>
+          </ScrollReveal>
+          <ScrollReveal
+            as="h2"
+            className={styles.headlineSm}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+          >
             VOXA answers and makes phone calls on behalf of your business.
-          </h2>
-          <p data-reveal className={styles.body}>
-            It qualifies leads, confirms orders, collects feedback, and books
-            callbacks — every time, the same way, at any volume. Every call is
-            automatically saved as clean, structured data in your CRM or
-            dashboard, so your team never has to enter it by hand.
-          </p>
+          </ScrollReveal>
+          <ScrollReveal
+            as="p"
+            className={styles.body}
+            baseOpacity={0.1}
+            enableBlur
+            baseRotation={3}
+            blurStrength={4}
+          >
+            It qualifies leads, confirms orders, collects feedback, and books callbacks — every time, the same way, at any volume. Every call is automatically saved as clean, structured data in your CRM or dashboard, so your team never has to enter it by hand.
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className={styles.section} id="our-products" data-snap-section>
-        <div
-          className={styles.bg}
-          style={{ backgroundImage: "url(/images/our-products.png)" }}
-        />
-        <div
-          className={styles.overlay}
-          style={{ background: "rgba(0,0,0,0.35)" }}
-        />
-        <div className={`${styles.inner} ${styles.innerRight}`}>
-          <p data-reveal className={styles.label}>
-            Our products
-          </p>
-          <div className={styles.grid} data-stagger>
-            {products.map((product) => (
-              <article
-                key={product.title}
-                className={styles.card}
-                data-stagger-item
-              >
-                <h3 className={styles.cardTitle}>{product.title}</h3>
-                <p className={styles.cardBody}>{product.body}</p>
-                <Link href={product.href} className={styles.cardLink}>
-                  See product <span aria-hidden="true">→</span>
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div
+        className={styles.horizon}
+        data-horizon
+        data-snap-protect
+        data-snap-section
+      >
+        <div className={styles.horizonPin}>
+          <div className={styles.horizonRow} data-horizon-row>
+            <section className={styles.section} id="our-products">
+              <div
+                className={styles.bg}
+                style={{ backgroundImage: "url(/images/our-products.png)" }}
+              />
+              <div
+                className={styles.overlay}
+                style={{ background: "rgba(0,0,0,0.35)" }}
+              />
+              <div className={`${styles.inner} ${styles.innerCenter}`}>
+                <ScrollReveal
+                  as="h2"
+                  className={styles.sectionHeading}
+                  transformOrigin="50% 50%"
+                >
+                  Our products
+                </ScrollReveal>
+                <AccordionGallery
+                  className={styles.gallery}
+                  items={products.map((product) => ({
+                    image: product.image,
+                    label: product.title,
+                    body: product.body,
+                    link: product.href,
+                    cta: "See product →",
+                    alt: product.title,
+                  }))}
+                  defaultIndex={0}
+                  expandRatio={0.58}
+                  trigger="hover"
+                  accentColor="#f8f0e5"
+                  overlayColor="#01002a"
+                  textColor="#f8f0e5"
+                  grayscale
+                  showLabels
+                  duration={0.6}
+                  ease="power3.out"
+                  parallax={0.5}
+                  tilt={8}
+                  stagger={0.06}
+                  height={420}
+                  gap={10}
+                  radius={16}
+                  orientation="horizontal"
+                />
+              </div>
+            </section>
 
-      <section className={styles.section} id="our-solutions" data-snap-section>
-        <div
-          className={styles.bg}
-          style={{ backgroundImage: "url(/images/our-solutions.png)" }}
-        />
-        <div
-          className={styles.overlay}
-          style={{ background: "rgba(0,0,0,0.3)" }}
-        />
-        <div className={`${styles.inner} ${styles.innerCenter}`}>
-          <p data-reveal className={styles.label}>
-            Our solutions
-          </p>
-          <div className={styles.grid} data-stagger>
-            {solutions.map((solution) => (
-              <article
-                key={solution.title}
-                className={styles.card}
-                data-stagger-item
-              >
-                <h3 className={styles.cardTitle}>{solution.title}</h3>
-                <p className={styles.cardBody}>{solution.body}</p>
-                <Link href={solution.href} className={styles.cardLink}>
-                  See solution <span aria-hidden="true">→</span>
-                </Link>
-              </article>
-            ))}
+            <section className={styles.section} id="our-solutions">
+              <div
+                className={styles.bg}
+                style={{ backgroundImage: "url(/images/our-solutions.png)" }}
+              />
+              <div
+                className={styles.overlay}
+                style={{ background: "rgba(0,0,0,0.3)" }}
+              />
+              <div className={`${styles.inner} ${styles.innerCenter}`}>
+                <ScrollReveal
+                  as="h2"
+                  className={styles.sectionHeading}
+                  transformOrigin="50% 50%"
+                >
+                  Our solutions
+                </ScrollReveal>
+                <AccordionGallery
+                  className={styles.gallery}
+                  items={solutions.map((solution) => ({
+                    image: solution.image,
+                    label: solution.title,
+                    body: solution.body,
+                    link: solution.href,
+                    cta: "See solution →",
+                    alt: solution.title,
+                  }))}
+                  defaultIndex={0}
+                  expandRatio={0.58}
+                  trigger="hover"
+                  accentColor="#f8f0e5"
+                  overlayColor="#01002a"
+                  textColor="#f8f0e5"
+                  grayscale
+                  showLabels
+                  duration={0.6}
+                  ease="power3.out"
+                  parallax={0.5}
+                  tilt={8}
+                  stagger={0.06}
+                  height={420}
+                  gap={10}
+                  radius={16}
+                  orientation="horizontal"
+                />
+              </div>
+            </section>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

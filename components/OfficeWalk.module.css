@@ -1,5 +1,6 @@
 .walk {
   position: relative;
+  overflow-x: clip;
 }
 
 .heroTrack {
@@ -19,16 +20,36 @@
   z-index: 1;
 }
 
-.section:nth-child(2) {
+.walk > .section:nth-of-type(1),
+.walk > section#what-voxa-does {
   z-index: 2;
 }
 
-.section:nth-child(3) {
+.horizon {
+  position: relative;
   z-index: 3;
+  height: 220vh;
 }
 
-.section:nth-child(4) {
-  z-index: 4;
+.horizonPin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.horizonRow {
+  display: flex;
+  width: 200vw;
+  height: 100%;
+  will-change: transform;
+}
+
+.horizonRow .section {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
 }
 
 .bg {
@@ -68,6 +89,11 @@
   text-align: center;
 }
 
+.innerCenter .root,
+.gallery {
+  width: 100%;
+}
+
 .innerCenterNarrow {
   align-items: center;
   text-align: center;
@@ -88,6 +114,18 @@
   height: auto;
   margin-bottom: 28px;
   filter: brightness(0) invert(1) sepia(1) saturate(0.35) hue-rotate(5deg);
+}
+
+.sectionHeading {
+  width: 100%;
+  margin: 0 0 28px;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-align: center;
+  color: #f8f0e5;
 }
 
 .label {
@@ -247,6 +285,30 @@
     top: 0;
     height: 100vh;
     min-height: 100vh;
+  }
+
+  .horizon {
+    height: auto;
+    z-index: auto;
+  }
+
+  .horizonPin {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .horizonRow {
+    display: block;
+    width: 100%;
+    transform: none !important;
+  }
+
+  .horizonRow .section {
+    width: 100%;
+    flex: none;
+    height: 80vh;
+    min-height: 80vh;
   }
 
   .bg {

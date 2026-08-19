@@ -1,0 +1,27 @@
+.word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(18px);
+  transform: translateY(22px);
+}
+
+.space {
+  display: inline-block;
+  width: 0.33em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
