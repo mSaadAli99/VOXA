@@ -12,7 +12,9 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const saved = window.localStorage.getItem("voxa-theme");
-    if (saved === "orb" || saved === "studio") setTheme(saved);
+    if (saved === "orb" || saved === "studio" || saved === "vesper") {
+      setTheme(saved);
+    }
   }, []);
 
   useEffect(() => {

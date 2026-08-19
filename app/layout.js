@@ -23,7 +23,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${dmSans.className}`}>
+      <body
+        className={`${dmSans.variable} ${dmSans.className}`}
+        style={{ background: "#000", color: "#fff" }}
+      >
         <ThemeProvider>
           <VOXAPageLoader />
           <OrbBackdrop />

@@ -12,6 +12,11 @@
   backdrop-filter: blur(12px);
 }
 
+:global(html[data-theme="vesper"]) .wrap {
+  top: auto;
+  bottom: 20px;
+}
+
 .btn {
   border: 0;
   border-radius: 999px;
@@ -36,5 +41,15 @@
 @media (max-width: 767px) {
   .wrap {
     top: 76px;
+  }
+
+  :global(html[data-theme="vesper"]) .wrap {
+    top: auto;
+    bottom: 16px;
+  }
+
+  .btn {
+    padding: 8px 10px;
+    font-size: 0.62rem;
   }
 }

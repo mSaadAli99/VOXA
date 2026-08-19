@@ -6,6 +6,7 @@ import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import ScrollReveal from "@/components/ScrollReveal";
 import AccordionGallery from "@/components/AccordionGallery";
+import { useTheme } from "@/components/ThemeProvider";
 import styles from "./OfficeWalk.module.css";
 
 const products = [
@@ -40,6 +41,7 @@ const solutions = [
 
 export default function OfficeWalk() {
   const rootRef = useRef(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const root = rootRef.current;
@@ -49,53 +51,55 @@ export default function OfficeWalk() {
     if (motionMq.matches) return;
 
     const ctx = gsap.context(() => {
-      gsap.from("[data-hero-fade]", {
-        opacity: 0,
-        y: -20,
-        duration: 0.7,
-        stagger: 0.16,
-        ease: "power2.out",
-        delay: 0.12,
-      });
+      if (theme !== "vesper") {
+        gsap.from("[data-hero-fade]", {
+          opacity: 0,
+          y: -20,
+          duration: 0.7,
+          stagger: 0.16,
+          ease: "power2.out",
+          delay: 0.12,
+        });
 
-      const heroTrack = root.querySelector("[data-hero-track]");
-      const heroZoom = root.querySelector("[data-hero-zoom]");
-      const heroCopy = root.querySelector("[data-hero-copy]");
-      if (heroTrack && heroZoom) {
-        const mobile = window.matchMedia("(max-width: 767px)");
-        const zoomTrigger = {
-          trigger: heroTrack,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1.15,
-          invalidateOnRefresh: true,
-        };
+        const heroTrack = root.querySelector("[data-hero-track]");
+        const heroZoom = root.querySelector("[data-hero-zoom]");
+        const heroCopy = root.querySelector("[data-hero-copy]");
+        if (heroTrack && heroZoom) {
+          const mobile = window.matchMedia("(max-width: 767px)");
+          const zoomTrigger = {
+            trigger: heroTrack,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.15,
+            invalidateOnRefresh: true,
+          };
 
-        gsap.fromTo(
-          heroZoom,
-          { scale: 1 },
-          {
-            scale: mobile.matches ? 1.15 : 1.4,
-            ease: "power2.inOut",
-            force3D: true,
-            transformOrigin: "50% 48%",
-            scrollTrigger: zoomTrigger,
-          },
-        );
-
-        if (heroCopy) {
-          gsap.to(heroCopy, {
-            opacity: 0,
-            y: -24,
-            ease: "power2.in",
-            scrollTrigger: {
-              trigger: heroTrack,
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 1.15,
-              invalidateOnRefresh: true,
+          gsap.fromTo(
+            heroZoom,
+            { scale: 1 },
+            {
+              scale: mobile.matches ? 1.15 : 1.4,
+              ease: "power2.inOut",
+              force3D: true,
+              transformOrigin: "50% 48%",
+              scrollTrigger: zoomTrigger,
             },
-          });
+          );
+
+          if (heroCopy) {
+            gsap.to(heroCopy, {
+              opacity: 0,
+              y: -24,
+              ease: "power2.in",
+              scrollTrigger: {
+                trigger: heroTrack,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.15,
+                invalidateOnRefresh: true,
+              },
+            });
+          }
         }
       }
 
@@ -139,7 +143,7 @@ export default function OfficeWalk() {
       window.clearTimeout(refresh);
       ctx.revert();
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div ref={rootRef} className={styles.walk}>
@@ -213,10 +217,10 @@ export default function OfficeWalk() {
       </section>
       </div>
 
+      <div className={styles.floor} data-snap-section>
       <section
         className={styles.section}
         id="what-voxa-does"
-        data-snap-section
       >
         <div
           className={styles.bg}
@@ -261,6 +265,7 @@ export default function OfficeWalk() {
           </ScrollReveal>
         </div>
       </section>
+      </div>
 
       <div
         className={styles.horizon}
@@ -278,7 +283,7 @@ export default function OfficeWalk() {
               />
               <div
                 className={styles.overlay}
-          data-office-dim
+                data-office-dim
                 style={{ background: "rgba(0,0,0,0.35)" }}
               />
               <div className={`${styles.inner} ${styles.innerCenter}`}>
@@ -328,7 +333,7 @@ export default function OfficeWalk() {
               />
               <div
                 className={styles.overlay}
-          data-office-dim
+                data-office-dim
                 style={{ background: "rgba(0,0,0,0.3)" }}
               />
               <div className={`${styles.inner} ${styles.innerCenter}`}>

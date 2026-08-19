@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+html,
+body {
+  background: #000000 !important;
+  color: #ffffff;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -23,6 +29,10 @@
 html,
 body {
   min-height: 100%;
+  background: #000000;
+  background: var(--bg, #000000);
+  color: #ffffff;
+  color: var(--text, #ffffff);
 }
 
 html {
@@ -58,6 +68,25 @@ main {
   position: relative;
   z-index: 1;
   opacity: 1;
+}
+
+html[data-theme="vesper"] {
+  --bg: #000000;
+  --text: #ffffff;
+  scroll-behavior: smooth;
+}
+
+html[data-theme="vesper"] body {
+  background: #000000 !important;
+  color: #ffffff;
+}
+
+html[data-theme="vesper"] body.menu-open {
+  overflow: hidden;
+}
+
+html[data-theme="vesper"] .site-root > header {
+  display: none;
 }
 
 html[data-theme="orb"] body {

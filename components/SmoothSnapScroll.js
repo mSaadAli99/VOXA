@@ -3,11 +3,14 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useTheme } from "@/components/ThemeProvider";
 import "lenis/dist/lenis.css";
 
 const SNAP_THRESHOLD = 0.45;
 
 export default function SmoothSnapScroll() {
+  const { theme } = useTheme();
+
   useEffect(() => {
     const mobileMq = window.matchMedia("(max-width: 767px)");
     const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -127,7 +130,7 @@ export default function SmoothSnapScroll() {
       document.documentElement.style.scrollBehavior = "";
       teardown();
     };
-  }, []);
+  }, [theme]);
 
   return null;
 }
