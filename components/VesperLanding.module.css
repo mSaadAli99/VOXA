@@ -14,6 +14,12 @@
   src: url("/instrument-serif-italic.woff2") format("woff2");
 }
 
+.track {
+  position: relative;
+  z-index: 1;
+  height: 220vh;
+}
+
 .wrap {
   --bg: #000000;
   --text: #ffffff;
@@ -41,10 +47,12 @@
   --lede-max: 38rem;
   --ui: var(--font-body), "DM Sans", system-ui, sans-serif;
   --serif: var(--font-display), "Genera Grotesk", sans-serif;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   isolation: isolate;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #000000 !important;
   color: #ffffff;
@@ -763,6 +771,10 @@
 }
 
 @media (max-width: 900px) {
+  .track {
+    height: auto;
+  }
+
   .wrap {
     --logo: 16px;
     --btn: 15px;

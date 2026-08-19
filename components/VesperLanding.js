@@ -93,7 +93,13 @@ export default function VesperLanding() {
   if (theme !== "vesper") return null;
 
   return (
-    <div ref={rootRef} className={styles.wrap} id="hero">
+    <div className={styles.track} data-snap-protect>
+    <div
+      ref={rootRef}
+      className={styles.wrap}
+      id="hero"
+      data-snap-section
+    >
       <div className={`${styles.heroPhoto} hero-photo`}>
         <video autoPlay muted loop playsInline src={HERO_VIDEO} />
       </div>
@@ -199,6 +205,7 @@ export default function VesperLanding() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

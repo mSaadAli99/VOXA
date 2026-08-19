@@ -217,10 +217,11 @@ export default function OfficeWalk() {
       </section>
       </div>
 
-      <div className={styles.floor} data-snap-section>
       <section
         className={styles.section}
         id="what-voxa-does"
+        data-snap-section
+        style={theme === "vesper" ? { background: "#f8f0e5" } : undefined}
       >
         <div
           className={styles.bg}
@@ -265,7 +266,6 @@ export default function OfficeWalk() {
           </ScrollReveal>
         </div>
       </section>
-      </div>
 
       <div
         className={styles.horizon}

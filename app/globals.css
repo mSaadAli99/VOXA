@@ -73,7 +73,6 @@ main {
 html[data-theme="vesper"] {
   --bg: #000000;
   --text: #ffffff;
-  scroll-behavior: smooth;
 }
 
 html[data-theme="vesper"] body {
@@ -86,7 +85,27 @@ html[data-theme="vesper"] body.menu-open {
 }
 
 html[data-theme="vesper"] .site-root > header {
-  display: none;
+  display: none !important;
+}
+
+html[data-theme="vesper"] #what-voxa-does {
+  background: #f8f0e5 !important;
+  color: #01002a !important;
+}
+
+html[data-theme="vesper"] #our-products {
+  background: #ffffff !important;
+  color: #01002a !important;
+}
+
+html[data-theme="vesper"] #our-solutions {
+  background: #f8f0e5 !important;
+  color: #01002a !important;
+}
+
+html[data-theme="vesper"] [data-office-photo],
+html[data-theme="vesper"] [data-office-dim] {
+  display: none !important;
 }
 
 html[data-theme="orb"] body {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useTheme } from "@/components/ThemeProvider";
 import styles from "./Navbar.module.css";
 
 const links = [
@@ -18,6 +19,9 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { theme } = useTheme();
+
+  if (theme === "vesper") return null;
 
   return (
     <header className={styles.header}>
