@@ -5,6 +5,7 @@ import { gsap } from "@/lib/gsap";
 import styles from "./ScrollReveal.module.css";
 
 function introIsPlaying() {
+  if (typeof document === "undefined") return false;
   const phase = document.documentElement.dataset.intro;
   return Boolean(phase) && phase !== "leaving" && phase !== "gone";
 }
