@@ -64,11 +64,17 @@
   white-space: nowrap;
   opacity: 0.92;
   transition: opacity 0.2s ease;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
 }
 
-.link:hover,
+.link:hover {
+  opacity: 1;
+}
+
 .active {
   opacity: 1;
+  border-bottom-color: #f8f0e5;
 }
 
 .cta {
@@ -151,5 +157,184 @@
 
   .cta {
     width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Orb / steel-blue navbar (FLASH-style layout)                       */
+/* ------------------------------------------------------------------ */
+
+.steelHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  background: transparent;
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+  will-change: transform, opacity;
+  pointer-events: auto;
+}
+
+.steelHeaderHidden {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.steelNav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 28px;
+  box-sizing: border-box;
+}
+
+.steelLogo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.steelLogoImage {
+  height: 28px;
+  width: auto;
+  background: transparent;
+  mix-blend-mode: normal;
+}
+
+.steelLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.steelLink {
+  font-family: var(--font-body);
+  color: #01002a;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.92;
+  transition: color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+}
+
+.steelLink:hover {
+  color: #314057;
+  opacity: 1;
+}
+
+.steelActive {
+  color: #01002a;
+  opacity: 1;
+  border-bottom-color: #01002a;
+}
+
+.steelCtaDesktop {
+  justify-self: end;
+}
+
+.steelCtaFull {
+  width: 100%;
+}
+
+.steelMobileCta {
+  display: none;
+}
+
+.steelToggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  justify-self: end;
+}
+
+.steelToggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #01002a;
+  border-radius: 2px;
+}
+
+.steelRule {
+  width: 100%;
+  height: 1px;
+  background: color-mix(in srgb, #01002a 16%, transparent);
+}
+
+@media (max-width: 900px) {
+  .steelNav {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+
+  .steelLinks {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 22px 24px;
+    background: color-mix(in srgb, #ffffff 94%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, #01002a 12%, transparent);
+  }
+
+  .steelLinksOpen {
+    display: flex;
+  }
+
+  .steelCtaDesktop {
+    display: none;
+  }
+
+  .steelMobileCta {
+    display: list-item;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .steelCtaFull {
+    width: 100%;
+  }
+
+  .steelToggle {
+    display: flex;
+  }
+
+  .steelNav {
+    position: relative;
   }
 }

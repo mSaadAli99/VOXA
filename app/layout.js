@@ -4,8 +4,8 @@ import Footer from "@/components/Footer";
 import SmoothSnapScroll from "@/components/SmoothSnapScroll";
 import VOXAPageLoader from "@/components/VOXAPageLoader";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import NextThemeProvider from "@/components/NextThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
-import OrbBackdrop from "@/components/OrbBackdrop";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -22,21 +22,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${dmSans.variable} ${dmSans.className}`}
         style={{ background: "#000", color: "#fff" }}
       >
         <ThemeProvider>
-          <VOXAPageLoader />
-          <OrbBackdrop />
-          <ThemeToggle />
-          <div className="site-root">
-            <Navbar />
-            <SmoothSnapScroll />
-            {children}
-            <Footer />
-          </div>
+          <NextThemeProvider>
+            <VOXAPageLoader />
+            <ThemeToggle />
+            <div className="site-root">
+              <Navbar />
+              <SmoothSnapScroll />
+              {children}
+              <Footer />
+            </div>
+          </NextThemeProvider>
         </ThemeProvider>
       </body>
     </html>

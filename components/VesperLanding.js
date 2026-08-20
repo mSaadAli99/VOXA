@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
+import TalkToUsButton from "@/components/TalkToUsButton";
 import styles from "./VesperLanding.module.css";
 
 const HERO_VIDEO =
@@ -137,13 +138,11 @@ export default function VesperLanding() {
             ))}
           </nav>
 
-          <Link
+          <TalkToUsButton
             href="#talk"
-            className={`${styles.btn} ${styles.btnSolid} ${styles.headerCta} appear appear--scale`}
+            className={`${styles.headerCta} appear appear--scale`}
             style={{ "--d": "0.34s" }}
-          >
-            Talk to us
-          </Link>
+          />
 
           <button
             type="button"
@@ -193,14 +192,12 @@ export default function VesperLanding() {
             </p>
 
             <div className={styles.heroActions}>
-              <Link
+              <TalkToUsButton
                 href="#talk"
                 id="talk"
-                className={`${styles.btn} ${styles.btnSolid} ${styles.heroBtn} appear appear--btn`}
+                className={`${styles.heroBtn} appear appear--btn`}
                 style={{ "--d": "0.96s" }}
-              >
-                Talk to us
-              </Link>
+              />
             </div>
           </div>
         </div>

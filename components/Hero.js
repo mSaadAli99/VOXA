@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import SpecularButton from "@/components/SpecularButton";
 import ScrollReveal from "@/components/ScrollReveal";
+import TalkToUsButton from "@/components/TalkToUsButton";
 import styles from "./Hero.module.css";
 
 const CONFIG = {
@@ -222,27 +222,7 @@ export default function Hero() {
               VOXA is a voice agent platform. It handles your business&apos;s phone calls — qualifying leads, confirming orders, following up with customers — automatically, and turns every call into structured data your team can use.
             </ScrollReveal>
             <div className={styles.ctaWrap}>
-              <SpecularButton
-                href="#talk"
-                size="md"
-                radius={999}
-                tint="#01002a"
-                tintOpacity={1}
-                blur={0}
-                textColor="#ffffff"
-                lineColor="#ffffff"
-                baseColor="#ffffff"
-                intensity={2.4}
-                shineSize={55}
-                shineFade={22}
-                thickness={2.8}
-                speed={0.55}
-                followMouse
-                proximity={250}
-                autoAnimate
-              >
-                Talk to us
-              </SpecularButton>
+              <TalkToUsButton href="#talk" />
             </div>
           </div>
 

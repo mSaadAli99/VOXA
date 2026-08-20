@@ -14,8 +14,35 @@ body {
   --color-navy: #01002a;
   --color-steel: #314057;
   --color-cream: #f8f0e5;
+  --color-brand: hsl(var(--brand));
+  --color-brand-foreground: hsl(var(--brand-foreground));
   --font-display: "Genera Grotesk", "GeneraGrotesk", sans-serif;
   --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+  --max-width-container: 80rem;
+  --animate-appear: appear 0.5s ease-out forwards;
+  --animate-appear-zoom: appear-zoom 0.5s ease-out forwards;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes appear-zoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 *,
@@ -109,27 +136,13 @@ html[data-theme="vesper"] [data-office-dim] {
 }
 
 html[data-theme="orb"] body {
-  background: #020a3a;
-}
-
-html[data-theme="orb"] [data-office-photo] {
-  opacity: 0 !important;
-}
-
-html[data-theme="orb"] [data-office-dim] {
-  background: rgba(2, 10, 58, 0.18) !important;
+  background: #ffffff !important;
+  color: #01002a;
 }
 
 html[data-theme="orb"] .site-root {
-  pointer-events: none;
-}
-
-html[data-theme="orb"] nav,
-html[data-theme="orb"] footer,
-html[data-theme="orb"] .site-root a,
-html[data-theme="orb"] .site-root button,
-html[data-theme="orb"] [data-office-ui] {
   pointer-events: auto;
+  background: #ffffff;
 }
 
 @font-face {
@@ -200,6 +213,8 @@ html[data-theme="orb"] [data-office-ui] {
 }
 
 :root {
+  --brand: 27 96% 61%;
+  --brand-foreground: 31 97% 72%;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -235,6 +250,8 @@ html[data-theme="orb"] [data-office-ui] {
 }
 
 .dark {
+  --brand: 31 97% 72%;
+  --brand-foreground: 27 96% 61%;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -277,5 +294,26 @@ html[data-theme="orb"] [data-office-ui] {
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-700 {
+    animation-delay: 700ms;
+  }
+  .delay-1000 {
+    animation-delay: 1000ms;
+  }
+  .fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+  .max-w-container {
+    max-width: var(--max-width-container);
   }
 }

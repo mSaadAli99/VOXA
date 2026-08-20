@@ -17,6 +17,11 @@
   bottom: 20px;
 }
 
+:global(html[data-theme="orb"]) .wrap {
+  top: auto;
+  bottom: 20px;
+}
+
 .btn {
   border: 0;
   border-radius: 999px;
@@ -44,6 +49,11 @@
   }
 
   :global(html[data-theme="vesper"]) .wrap {
+    top: auto;
+    bottom: 16px;
+  }
+
+  :global(html[data-theme="orb"]) .wrap {
     top: auto;
     bottom: 16px;
   }

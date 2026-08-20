@@ -6,6 +6,7 @@ import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import ScrollReveal from "@/components/ScrollReveal";
 import AccordionGallery from "@/components/AccordionGallery";
+import TalkToUsButton from "@/components/TalkToUsButton";
 import { useTheme } from "@/components/ThemeProvider";
 import styles from "./OfficeWalk.module.css";
 
@@ -44,6 +45,8 @@ export default function OfficeWalk() {
   const { theme } = useTheme();
 
   useEffect(() => {
+    if (theme === "orb") return undefined;
+
     const root = rootRef.current;
     if (!root) return;
 
@@ -145,6 +148,8 @@ export default function OfficeWalk() {
     };
   }, [theme]);
 
+  if (theme === "orb") return null;
+
   return (
     <div ref={rootRef} className={styles.walk}>
       <div className={styles.heroTrack} data-hero-track data-snap-protect>
@@ -199,20 +204,9 @@ export default function OfficeWalk() {
           >
             VOXA is a voice agent platform. It handles your business&apos;s phone calls — qualifying leads, confirming orders, following up — automatically, and turns every call into structured data your team can use.
           </ScrollReveal>
-          <ScrollReveal
-            as={Link}
-            href="#talk"
-            id="talk"
-            className={styles.cta}
-            data-hero-fade
-            baseOpacity={0.1}
-            enableBlur
-            baseRotation={3}
-            blurStrength={4}
-            transformOrigin="50% 50%"
-          >
-            Talk to us
-          </ScrollReveal>
+          <div data-hero-fade className={styles.ctaWrap}>
+            <TalkToUsButton href="#talk" id="talk" />
+          </div>
         </div>
       </section>
       </div>
