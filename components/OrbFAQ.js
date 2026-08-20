@@ -1,7 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { Instrument_Serif } from "next/font/google";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "@/lib/gsap";
 import styles from "./OrbFAQ.module.css";
+
+const faqSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-faq-serif",
+});
 
 const FAQS = [
   {
@@ -27,42 +37,172 @@ const FAQS = [
 ];
 
 export default function OrbFAQ() {
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(0);
+  const panelRefs = useRef([]);
+  const answerRefs = useRef([]);
+  const iconRefs = useRef([]);
+  const openRef = useRef(0);
+  const reduceMotion = useRef(false);
+
+  useEffect(() => {
+    reduceMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    panelRefs.current.forEach((panel, index) => {
+      if (!panel) return;
+      const answer = answerRefs.current[index];
+      const icon = iconRefs.current[index];
+      if (index === 0) {
+        gsap.set(panel, { height: "auto", overflow: "hidden" });
+        gsap.set(answer, { opacity: 1, y: 0 });
+        gsap.set(icon, { rotation: 45 });
+      } else {
+        gsap.set(panel, { height: 0, overflow: "hidden" });
+        gsap.set(answer, { opacity: 0, y: 12 });
+        gsap.set(icon, { rotation: 0 });
+      }
+    });
+  }, []);
+
+  const animateClose = (index) => {
+    const panel = panelRefs.current[index];
+    const answer = answerRefs.current[index];
+    const icon = iconRefs.current[index];
+    if (!panel) return;
+
+    if (reduceMotion.current) {
+      gsap.set(panel, { height: 0 });
+      gsap.set(answer, { opacity: 0, y: 12 });
+      gsap.set(icon, { rotation: 0 });
+      return;
+    }
+
+    gsap.killTweensOf([panel, answer, icon]);
+    gsap.to(icon, { rotation: 0, duration: 0.28, ease: "power2.out" });
+    gsap.to(answer, { opacity: 0, y: 10, duration: 0.2, ease: "power2.in" });
+    gsap.to(panel, {
+      height: 0,
+      duration: 0.4,
+      ease: "power3.inOut",
+    });
+  };
+
+  const animateOpen = (index) => {
+    const panel = panelRefs.current[index];
+    const answer = answerRefs.current[index];
+    const icon = iconRefs.current[index];
+    if (!panel) return;
+
+    if (reduceMotion.current) {
+      gsap.set(panel, { height: "auto" });
+      gsap.set(answer, { opacity: 1, y: 0 });
+      gsap.set(icon, { rotation: 45 });
+      return;
+    }
+
+    gsap.killTweensOf([panel, answer, icon]);
+    gsap.set(panel, { height: "auto" });
+    const target = panel.offsetHeight;
+    gsap.set(panel, { height: 0 });
+    gsap.set(answer, { opacity: 0, y: 14 });
+
+    gsap.to(icon, { rotation: 45, duration: 0.35, ease: "power2.out" });
+    gsap.to(panel, {
+      height: target,
+      duration: 0.48,
+      ease: "power3.out",
+      onComplete: () => {
+        gsap.set(panel, { height: "auto" });
+      },
+    });
+    gsap.to(answer, {
+      opacity: 1,
+      y: 0,
+      duration: 0.42,
+      delay: 0.08,
+      ease: "power2.out",
+    });
+  };
+
+  const onToggle = (index) => {
+    const current = openRef.current;
+    if (current === index) {
+      animateClose(index);
+      openRef.current = null;
+      setOpen(null);
+      return;
+    }
+
+    if (current !== null && current !== undefined) {
+      animateClose(current);
+    }
+    animateOpen(index);
+    openRef.current = index;
+    setOpen(index);
+  };
 
   return (
-    <section id="faq" className={styles.section} aria-label="Frequently asked questions">
+    <section
+      id="faq"
+      className={`${styles.section} ${faqSerif.variable}`}
+      aria-label="Frequently asked questions"
+    >
       <div className={styles.inner}>
         <header className={styles.header}>
-          <h2 className={styles.title}>Frequently Asked Questions</h2>
-          <p className={styles.subtitle}>
-            Everything you need to know about deploying AI agents and automating
-            your workflows.
+          <p className={styles.lede}>
+            <span>Got questions?</span>
+            <span>Say less, we&apos;ve got answers!</span>
           </p>
+          <h2 className={styles.mark}>
+            FAQ&apos;s
+            <span className={styles.markArrow} aria-hidden="true">
+              ↗
+            </span>
+          </h2>
         </header>
 
         <ul className={styles.list} role="list">
           {FAQS.map((item, index) => {
             const isOpen = open === index;
             return (
-              <li key={item.q} className={styles.item}>
+              <li
+                key={item.q}
+                className={`${styles.item} ${isOpen ? styles.itemOpen : ""}`}
+              >
                 <button
                   type="button"
-                  className={`${styles.trigger} ${isOpen ? styles.triggerOpen : ""}`}
+                  className={styles.trigger}
                   aria-expanded={isOpen}
-                  onClick={() => setOpen(isOpen ? null : index)}
+                  onClick={() => onToggle(index)}
                 >
                   <span className={styles.question}>{item.q}</span>
-                  <span className={styles.icon} aria-hidden="true">
-                    {isOpen ? "−" : "+"}
+                  <span
+                    ref={(el) => {
+                      iconRefs.current[index] = el;
+                    }}
+                    className={styles.icon}
+                    aria-hidden="true"
+                  >
+                    +
                   </span>
                 </button>
+
                 <div
-                  className={`${styles.panel} ${isOpen ? styles.panelOpen : ""}`}
+                  ref={(el) => {
+                    panelRefs.current[index] = el;
+                  }}
+                  className={styles.panel}
                   role="region"
                 >
-                  <div className={styles.panelInner}>
-                    <p className={styles.answer}>{item.a}</p>
-                  </div>
+                  <p
+                    ref={(el) => {
+                      answerRefs.current[index] = el;
+                    }}
+                    className={styles.answer}
+                  >
+                    {item.a}
+                  </p>
                 </div>
               </li>
             );
