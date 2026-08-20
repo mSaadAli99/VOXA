@@ -27,7 +27,7 @@ interface HeroProps {
     };
   };
   title: React.ReactNode;
-  description: string;
+  description: React.ReactNode;
   actions: HeroAction[];
   image?: {
     light: string;
@@ -104,14 +104,14 @@ export function HeroSection({
             {title}
           </h1>
 
-          <p
+          <div
             className={cn(
               "text-md relative z-10 animate-appear font-medium text-muted-foreground opacity-0 delay-100 sm:text-xl",
               centered ? "max-w-[640px]" : "max-w-[550px]",
             )}
           >
             {description}
-          </p>
+          </div>
 
           <div className="relative z-10 flex animate-appear justify-center gap-4 opacity-0 delay-300">
             {actions.map((action, index) =>

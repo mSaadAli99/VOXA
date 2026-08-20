@@ -70,6 +70,8 @@
 }
 
 .question {
+  flex: 1;
+  min-width: 0;
   font-family: var(--font-body);
   font-size: clamp(0.98rem, 1.5vw, 1.12rem);
   font-weight: 500;
