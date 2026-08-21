@@ -10,6 +10,17 @@ function introIsPlaying() {
   return Boolean(phase) && phase !== "leaving" && phase !== "gone";
 }
 
+function resolveTrigger(el) {
+  /* Prefer the scroll section (rail / pin track) over sticky children —
+     sticky titles never cross ScrollTrigger start lines while pinned. */
+  return (
+    el.closest("[data-snap-section]") ||
+    el.closest("section") ||
+    el.closest("header") ||
+    el
+  );
+}
+
 export default function ScrollReveal({
   children,
   as: Tag = "p",
@@ -22,6 +33,8 @@ export default function ScrollReveal({
   rotationEnd = "top 40%",
   wordAnimationEnd = "top 32%",
   transformOrigin = "0% 50%",
+  /** Play once when the section enters — needed for sticky showcase rails */
+  once = false,
   ...rest
 }) {
   const containerRef = useRef(null);
@@ -48,21 +61,28 @@ export default function ScrollReveal({
     const el = containerRef.current;
     if (!el) return;
 
+    const wordElements = el.querySelectorAll(`.${styles.word}`);
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(el, { rotate: 0, clearProps: "transform" });
+      gsap.set(wordElements, { opacity: 1, y: 0, filter: "none" });
       return;
     }
 
-    const scroller =
-      scrollContainerRef?.current ? scrollContainerRef.current : window;
-    const wordElements = el.querySelectorAll(`.${styles.word}`);
-    const trigger = el.closest("section") || el.closest("header") || el;
+    const scroller = scrollContainerRef?.current
+      ? scrollContainerRef.current
+      : window;
+    const trigger = resolveTrigger(el);
+    const toggleActions = once
+      ? "play none none none"
+      : "play none none reverse";
 
     let ctx;
     let observer;
 
     const opacityFrom = 0;
-    const rotationFrom = Math.max(baseRotation, 10);
-    const blurFrom = Math.max(blurStrength, 16);
+    const rotationFrom = Math.max(baseRotation, 3);
+    const blurFrom = Math.max(blurStrength, 4);
 
     const play = () => {
       ctx = gsap.context(() => {
@@ -77,7 +97,7 @@ export default function ScrollReveal({
               trigger,
               scroller,
               start: "top 88%",
-              toggleActions: "play none none reverse",
+              toggleActions,
             },
           },
         );
@@ -101,7 +121,7 @@ export default function ScrollReveal({
             trigger,
             scroller,
             start: "top 88%",
-            toggleActions: "play none none reverse",
+            toggleActions,
           },
         };
         if (enableBlur) to.filter = "blur(0px)";
@@ -138,6 +158,7 @@ export default function ScrollReveal({
     wordAnimationEnd,
     blurStrength,
     transformOrigin,
+    once,
   ]);
 
   return (

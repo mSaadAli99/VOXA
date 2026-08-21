@@ -153,6 +153,7 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
         <ScrollReveal
           as="span"
           className={styles.bgTitleText}
+          once
           baseOpacity={0.1}
           enableBlur
           baseRotation={2}
@@ -186,6 +187,7 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               <ScrollReveal
                 as="h3"
                 className={styles.productTitle}
+                once
                 baseOpacity={0.1}
                 enableBlur
                 baseRotation={2}
@@ -196,6 +198,7 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               <ScrollReveal
                 as="p"
                 className={styles.productBody}
+                once
                 baseOpacity={0.1}
                 enableBlur
                 baseRotation={2}
@@ -212,6 +215,7 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               <ScrollReveal
                 as="h3"
                 className={styles.productTitle}
+                once
                 baseOpacity={0.1}
                 enableBlur
                 baseRotation={2}
@@ -222,6 +226,7 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               <ScrollReveal
                 as="p"
                 className={styles.productBody}
+                once
                 baseOpacity={0.1}
                 enableBlur
                 baseRotation={2}
