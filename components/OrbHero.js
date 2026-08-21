@@ -8,7 +8,11 @@ import styles from "./OrbHero.module.css";
 
 export default function OrbHero() {
   return (
-    <section className={styles.hero} aria-label="VOXA Orb hero">
+    <section
+      className={styles.hero}
+      aria-label="VOXA Orb hero"
+      data-snap-section
+    >
       <div className={styles.media} aria-hidden="true">
         <video
           className={styles.video}

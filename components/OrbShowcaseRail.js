@@ -179,7 +179,12 @@ export default function OrbShowcaseRail() {
   }, [apply]);
 
   return (
-    <div ref={trackRef} className={styles.track}>
+    <div
+      ref={trackRef}
+      className={styles.track}
+      data-snap-section
+      data-snap-protect
+    >
       <div className={styles.pin}>
         <div ref={sliderRef} className={styles.slider}>
           <div className={styles.panel}>

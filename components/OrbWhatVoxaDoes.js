@@ -112,6 +112,8 @@ export default function OrbWhatVoxaDoes() {
       id="what-voxa-does"
       className={styles.track}
       aria-label="What VOXA does"
+      data-snap-section
+      data-snap-protect
     >
       <div className={styles.pin}>
         <div className={styles.reveal} data-reveal>

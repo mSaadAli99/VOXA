@@ -11,7 +11,7 @@ export default function OrbLanding() {
   if (theme !== "orb") return null;
 
   return (
-    <div className="text-foreground" style={{ background: "#f8f0e5" }} data-snap-protect>
+    <div className="text-foreground" style={{ background: "#f8f0e5" }}>
       <OrbHero />
       <OrbWhatVoxaDoes />
       <OrbShowcaseRail />

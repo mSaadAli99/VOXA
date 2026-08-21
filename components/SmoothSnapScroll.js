@@ -5,7 +5,10 @@ import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import "lenis/dist/lenis.css";
 
-const SNAP_THRESHOLD = 0.45;
+const SNAP_THRESHOLD = 0.28;
+/* Tall scrub sections (gate / rail) only disable snap in their middle.
+   A larger edge keeps Lenis from overshooting into "protect" before snap fires. */
+const PROTECT_EDGE = 0.9;
 
 export default function SmoothSnapScroll() {
   useEffect(() => {
@@ -34,6 +37,8 @@ export default function SmoothSnapScroll() {
 
       const points = [0];
       document.querySelectorAll("[data-snap-section]").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        if (el.offsetParent === null && el.offsetHeight === 0) return;
         const top = el.getBoundingClientRect().top + window.scrollY;
         points.push(gsap.utils.clamp(0, 1, top / max));
       });
@@ -46,11 +51,14 @@ export default function SmoothSnapScroll() {
 
     const isProtected = (scrollY) => {
       const vh = window.innerHeight;
+      const edge = vh * PROTECT_EDGE;
 
       return [...document.querySelectorAll("[data-snap-protect]")].some((el) => {
+        if (!(el instanceof HTMLElement)) return false;
+        if (el.offsetHeight < vh * 1.35) return false;
         const top = el.getBoundingClientRect().top + window.scrollY;
         const bottom = top + el.offsetHeight;
-        return scrollY > top + vh * 0.12 && scrollY < bottom - vh * 0.12;
+        return scrollY > top + edge && scrollY < bottom - edge;
       });
     };
 
@@ -65,7 +73,7 @@ export default function SmoothSnapScroll() {
       }
 
       lenis = new Lenis({
-        lerp: 0.09,
+        lerp: 0.14,
         wheelMultiplier: 0.85,
         smoothWheel: true,
         autoRaf: false,
@@ -104,9 +112,9 @@ export default function SmoothSnapScroll() {
             }
             return local <= 1 - SNAP_THRESHOLD ? previous : next;
           },
-          duration: { min: 0.6, max: 0.8 },
-          delay: 0.08,
-          ease: "power3.inOut",
+          duration: { min: 0.12, max: 0.22 },
+          delay: 0,
+          ease: "power4.out",
           directional: true,
           inertia: false,
         },
@@ -120,11 +128,12 @@ export default function SmoothSnapScroll() {
     motionMq.addEventListener("change", setup);
     window.addEventListener("load", setup);
 
+    /* Theme swap remounts Orb/Studio — rebuild snap so Orb markers are live */
     const onTheme = () => {
       window.setTimeout(() => {
-        ScrollTrigger.refresh();
+        setup();
         lenis?.resize?.();
-      }, 40);
+      }, 60);
     };
     const themeWatch = new MutationObserver(onTheme);
     themeWatch.observe(document.documentElement, {
