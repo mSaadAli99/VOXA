@@ -6,6 +6,7 @@ import VOXAPageLoader from "@/components/VOXAPageLoader";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NextThemeProvider from "@/components/NextThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
+import AudioPlayer from "@/components/AudioPlayer";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
           <NextThemeProvider>
             <VOXAPageLoader />
             <ThemeToggle />
+            <AudioPlayer />
             <div className="site-root">
               <Navbar />
               <SmoothSnapScroll />
