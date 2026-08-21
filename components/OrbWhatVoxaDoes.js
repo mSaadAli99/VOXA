@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./OrbWhatVoxaDoes.module.css";
 
 export default function OrbWhatVoxaDoes() {
@@ -24,19 +25,33 @@ export default function OrbWhatVoxaDoes() {
     const intro = root.querySelector("[data-intro]");
 
     if (reduced) {
-      gsap.set([left, right, gate, veil], { clearProps: "all", opacity: 0, visibility: "hidden" });
+      gsap.set([left, right, gate, veil], {
+        clearProps: "all",
+        opacity: 0,
+        visibility: "hidden",
+      });
       gsap.set(reveal, { opacity: 1, y: 0, filter: "none" });
       gsap.set(intro, { opacity: 1, y: 0 });
       return undefined;
     }
 
-    const travel = mobile ? Math.min(window.innerWidth * 0.62, 280) : Math.min(window.innerWidth * 0.58, 720);
-    const depth = mobile ? 18 : 36;
+    const travel = mobile
+      ? Math.min(window.innerWidth * 0.62, 280)
+      : Math.min(window.innerWidth * 0.58, 720);
 
     const ctx = gsap.context(() => {
       gsap.set(reveal, { opacity: 0, y: 28, filter: "blur(8px)" });
       gsap.set(intro, { opacity: 0, y: 18 });
-      gsap.set([titleLeft, titleRight], { scale: 1, letterSpacing: "-0.03em" });
+      gsap.set([left, right], { x: 0, force3D: true });
+      /* Center both titles on the seam — must use xPercent/yPercent so GSAP
+         does not wipe a CSS translate and break the split. */
+      gsap.set([titleLeft, titleRight], {
+        xPercent: -50,
+        yPercent: -50,
+        scale: 1,
+        letterSpacing: "-0.035em",
+        force3D: true,
+      });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -49,41 +64,15 @@ export default function OrbWhatVoxaDoes() {
         },
       });
 
-      tl.to(
-        [titleLeft, titleRight],
-        {
-          scale: 1.04,
-          letterSpacing: "0.02em",
-          duration: 0.25,
-          ease: "power1.inOut",
-        },
-        0,
-      );
       tl.to(veil, { opacity: 0.55, duration: 0.25, ease: "power1.in" }, 0);
-      tl.to(
-        left,
-        { x: -travel * 0.12, rotateY: mobile ? 0 : 4, z: -depth * 0.25, duration: 0.25 },
-        0,
-      );
-      tl.to(
-        right,
-        { x: travel * 0.12, rotateY: mobile ? 0 : -4, z: -depth * 0.25, duration: 0.25 },
-        0,
-      );
+      tl.to(left, { x: -travel * 0.12, duration: 0.25 }, 0);
+      tl.to(right, { x: travel * 0.12, duration: 0.25 }, 0);
 
-      tl.to(
-        left,
-        { x: -travel * 0.55, rotateY: mobile ? 0 : 10, z: -depth * 0.7, duration: 0.25 },
-        0.25,
-      );
-      tl.to(
-        right,
-        { x: travel * 0.55, rotateY: mobile ? 0 : -10, z: -depth * 0.7, duration: 0.25 },
-        0.25,
-      );
+      tl.to(left, { x: -travel * 0.55, duration: 0.25 }, 0.25);
+      tl.to(right, { x: travel * 0.55, duration: 0.25 }, 0.25);
       tl.to(
         [titleLeft, titleRight],
-        { opacity: 0.35, filter: "blur(2px)", scale: 0.96, duration: 0.25 },
+        { opacity: 0.35, filter: "blur(2px)", scale: 0.98, duration: 0.25 },
         0.25,
       );
       tl.to(veil, { opacity: 0.2, duration: 0.25 }, 0.25);
@@ -93,16 +82,8 @@ export default function OrbWhatVoxaDoes() {
         0.28,
       );
 
-      tl.to(
-        left,
-        { x: -travel * 1.05, rotateY: mobile ? 0 : 14, z: -depth, duration: 0.25 },
-        0.5,
-      );
-      tl.to(
-        right,
-        { x: travel * 1.05, rotateY: mobile ? 0 : -14, z: -depth, duration: 0.25 },
-        0.5,
-      );
+      tl.to(left, { x: -travel * 1.05, duration: 0.25 }, 0.5);
+      tl.to(right, { x: travel * 1.05, duration: 0.25 }, 0.5);
       tl.to(gate, { opacity: 0.55, duration: 0.25 }, 0.5);
       tl.to(
         reveal,
@@ -136,13 +117,16 @@ export default function OrbWhatVoxaDoes() {
         <div className={styles.reveal} data-reveal>
           <div className={styles.revealInner}>
             <div className={styles.intro} data-intro>
-              <p className={styles.body}>
-                VOXA answers and makes phone calls on behalf of your business. It
-                qualifies leads, confirms orders, collects feedback, and books
-                callbacks — every time, the same way, at any volume. Every call is
-                automatically saved as clean, structured data in your CRM or
-                dashboard, so your team never has to enter it by hand.
-              </p>
+              <ScrollReveal
+                as="p"
+                className={styles.body}
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={3}
+                blurStrength={4}
+              >
+                VOXA answers and makes phone calls on behalf of your business. It qualifies leads, confirms orders, collects feedback, and books callbacks — every time, the same way, at any volume. Every call is automatically saved as clean, structured data in your CRM or dashboard, so your team never has to enter it by hand.
+              </ScrollReveal>
             </div>
           </div>
         </div>

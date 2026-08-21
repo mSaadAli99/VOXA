@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./OrbProducts.module.css";
 
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -149,7 +150,16 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
   const inner = (
     <div className={embedded ? styles.pinEmbedded : styles.pin}>
       <h2 ref={bgTitleRef} className={styles.bgTitle}>
-        {heading}
+        <ScrollReveal
+          as="span"
+          className={styles.bgTitleText}
+          baseOpacity={0.1}
+          enableBlur
+          baseRotation={2}
+          blurStrength={4}
+        >
+          {heading}
+        </ScrollReveal>
       </h2>
 
       <div className={styles.stage}>
@@ -173,16 +183,52 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
             />
 
             <div ref={overlayARef} className={styles.overlay}>
-              <h3 className={styles.productTitle}>{items[0].title}</h3>
-              <p className={styles.productBody}>{items[0].body}</p>
+              <ScrollReveal
+                as="h3"
+                className={styles.productTitle}
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={2}
+                blurStrength={3}
+              >
+                {items[0].title}
+              </ScrollReveal>
+              <ScrollReveal
+                as="p"
+                className={styles.productBody}
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={2}
+                blurStrength={3}
+              >
+                {items[0].body}
+              </ScrollReveal>
               <Link href={items[0].href} className={styles.seeProduct}>
                 {items[0].cta}
               </Link>
             </div>
 
             <div ref={overlayBRef} className={styles.overlay}>
-              <h3 className={styles.productTitle}>{items[1].title}</h3>
-              <p className={styles.productBody}>{items[1].body}</p>
+              <ScrollReveal
+                as="h3"
+                className={styles.productTitle}
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={2}
+                blurStrength={3}
+              >
+                {items[1].title}
+              </ScrollReveal>
+              <ScrollReveal
+                as="p"
+                className={styles.productBody}
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={2}
+                blurStrength={3}
+              >
+                {items[1].body}
+              </ScrollReveal>
               <Link href={items[1].href} className={styles.seeProduct}>
                 {items[1].cta}
               </Link>

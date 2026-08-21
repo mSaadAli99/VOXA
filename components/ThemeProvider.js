@@ -12,8 +12,12 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const saved = window.localStorage.getItem("voxa-theme");
-    if (saved === "orb" || saved === "studio" || saved === "vesper") {
+    if (saved === "orb" || saved === "studio") {
       setTheme(saved);
+    } else if (saved === "vesper") {
+      // Tab removed — fall back to Studio
+      setTheme("studio");
+      window.localStorage.setItem("voxa-theme", "studio");
     }
   }, []);
 

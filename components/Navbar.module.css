@@ -210,7 +210,8 @@
 .steelLogoImage {
   height: 28px;
   width: auto;
-  background: transparent;
+  background: transparent !important;
+  box-shadow: none;
   mix-blend-mode: normal;
 }
 
@@ -226,7 +227,7 @@
 
 .steelLink {
   font-family: var(--font-body);
-  color: #01002a;
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.72rem;
   font-weight: 500;
@@ -240,22 +241,32 @@
 }
 
 .steelLink:hover {
-  color: #314057;
+  color: #ffffff;
   opacity: 1;
 }
 
 .steelActive {
-  color: #01002a;
+  color: #ffffff;
   opacity: 1;
-  border-bottom-color: #01002a;
+  border-bottom-color: #ffffff;
 }
 
 .steelCtaDesktop {
   justify-self: end;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.steelCtaDesktop:hover {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  opacity: 0.85;
 }
 
 .steelCtaFull {
   width: 100%;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
 }
 
 .steelMobileCta {
@@ -280,14 +291,14 @@
   display: block;
   width: 18px;
   height: 2px;
-  background: #01002a;
+  background: #ffffff;
   border-radius: 2px;
 }
 
 .steelRule {
   width: 100%;
   height: 1px;
-  background: color-mix(in srgb, #01002a 16%, transparent);
+  background: color-mix(in srgb, #ffffff 22%, transparent);
 }
 
 @media (max-width: 900px) {
@@ -307,9 +318,9 @@
     align-items: flex-start;
     gap: 16px;
     padding: 20px 22px 24px;
-    background: color-mix(in srgb, #ffffff 94%, transparent);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid color-mix(in srgb, #01002a 12%, transparent);
+    background: color-mix(in srgb, #01002a 78%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid color-mix(in srgb, #ffffff 16%, transparent);
   }
 
   .steelLinksOpen {

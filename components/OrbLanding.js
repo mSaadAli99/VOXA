@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "@/components/ThemeProvider";
-import { HeroSectionDemo } from "@/components/blocks/hero-section-demo";
+import OrbHero from "@/components/OrbHero";
 import OrbWhatVoxaDoes from "@/components/OrbWhatVoxaDoes";
 import OrbShowcaseRail from "@/components/OrbShowcaseRail";
 import OrbFAQ from "@/components/OrbFAQ";
@@ -11,8 +11,8 @@ export default function OrbLanding() {
   if (theme !== "orb") return null;
 
   return (
-    <div className="bg-background text-foreground" data-snap-protect>
-      <HeroSectionDemo />
+    <div className="text-foreground" style={{ background: "#f8f0e5" }} data-snap-protect>
+      <OrbHero />
       <OrbWhatVoxaDoes />
       <OrbShowcaseRail />
       <OrbFAQ />

@@ -12,11 +12,6 @@
   backdrop-filter: blur(12px);
 }
 
-:global(html[data-theme="vesper"]) .wrap {
-  top: auto;
-  bottom: 20px;
-}
-
 :global(html[data-theme="orb"]) .wrap {
   top: auto;
   bottom: 20px;
@@ -46,11 +41,6 @@
 @media (max-width: 767px) {
   .wrap {
     top: 76px;
-  }
-
-  :global(html[data-theme="vesper"]) .wrap {
-    top: auto;
-    bottom: 16px;
   }
 
   :global(html[data-theme="orb"]) .wrap {

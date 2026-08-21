@@ -3,6 +3,7 @@
 import { Instrument_Serif } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./OrbFAQ.module.css";
 
 const faqSerif = Instrument_Serif({
@@ -37,11 +38,11 @@ const FAQS = [
 ];
 
 export default function OrbFAQ() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(null);
   const panelRefs = useRef([]);
   const answerRefs = useRef([]);
   const iconRefs = useRef([]);
-  const openRef = useRef(0);
+  const openRef = useRef(null);
   const reduceMotion = useRef(false);
 
   useEffect(() => {
@@ -53,15 +54,9 @@ export default function OrbFAQ() {
       if (!panel) return;
       const answer = answerRefs.current[index];
       const icon = iconRefs.current[index];
-      if (index === 0) {
-        gsap.set(panel, { height: "auto", overflow: "hidden" });
-        gsap.set(answer, { opacity: 1, y: 0 });
-        gsap.set(icon, { rotation: 45 });
-      } else {
-        gsap.set(panel, { height: 0, overflow: "hidden" });
-        gsap.set(answer, { opacity: 0, y: 12 });
-        gsap.set(icon, { rotation: 0 });
-      }
+      gsap.set(panel, { height: 0, overflow: "hidden" });
+      gsap.set(answer, { opacity: 0, y: 12 });
+      gsap.set(icon, { rotation: 0 });
     });
   }, []);
 
@@ -150,12 +145,39 @@ export default function OrbFAQ() {
     >
       <div className={styles.inner}>
         <header className={styles.header}>
-          <p className={styles.lede}>
-            <span>Got questions?</span>
-            <span>Say less, we&apos;ve got answers!</span>
-          </p>
+          <div className={styles.lede}>
+            <ScrollReveal
+              as="p"
+              className={styles.ledeLine}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={2}
+              blurStrength={4}
+            >
+              Got questions?
+            </ScrollReveal>
+            <ScrollReveal
+              as="p"
+              className={styles.ledeLine}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={2}
+              blurStrength={4}
+            >
+              Say less, we've got answers!
+            </ScrollReveal>
+          </div>
           <h2 className={styles.mark}>
-            FAQ&apos;s
+            <ScrollReveal
+              as="span"
+              className={styles.markText}
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            >
+              FAQ's
+            </ScrollReveal>
             <span className={styles.markArrow} aria-hidden="true">
               ↗
             </span>
@@ -176,7 +198,16 @@ export default function OrbFAQ() {
                   aria-expanded={isOpen}
                   onClick={() => onToggle(index)}
                 >
-                  <span className={styles.question}>{item.q}</span>
+                  <ScrollReveal
+                    as="span"
+                    className={styles.question}
+                    baseOpacity={0.1}
+                    enableBlur
+                    baseRotation={2}
+                    blurStrength={3}
+                  >
+                    {item.q}
+                  </ScrollReveal>
                   <span
                     ref={(el) => {
                       iconRefs.current[index] = el;

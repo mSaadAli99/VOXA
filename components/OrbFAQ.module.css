@@ -1,6 +1,6 @@
 .section {
   position: relative;
-  background: #ffffff;
+  background: #f8f0e5;
   color: #0a0a0a;
   padding: 100px 28px 120px;
 }
@@ -25,6 +25,10 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.ledeLine {
+  margin: 0;
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 400;
@@ -44,6 +48,11 @@
   letter-spacing: -0.03em;
   line-height: 0.9;
   color: #0a0a0a;
+}
+
+.markText {
+  font: inherit;
+  color: inherit;
 }
 
 .markArrow {

@@ -24,14 +24,6 @@ export default function ThemeToggle() {
       >
         Orb
       </button>
-      <button
-        type="button"
-        className={`${styles.btn} ${theme === "vesper" ? styles.active : ""}`}
-        onClick={() => setTheme("vesper")}
-        aria-pressed={theme === "vesper"}
-      >
-        Vesper
-      </button>
     </div>
   );
 }

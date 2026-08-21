@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import TalkToUsButton from "@/components/TalkToUsButton";
 import { useTheme } from "@/components/ThemeProvider";
@@ -28,7 +28,6 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [orbHidden, setOrbHidden] = useState(false);
   const { theme } = useTheme();
-  const lastY = useRef(0);
 
   useEffect(() => {
     if (theme !== "orb") {
@@ -36,32 +35,22 @@ export default function Navbar() {
       return undefined;
     }
 
-    lastY.current = window.scrollY;
-
     const onScroll = () => {
       const y = window.scrollY;
-      const heroH = Math.min(window.innerHeight * 0.72, 720);
-      const goingDown = y > lastY.current + 4;
-      const goingUp = y < lastY.current - 4;
-
-      if (y < 48) {
+      // Only show navbar at the top of the hero — never reappear on scroll-up
+      // in lower sections once you've left the hero.
+      if (y <= 24) {
         setOrbHidden(false);
-      } else if (goingDown && y > heroH * 0.45) {
+      } else {
         setOrbHidden(true);
         setOpen(false);
-      } else if (goingUp) {
-        setOrbHidden(false);
       }
-
-      lastY.current = y;
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [theme]);
-
-  if (theme === "vesper") return null;
 
   if (theme === "orb") {
     return (
@@ -75,7 +64,7 @@ export default function Navbar() {
             onClick={() => setOpen(false)}
           >
             <Image
-              src="/images/logo-navy.png?v=2"
+              src="/images/logo-white-nav.png?v=1"
               alt="VOXA"
               width={140}
               height={36}

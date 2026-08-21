@@ -1,0 +1,161 @@
+.hero {
+  position: relative;
+  width: 100%;
+  /* Tall enough for a full-viewport hero, and tall enough to fit the
+     full 2888×2160 frame at full width (no side crop). */
+  min-height: 100dvh;
+  height: max(100dvh, calc(100vw * 2160 / 2888));
+  overflow: hidden;
+  color: #f8f0e5;
+  background: #0b1620;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #0b1620;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(1, 0, 42, 0.72) 0%,
+      rgba(1, 0, 42, 0.42) 42%,
+      rgba(1, 0, 42, 0.12) 68%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(1, 0, 42, 0.28) 0%,
+      transparent 28%,
+      transparent 72%,
+      rgba(1, 0, 42, 0.35) 100%
+    );
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 28px 80px;
+  box-sizing: border-box;
+}
+
+.copyInner {
+  width: 100%;
+  max-width: 34rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1.35rem;
+}
+
+.titleWrap {
+  width: 100%;
+}
+
+.flip {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 0.75rem !important;
+  width: 100%;
+}
+
+.flipText {
+  font-family: var(--font-display) !important;
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.08 !important;
+  color: #f8f0e5 !important;
+  text-align: left !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35) !important;
+  filter: none !important;
+}
+
+.flipWord {
+  font-family: var(--font-display) !important;
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.08 !important;
+  color: #01002a !important;
+  background: color-mix(in srgb, #f8f0e5 92%, #ffffff) !important;
+  border: 1px solid color-mix(in srgb, #f8f0e5 40%, transparent) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18) !important;
+  filter: none !important;
+}
+
+.description {
+  margin: 0;
+  max-width: 30rem;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.65;
+  color: color-mix(in srgb, #f8f0e5 88%, #ffffff);
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.28);
+}
+
+.cta {
+  margin-top: 0.35rem;
+}
+
+.ctaBtn {
+  border-color: #f8f0e5 !important;
+  color: #f8f0e5 !important;
+}
+
+.ctaBtn:hover {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 767px) {
+  .copy {
+    align-items: flex-end;
+    padding: 96px 18px 56px;
+  }
+
+  .copyInner {
+    max-width: none;
+  }
+
+  .mediaShade {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(1, 0, 42, 0.35) 0%,
+        rgba(1, 0, 42, 0.2) 40%,
+        rgba(1, 0, 42, 0.72) 100%
+      );
+  }
+}

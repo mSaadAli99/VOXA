@@ -54,55 +54,53 @@ export default function OfficeWalk() {
     if (motionMq.matches) return;
 
     const ctx = gsap.context(() => {
-      if (theme !== "vesper") {
-        gsap.from("[data-hero-fade]", {
-          opacity: 0,
-          y: -20,
-          duration: 0.7,
-          stagger: 0.16,
-          ease: "power2.out",
-          delay: 0.12,
-        });
+      gsap.from("[data-hero-fade]", {
+        opacity: 0,
+        y: -20,
+        duration: 0.7,
+        stagger: 0.16,
+        ease: "power2.out",
+        delay: 0.12,
+      });
 
-        const heroTrack = root.querySelector("[data-hero-track]");
-        const heroZoom = root.querySelector("[data-hero-zoom]");
-        const heroCopy = root.querySelector("[data-hero-copy]");
-        if (heroTrack && heroZoom) {
-          const mobile = window.matchMedia("(max-width: 767px)");
-          const zoomTrigger = {
-            trigger: heroTrack,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.15,
-            invalidateOnRefresh: true,
-          };
+      const heroTrack = root.querySelector("[data-hero-track]");
+      const heroZoom = root.querySelector("[data-hero-zoom]");
+      const heroCopy = root.querySelector("[data-hero-copy]");
+      if (heroTrack && heroZoom) {
+        const mobile = window.matchMedia("(max-width: 767px)");
+        const zoomTrigger = {
+          trigger: heroTrack,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.15,
+          invalidateOnRefresh: true,
+        };
 
-          gsap.fromTo(
-            heroZoom,
-            { scale: 1 },
-            {
-              scale: mobile.matches ? 1.15 : 1.4,
-              ease: "power2.inOut",
-              force3D: true,
-              transformOrigin: "50% 48%",
-              scrollTrigger: zoomTrigger,
+        gsap.fromTo(
+          heroZoom,
+          { scale: 1 },
+          {
+            scale: mobile.matches ? 1.15 : 1.4,
+            ease: "power2.inOut",
+            force3D: true,
+            transformOrigin: "50% 48%",
+            scrollTrigger: zoomTrigger,
+          },
+        );
+
+        if (heroCopy) {
+          gsap.to(heroCopy, {
+            opacity: 0,
+            y: -24,
+            ease: "power2.in",
+            scrollTrigger: {
+              trigger: heroTrack,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 1.15,
+              invalidateOnRefresh: true,
             },
-          );
-
-          if (heroCopy) {
-            gsap.to(heroCopy, {
-              opacity: 0,
-              y: -24,
-              ease: "power2.in",
-              scrollTrigger: {
-                trigger: heroTrack,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.15,
-                invalidateOnRefresh: true,
-              },
-            });
-          }
+          });
         }
       }
 
@@ -215,7 +213,6 @@ export default function OfficeWalk() {
         className={styles.section}
         id="what-voxa-does"
         data-snap-section
-        style={theme === "vesper" ? { background: "#f8f0e5" } : undefined}
       >
         <div
           className={styles.bg}
