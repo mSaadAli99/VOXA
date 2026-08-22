@@ -64,20 +64,19 @@ function XIcon({ className }) {
   );
 }
 
-function YouTubeIcon({ className }) {
+function FacebookIcon({ className }) {
   return (
     <Icon className={className}>
-      <path d="M23.5 7.2a3.1 3.1 0 0 0-2.18-2.2C19.5 4.5 12 4.5 12 4.5s-7.5 0-9.32.5A3.1 3.1 0 0 0 .5 7.2 32.6 32.6 0 0 0 0 12a32.6 32.6 0 0 0 .5 4.8 3.1 3.1 0 0 0 2.18 2.2c1.82.5 9.32.5 9.32.5s7.5 0 9.32-.5a3.1 3.1 0 0 0 2.18-2.2A32.6 32.6 0 0 0 24 12a32.6 32.6 0 0 0-.5-4.8ZM9.75 15.5v-7l6.25 3.5-6.25 3.5Z" />
+      <path d="M14.5 8.25V6.1c0-.72.48-1.1 1.22-1.1H17V2h-2.4C11.9 2 10.5 3.7 10.5 6.3v1.95H8.25V11h2.25v11h3V11h2.4l.35-2.75H14.5Z" />
     </Icon>
   );
 }
 
-
 const socials = [
-  { href: "#", label: "LinkedIn", Icon: LinkedInIcon },
+  { href: "#", label: "Facebook", Icon: FacebookIcon },
   { href: "#", label: "Instagram", Icon: InstagramIcon },
+  { href: "#", label: "LinkedIn", Icon: LinkedInIcon },
   { href: "#", label: "X", Icon: XIcon },
-  { href: "#", label: "YouTube", Icon: YouTubeIcon },
 ];
 
 const AI_PROMPT =
