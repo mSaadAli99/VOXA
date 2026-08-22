@@ -54,7 +54,10 @@ export default function OrbHero() {
             baseRotation={3}
             blurStrength={4}
           >
-            VOXA is a voice agent platform. It handles your business's phone calls — qualifying leads, confirming orders, following up with customers — automatically, and turns every call into structured data your team can use.
+            VOXA is a voice agent platform. It handles your business&apos;s
+            phone calls — qualifying leads, confirming orders, following up with
+            customers — automatically, and turns every call into structured data
+            your team can use.
           </ScrollReveal>
 
           <div className={styles.cta}>

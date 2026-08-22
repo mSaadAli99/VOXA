@@ -165,7 +165,7 @@ export default function OrbFAQ() {
               baseRotation={2}
               blurStrength={4}
             >
-              Say less, we've got answers!
+              Say less, we&apos;ve got answers!
             </ScrollReveal>
           </div>
           <h2 className={styles.mark}>
@@ -177,7 +177,7 @@ export default function OrbFAQ() {
               baseRotation={3}
               blurStrength={4}
             >
-              FAQ's
+              FAQ&apos;s
             </ScrollReveal>
             <span className={styles.markArrow} aria-hidden="true">
               ↗
