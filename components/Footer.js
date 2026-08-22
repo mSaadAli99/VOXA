@@ -77,6 +77,18 @@ export default function Footer() {
           ))}
         </nav>
 
+        <div className={styles.contact}>
+          <p className={styles.heading}>Contact</p>
+          <address className={styles.address}>
+            B-11, 1st Floor, KDA Scheme,
+            <br />
+            1-A, Ext. Opp. National Stadium, Karachi.
+          </address>
+          <a href="mailto:info@ai-voxa.com" className={styles.email}>
+            info@ai-voxa.com
+          </a>
+        </div>
+
         <div className={styles.legal}>
           <p className={styles.copy}>{`\u00A9 ${year} VOXA. All rights reserved.`}</p>
           <div className={styles.policies}>

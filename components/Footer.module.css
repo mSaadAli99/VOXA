@@ -119,12 +119,38 @@
   color: #314057;
 }
 
+.contact {
+  margin-top: 56px;
+  max-width: 28rem;
+}
+
+.address,
+.email {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+  color: #01002a;
+  text-decoration: none;
+}
+
+.address {
+  margin-bottom: 10px;
+}
+
+.email:hover {
+  color: #314057;
+}
+
 .legal {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 64px;
+  margin-top: 40px;
 }
 
 .copy,
