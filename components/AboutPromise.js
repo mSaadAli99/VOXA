@@ -105,7 +105,11 @@ export default function AboutPromise({
   }, [showLines, photos]);
 
   const copy = (
-        <div className={photos ? `${styles.copyBlock} ${stack.copyCol}` : undefined}>
+        <div
+          className={
+            photos ? `${styles.copyBlock} ${stack.copyCol}` : styles.copyCentered
+          }
+        >
         <h2
           className={`${styles.title} ${align === "left" ? styles.titleLeft : ""} ${
             photos ? stack.heading : ""
