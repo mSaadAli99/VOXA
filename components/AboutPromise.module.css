@@ -1,0 +1,224 @@
+.track {
+  position: relative;
+  background: #f8f0e5;
+  color: #01002a;
+}
+
+.pin {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 88px 24px 48px;
+  box-sizing: border-box;
+}
+
+.pinLeft {
+  align-items: flex-start;
+  padding-left: max(28px, calc((100% - 1120px) / 2 + 28px));
+  padding-right: 28px;
+}
+
+.pin.pinSplit,
+.pinLeft.pinSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 34rem) auto;
+  align-items: start;
+  justify-content: space-between;
+  column-gap: 48px;
+  padding: 64px 56px 40px;
+}
+
+.copyBlock {
+  min-width: 0;
+  max-width: 34rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.photos {
+  margin-top: 0;
+}
+
+.pinSplit .title {
+  margin: 0 0 14px;
+  line-height: 0.9;
+}
+
+.pinSplit .intro {
+  max-width: 32rem;
+  width: 100%;
+  margin: 0 0 18px;
+  line-height: 1.55;
+}
+
+.pinSplit .listPlain .item + .item {
+  margin-top: 12px;
+}
+
+.pinSplit .cta {
+  margin-top: 22px;
+  padding-top: 0;
+}
+
+.title {
+  margin: 0 0 28px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-align: center;
+  color: #01002a;
+}
+
+.intro {
+  margin: 0 0 36px;
+  max-width: 40rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.02rem, 1.8vw, 1.15rem);
+  line-height: 1.7;
+  text-align: center;
+  color: #01002a;
+}
+
+.pinLeft .title,
+.pinLeft .intro,
+.pinLeft .point {
+  text-align: left;
+}
+
+.list {
+  width: min(720px, 100%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listPlain .item + .item {
+  margin-top: 28px;
+}
+
+.listCompact.listPlain .item + .item {
+  margin-top: 12px;
+}
+
+.listBullets {
+  list-style: none;
+  padding-left: 0;
+  align-items: flex-start;
+}
+
+.listBullets .item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pointArrow {
+  flex-shrink: 0;
+  display: inline-flex;
+  margin-top: 0.28em;
+  color: inherit;
+}
+
+.pointArrow svg {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+.listBullets .point {
+  color: inherit;
+  text-align: left;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+}
+
+.point {
+  margin: 0;
+  max-width: 36rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.55;
+  text-align: center;
+  color: inherit;
+}
+
+.connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 56px;
+  margin: 8px 0 4px;
+}
+
+.line {
+  position: relative;
+  display: block;
+  width: 1px;
+  flex: 1;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: #01002a;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.arrow {
+  font-size: 0.55rem;
+  line-height: 1;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cta {
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.cta :global(a) {
+  min-width: 11.5rem;
+  padding: 14px 28px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .pin.pinSplit,
+  .pinLeft.pinSplit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 72px 20px 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pin {
+    padding: 80px 18px 36px;
+  }
+
+  .pinLeft {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .connector {
+    height: 44px;
+  }
+}

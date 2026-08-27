@@ -37,7 +37,7 @@ const FAQS = [
   },
 ];
 
-export default function OrbFAQ() {
+export default function OrbFAQ({ items = FAQS }) {
   const [open, setOpen] = useState(null);
   const panelRefs = useRef([]);
   const answerRefs = useRef([]);
@@ -58,7 +58,7 @@ export default function OrbFAQ() {
       gsap.set(answer, { opacity: 0, y: 12 });
       gsap.set(icon, { rotation: 0 });
     });
-  }, []);
+  }, [items]);
 
   const animateClose = (index) => {
     const panel = panelRefs.current[index];
@@ -186,7 +186,7 @@ export default function OrbFAQ() {
         </header>
 
         <ul className={styles.list} role="list">
-          {FAQS.map((item, index) => {
+          {items.map((item, index) => {
             const isOpen = open === index;
             return (
               <li

@@ -60,10 +60,14 @@
 }
 
 .solid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 14px 28px;
+  border: 1px solid #01002a;
   border-radius: 6px;
   background: #01002a;
   color: #f8f0e5;
@@ -73,10 +77,33 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
+  transition: color 0.35s ease, border-color 0.35s ease;
+}
+
+.solid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #ffffff;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .solid:hover {
-  background: #314057;
+  background: #01002a;
+  color: #01002a;
+  border-color: #ffffff;
+}
+
+.solid:hover::before {
+  transform: scaleY(1);
+}
+
+.solidLabel {
+  position: relative;
+  z-index: 1;
 }
 
 .columns {

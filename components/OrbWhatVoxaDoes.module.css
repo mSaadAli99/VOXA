@@ -1,131 +1,47 @@
 .track {
   position: relative;
-  height: 320vh;
   background: #f8f0e5;
   color: #01002a;
 }
 
 .pin {
-  position: sticky;
-  top: 0;
+  position: relative;
   height: 100svh;
   overflow: hidden;
-  isolation: isolate;
-}
-
-.reveal {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 96px 24px 72px;
-  box-sizing: border-box;
-  overflow: auto;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 20%, rgba(49, 64, 87, 0.08), transparent 60%),
-    #f8f0e5;
-  will-change: transform, opacity, filter;
+  background: #f8f0e5;
 }
 
-.revealInner {
-  width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
-.intro {
-  max-width: 39rem;
-  margin: 0 auto;
+.label {
+  margin: 0;
+  padding: 0 28px;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 8.5vw, 6.25rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
   text-align: center;
+  color: #01002a;
+  pointer-events: none;
 }
 
 .body {
+  display: none;
+  width: min(40rem, calc(100% - 48px));
   margin: 0;
   font-family: var(--font-body);
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  font-size: clamp(1.05rem, 2.2vw, 1.28rem);
   line-height: 1.75;
+  text-align: center;
   color: #314057;
 }
 
-.gate {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  pointer-events: none;
-  will-change: opacity;
-}
-
-.veil {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: min(42vw, 280px);
-  transform: translateX(-50%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, #01002a 10%, transparent) 45%,
-    color-mix(in srgb, #01002a 10%, transparent) 55%,
-    transparent
-  );
-  opacity: 0;
-  filter: blur(18px);
-  pointer-events: none;
-  z-index: 4;
-}
-
-.gateLeft,
-.gateRight {
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-  background: #f8f0e5;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-.gateTitle {
-  position: absolute;
-  top: 50%;
-  width: max-content;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 7vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: #01002a;
-  white-space: nowrap;
-  text-align: center;
-  will-change: transform, opacity, filter;
-}
-
-/* Both titles share the same seam anchor; GSAP owns xPercent/yPercent */
-.gateLeft .gateTitle {
-  left: 100%;
-}
-
-.gateRight .gateTitle {
-  left: 0;
-}
-
 @media (max-width: 767px) {
-  .track {
-    height: 260vh;
-  }
-
-  .reveal {
-    padding: 88px 18px 56px;
-  }
-
-  .gateTitle {
-    font-size: clamp(1.7rem, 9vw, 2.4rem);
-  }
+  .label {
+    font-size: clamp(2.1rem, 12vw, 3.2rem);
+    padding: 0 18px;
+    }
 }

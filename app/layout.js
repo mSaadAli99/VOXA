@@ -5,7 +5,6 @@ import SmoothSnapScroll from "@/components/SmoothSnapScroll";
 import VOXAPageLoader from "@/components/VOXAPageLoader";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NextThemeProvider from "@/components/NextThemeProvider";
-import ThemeToggle from "@/components/ThemeToggle";
 import AudioPlayer from "@/components/AudioPlayer";
 import "./globals.css";
 
@@ -31,7 +30,6 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <NextThemeProvider>
             <VOXAPageLoader />
-            <ThemeToggle />
             <AudioPlayer />
             <div className="site-root">
               <Navbar />

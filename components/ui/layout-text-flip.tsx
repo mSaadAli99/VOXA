@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
@@ -20,7 +20,6 @@ export const LayoutTextFlip = ({
   wordClassName?: string;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const layoutId = useId();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,7 +37,6 @@ export const LayoutTextFlip = ({
       )}
     >
       <motion.span
-        layoutId={`${layoutId}-subtext`}
         className={cn(
           "text-2xl font-bold tracking-tight drop-shadow-lg md:text-4xl",
           textClassName,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import "lenis/dist/lenis.css";
@@ -11,7 +12,19 @@ const SNAP_THRESHOLD = 0.28;
 const PROTECT_EDGE = 0.9;
 
 export default function SmoothSnapScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    const snapPages = new Set(["/", "/about", "/solutions", "/products", "/technology"]);
+    if (!snapPages.has(pathname)) {
+      document.documentElement.style.scrollBehavior = "smooth";
+      return undefined;
+    }
+
     const mobileMq = window.matchMedia("(max-width: 767px)");
     const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -42,7 +55,6 @@ export default function SmoothSnapScroll() {
         const top = el.getBoundingClientRect().top + window.scrollY;
         points.push(gsap.utils.clamp(0, 1, top / max));
       });
-      points.push(1);
 
       return [...new Set(points.map((value) => Number(value.toFixed(4))))].sort(
         (a, b) => a - b,
@@ -94,6 +106,10 @@ export default function SmoothSnapScroll() {
             if (isProtected(self.scroll())) return progress;
 
             const points = getSnapPoints();
+            const last = points[points.length - 1];
+            /* Footer sits after the last snap section — don't yank the page */
+            if (progress > last + 0.002) return progress;
+
             let index = 0;
             while (
               index < points.length - 1 &&
@@ -149,7 +165,7 @@ export default function SmoothSnapScroll() {
       document.documentElement.style.scrollBehavior = "";
       teardown();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

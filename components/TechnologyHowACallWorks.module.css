@@ -1,0 +1,13 @@
+.panel {
+  justify-content: flex-start;
+}
+
+.copy {
+  max-width: 42rem;
+}
+
+@media (max-width: 900px) {
+  .copy {
+    max-width: none;
+  }
+}

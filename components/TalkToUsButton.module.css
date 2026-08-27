@@ -1,4 +1,7 @@
 .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -15,11 +18,31 @@
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: border-color 0.35s ease, color 0.35s ease;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #ffffff;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .btn:hover {
   background: transparent;
-  border-color: #314057;
-  color: #314057;
+  border-color: #ffffff;
+  color: #01002a;
+}
+
+.btn:hover::before {
+  transform: scaleY(1);
+}
+
+.label {
+  position: relative;
+  z-index: 1;
 }

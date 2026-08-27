@@ -1,3 +1,5 @@
-export default function ProductsPage() {
-  return <main />;
+import ProductsPage from "@/components/ProductsPage";
+
+export default function ProductsRoute() {
+  return <ProductsPage />;
 }

@@ -1,3 +1,5 @@
-export default function SolutionsPage() {
-  return <main />;
+import SolutionsPage from "@/components/SolutionsPage";
+
+export default function SolutionsRoute() {
+  return <SolutionsPage />;
 }

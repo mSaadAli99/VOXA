@@ -15,7 +15,7 @@
 .slider {
   display: flex;
   flex-direction: row;
-  width: 200vw;
+  width: 200%;
   height: 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -23,8 +23,8 @@
 
 .panel {
   position: relative;
-  flex: 0 0 100vw;
-  width: 100vw;
+  flex: 0 0 50%;
+  width: 50%;
   height: 100%;
   overflow: hidden;
 }

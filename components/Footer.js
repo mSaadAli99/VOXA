@@ -20,7 +20,7 @@ const columns = [
   {
     title: "Company",
     links: [
-      { href: "/#what-voxa-does", label: "About" },
+      { href: "/about", label: "About" },
       { href: "/technology", label: "Technology" },
       { href: "/#talk", label: "Contact" },
     ],
@@ -116,12 +116,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
+    <footer className={styles.footer} data-snap-protect>
+      <div className={styles.inner} id="talk">
         <div className={styles.ctaBlock}>
           <h2 className={styles.headline}>Ready to talk.</h2>
           <Link href="/#talk" className={styles.solid}>
-            Contact us
+            <span className={styles.solidLabel}>Contact us</span>
           </Link>
         </div>
 

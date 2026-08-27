@@ -1,0 +1,139 @@
+.tight {
+  align-items: flex-start;
+  padding: 64px 56px 40px;
+}
+
+.tightCopy :global(h2) {
+  margin: 0 0 14px;
+  line-height: 0.9;
+}
+
+.tightCopy :global(p[data-intro]) {
+  margin: 0 0 18px;
+  line-height: 1.55;
+}
+
+.cta {
+  margin-top: 22px;
+  padding-top: 0;
+  flex-shrink: 0;
+}
+
+.cta :global(a) {
+  min-width: 11.5rem;
+  padding: 14px 28px;
+  font-size: 0.8rem;
+}
+
+.wide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 80px 56px 56px;
+}
+
+.wideCopy {
+  width: 100%;
+  max-width: none;
+}
+
+.wideTitle {
+  max-width: none;
+  margin: 0 0 28px;
+  font-size: clamp(2.4rem, 5vw, 4.25rem);
+  line-height: 0.95;
+  text-align: left;
+}
+
+.wideIntro {
+  max-width: none !important;
+  width: 100%;
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.featureSection {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: #f8f0e5;
+  color: #01002a;
+  padding: 80px 56px;
+  box-sizing: border-box;
+}
+
+.featureRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "copy media";
+  gap: 48px 56px;
+  align-items: start;
+  width: 100%;
+}
+
+.featureRowFlip {
+  grid-template-areas: "media copy";
+}
+
+.featureCopy {
+  grid-area: copy;
+  width: 100%;
+  max-width: 34rem;
+}
+
+.featureTitle {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #01002a;
+}
+
+.featureIntro {
+  margin: 0 0 20px;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.55;
+  color: #01002a;
+}
+
+.featureMedia {
+  grid-area: media;
+  min-width: 0;
+  width: 100%;
+}
+
+.featureImage {
+  display: block;
+  width: 100%;
+  height: min(48vh, 420px);
+  object-fit: cover;
+  object-position: center;
+  border-radius: 22px;
+  box-shadow: 0 18px 44px rgba(1, 0, 42, 0.18);
+}
+
+@media (max-width: 900px) {
+  .tight,
+  .wide,
+  .featureSection {
+    padding: 72px 20px 36px;
+  }
+
+  .featureRow,
+  .featureRowFlip {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "media";
+    gap: 24px;
+  }
+
+
+  .featureImage {
+    height: 220px;
+  }
+}

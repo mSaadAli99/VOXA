@@ -1,0 +1,76 @@
+.panelInner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 80px 56px 56px;
+  box-sizing: border-box;
+}
+
+.copyCol {
+  flex: 1;
+  min-width: 0;
+  max-width: 34rem;
+  text-align: left;
+}
+
+.heading {
+  text-align: left !important;
+}
+
+.lede {
+  max-width: 32rem;
+  width: 100%;
+  text-align: left !important;
+}
+
+.stack {
+  position: relative;
+  flex-shrink: 0;
+  width: min(44vw, 480px);
+  height: min(68vh, 560px);
+}
+
+.back,
+.front {
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: auto;
+  border-radius: 22px;
+  box-shadow: 0 18px 44px rgba(1, 0, 42, 0.2);
+}
+
+.back {
+  top: 0;
+  right: 0;
+  width: 64%;
+  height: 68%;
+  z-index: 1;
+}
+
+.front {
+  left: 0;
+  bottom: 0;
+  width: 70%;
+  height: 74%;
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .panelInner {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 72px 20px 36px;
+    gap: 28px;
+  }
+
+  .stack {
+    width: 100%;
+    max-width: 360px;
+    height: 280px;
+    align-self: center;
+  }
+}
