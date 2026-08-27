@@ -77,6 +77,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
+  cursor: pointer;
   transition: color 0.35s ease, border-color 0.35s ease;
 }
 
@@ -153,6 +154,14 @@
 .policy:hover,
 .socialLink:hover {
   color: #314057;
+}
+
+button.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
 }
 
 .socialLink {

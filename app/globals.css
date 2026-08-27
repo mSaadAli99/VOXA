@@ -67,6 +67,15 @@ html {
   --font-display: "Genera Grotesk", "GeneraGrotesk", sans-serif;
   --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
   scroll-behavior: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -97,6 +106,15 @@ main {
   z-index: 1;
   overflow-x: clip;
   opacity: 1;
+}
+
+.site-root:has([data-page="not-found"]) header,
+.site-root:has([data-page="not-found"]) footer {
+  display: none;
+}
+
+.site-root:has([data-page="not-found"]) {
+  background: #000000;
 }
 
 html[data-theme="orb"] body {

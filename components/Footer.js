@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { ContactUsButton } from "@/components/ContactModal";
 import styles from "./Footer.module.css";
 
 const columns = [
@@ -22,7 +25,7 @@ const columns = [
     links: [
       { href: "/about", label: "About" },
       { href: "/technology", label: "Technology" },
-      { href: "/#talk", label: "Contact" },
+      { href: "#contact", label: "Contact", contact: true },
     ],
   },
 ];
@@ -120,9 +123,9 @@ export default function Footer() {
       <div className={styles.inner} id="talk">
         <div className={styles.ctaBlock}>
           <h2 className={styles.headline}>Ready to talk.</h2>
-          <Link href="/#talk" className={styles.solid}>
+          <ContactUsButton className={styles.solid}>
             <span className={styles.solidLabel}>Contact us</span>
-          </Link>
+          </ContactUsButton>
         </div>
 
         <div className={styles.columns}>
@@ -145,9 +148,15 @@ export default function Footer() {
                 <ul className={styles.list}>
                   {column.links.map((link) => (
                     <li key={link.label}>
-                      <Link href={link.href} className={styles.link}>
-                        {link.label}
-                      </Link>
+                      {link.contact ? (
+                        <ContactUsButton className={styles.link}>
+                          {link.label}
+                        </ContactUsButton>
+                      ) : (
+                        <Link href={link.href} className={styles.link}>
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
