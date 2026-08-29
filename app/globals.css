@@ -114,7 +114,13 @@ main {
 }
 
 .site-root:has([data-page="not-found"]) {
-  background: #000000;
+  background: #f8f0e5;
+}
+
+html:has([data-page="not-found"]),
+body:has([data-page="not-found"]) {
+  background: #f8f0e5 !important;
+  color: #01002a;
 }
 
 html[data-theme="orb"] body {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
 import rail from "./OrbShowcaseRail.module.css";
 import copy from "./AboutPromise.module.css";
 import stack from "./SolutionsIndustries.module.css";
@@ -132,7 +133,23 @@ export default function SolutionsIndustries() {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(root.querySelectorAll("[data-point]"), { color: "#01002a" });
-      return undefined;
+      gsap.set(root.querySelectorAll("[data-title], [data-intro]"), { autoAlpha: 1 });
+      const hash = window.location.hash.replace(/^#/, "");
+      if (hash === "e-commerce") {
+        gsap.set(slider, { xPercent: -50 });
+      }
+      const clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+      let clearHashChange = () => {};
+      const onHashChange = () => {
+        clearHashChange();
+        clearHashChange = scheduleSectionHashScroll(window.location.hash);
+      };
+      window.addEventListener("hashchange", onHashChange);
+      return () => {
+        clearHashScroll();
+        clearHashChange();
+        window.removeEventListener("hashchange", onHashChange);
+      };
     }
 
     const ctx = gsap.context(() => {
@@ -143,6 +160,7 @@ export default function SolutionsIndustries() {
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
+          id: "solutions-rail",
           trigger: root,
           start: "top top",
           end: "+=420%",
@@ -187,8 +205,18 @@ export default function SolutionsIndustries() {
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
+    const refreshAgain = window.setTimeout(() => ScrollTrigger.refresh(), 280);
+    let clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+    const onHashChange = () => {
+      clearHashScroll();
+      clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+    };
+    window.addEventListener("hashchange", onHashChange);
     return () => {
       window.clearTimeout(refresh);
+      window.clearTimeout(refreshAgain);
+      clearHashScroll();
+      window.removeEventListener("hashchange", onHashChange);
       ctx.revert();
     };
   }, []);

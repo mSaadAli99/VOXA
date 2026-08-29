@@ -10,8 +10,8 @@
   justify-content: space-between;
   padding: 18vh 24px 12vh;
   box-sizing: border-box;
-  background: #000000;
-  color: #ffffff;
+  background: #f8f0e5;
+  color: #01002a;
 }
 
 .grain {
@@ -19,9 +19,9 @@
   inset: 0 0 auto 0;
   height: 28%;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.18;
   background-image:
-    radial-gradient(rgba(255, 255, 255, 0.18) 0.6px, transparent 0.7px);
+    radial-gradient(rgba(1, 0, 42, 0.12) 0.6px, transparent 0.7px);
   background-size: 4px 4px;
   mask-image: linear-gradient(to bottom, black, transparent);
 }
@@ -38,8 +38,8 @@
   border: 1px solid transparent;
   background: transparent;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 -24px 80px rgba(255, 255, 255, 0.06);
+    0 0 0 1px rgba(1, 0, 42, 0.08),
+    0 -24px 80px rgba(1, 0, 42, 0.05);
   pointer-events: none;
 }
 
@@ -54,7 +54,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.7),
+    rgba(1, 0, 42, 0.35),
     transparent
   );
 }
@@ -76,7 +76,7 @@
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.9;
-  color: #ffffff;
+  color: #01002a;
 }
 
 .message {
@@ -85,7 +85,7 @@
   font-size: clamp(0.95rem, 1.6vw, 1.15rem);
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(1, 0, 42, 0.82);
 }
 
 .action {
@@ -100,7 +100,7 @@
 .mark {
   width: 42px;
   height: 42px;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(1, 0, 42, 0.82);
 }
 
 .home {
@@ -108,13 +108,13 @@
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(1, 0, 42, 0.68);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .home:hover {
-  color: #ffffff;
+  color: #01002a;
 }
 
 @media (max-width: 767px) {

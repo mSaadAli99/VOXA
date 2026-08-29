@@ -19,7 +19,7 @@ const SOLUTIONS = [
     badge: "Real Estate",
     title: "Real Estate",
     body: "Every lead answered and qualified within seconds, day or night.",
-    href: "/#talk",
+    href: "/solutions#real-estate",
     cta: "See solution →",
   },
   {
@@ -29,7 +29,7 @@ const SOLUTIONS = [
     badge: "E-Commerce",
     title: "E-Commerce",
     body: "Every order confirmed before dispatch. Every delivery followed up automatically.",
-    href: "/#talk",
+    href: "/solutions#e-commerce",
     cta: "See solution →",
   },
 ];

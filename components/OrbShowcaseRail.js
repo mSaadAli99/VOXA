@@ -14,7 +14,7 @@ const PRODUCTS = [
     badge: "Voice Agent",
     title: "VOXA Voice Agent Platform",
     body: "An AI voice agent for real estate and e-commerce businesses. It handles lead qualification, order confirmation, and customer follow-up calls.",
-    href: "/#talk",
+    href: "/products#voice-agent",
     cta: "See product →",
   },
   {
@@ -24,7 +24,7 @@ const PRODUCTS = [
     badge: "Communications Suite",
     title: "VOXA Communications Suite",
     body: "A complete calling platform for contact centers and enterprises — telephony, CRM, omni-channel support, and AI automation in one system.",
-    href: "/#talk",
+    href: "/products#communications-suite",
     cta: "See product →",
   },
 ];
@@ -37,7 +37,7 @@ const SOLUTIONS = [
     badge: "Real Estate",
     title: "Real Estate",
     body: "Every lead answered and qualified within seconds, day or night.",
-    href: "/#talk",
+    href: "/solutions#real-estate",
     cta: "See solution →",
   },
   {
@@ -47,7 +47,7 @@ const SOLUTIONS = [
     badge: "E-Commerce",
     title: "E-Commerce",
     body: "Every order confirmed before dispatch. Every delivery followed up automatically.",
-    href: "/#talk",
+    href: "/solutions#e-commerce",
     cta: "See solution →",
   },
 ];

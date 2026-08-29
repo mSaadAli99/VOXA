@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
 import TalkToUsButton from "@/components/TalkToUsButton";
 import rail from "./OrbShowcaseRail.module.css";
 import copy from "./AboutPromise.module.css";
@@ -315,7 +316,22 @@ export default function ProductsProducts() {
           { autoAlpha: 1 },
         );
       });
-      return undefined;
+      const hash = window.location.hash.replace(/^#/, "");
+      if (hash === "communications-suite") {
+        gsap.set(slider, { xPercent: -50 });
+      }
+      const clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+      let clearHashChange = () => {};
+      const onHashChange = () => {
+        clearHashChange();
+        clearHashChange = scheduleSectionHashScroll(window.location.hash);
+      };
+      window.addEventListener("hashchange", onHashChange);
+      return () => {
+        clearHashScroll();
+        clearHashChange();
+        window.removeEventListener("hashchange", onHashChange);
+      };
     }
 
     const ctx = gsap.context(() => {
@@ -326,6 +342,7 @@ export default function ProductsProducts() {
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
+          id: "products-rail",
           trigger: root,
           start: "top top",
           end: "+=420%",
@@ -375,9 +392,17 @@ export default function ProductsProducts() {
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
     const refreshAgain = window.setTimeout(() => ScrollTrigger.refresh(), 280);
+    let clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+    const onHashChange = () => {
+      clearHashScroll();
+      clearHashScroll = scheduleSectionHashScroll(window.location.hash);
+    };
+    window.addEventListener("hashchange", onHashChange);
     return () => {
       window.clearTimeout(refresh);
       window.clearTimeout(refreshAgain);
+      clearHashScroll();
+      window.removeEventListener("hashchange", onHashChange);
       ctx.revert();
       featureCtx.revert();
     };

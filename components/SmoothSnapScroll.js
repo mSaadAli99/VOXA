@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
 import "lenis/dist/lenis.css";
 
 const SNAP_THRESHOLD = 0.28;
@@ -15,6 +16,11 @@ export default function SmoothSnapScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const clearHashScroll = scheduleSectionHashScroll(hash, [200, 500, 900]);
+      return clearHashScroll;
+    }
     window.scrollTo(0, 0);
   }, [pathname]);
 
