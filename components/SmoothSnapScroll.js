@@ -80,6 +80,14 @@ export default function SmoothSnapScroll() {
       });
     };
 
+    const isSnapFree = (scrollY) =>
+      [...document.querySelectorAll("[data-snap-free]")].some((el) => {
+        if (!(el instanceof HTMLElement)) return false;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        const bottom = top + el.offsetHeight;
+        return scrollY >= top && scrollY < bottom;
+      });
+
     const setup = () => {
       teardown();
       document.documentElement.style.scrollBehavior = "auto";
@@ -109,7 +117,7 @@ export default function SmoothSnapScroll() {
         end: "max",
         snap: {
           snapTo: (progress, self) => {
-            if (isProtected(self.scroll())) return progress;
+            if (isProtected(self.scroll()) || isSnapFree(self.scroll())) return progress;
 
             const points = getSnapPoints();
             const last = points[points.length - 1];

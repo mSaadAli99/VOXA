@@ -4,6 +4,7 @@ import OrbHero from "@/components/OrbHero";
 import OrbWhatVoxaDoes from "@/components/OrbWhatVoxaDoes";
 import OrbShowcaseRail from "@/components/OrbShowcaseRail";
 import OrbCallPreview from "@/components/OrbCallPreview";
+import OrbVoices from "@/components/OrbVoices";
 import OrbFAQ from "@/components/OrbFAQ";
 
 export default function OrbLanding() {
@@ -13,6 +14,7 @@ export default function OrbLanding() {
       <OrbWhatVoxaDoes />
       <OrbShowcaseRail />
       <OrbCallPreview />
+      <OrbVoices />
       <OrbFAQ />
     </div>
   );
