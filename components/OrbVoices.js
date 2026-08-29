@@ -91,11 +91,24 @@ function VoiceBubble({ voice, playing = false, onHoverStart, onHoverEnd }) {
     return (
       <div
         className={bubbleClass}
-        onMouseEnter={() => onHoverStart(voice)}
-        onMouseLeave={() => onHoverEnd(voice)}
-        onTouchStart={() => onHoverStart(voice)}
-        onTouchEnd={() => onHoverEnd(voice)}
-        onTouchCancel={() => onHoverEnd(voice)}
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") onHoverStart(voice);
+        }}
+        onPointerLeave={(event) => {
+          if (event.pointerType === "mouse") onHoverEnd(voice);
+        }}
+        onPointerDown={(event) => {
+          if (event.pointerType !== "mouse") {
+            event.preventDefault();
+            onHoverStart(voice);
+          }
+        }}
+        onPointerUp={(event) => {
+          if (event.pointerType !== "mouse") onHoverEnd(voice);
+        }}
+        onPointerCancel={(event) => {
+          if (event.pointerType !== "mouse") onHoverEnd(voice);
+        }}
         role="group"
         aria-label={`Preview ${voice.label} voice`}
       >
@@ -108,7 +121,8 @@ function VoiceBubble({ voice, playing = false, onHoverStart, onHoverEnd }) {
 }
 
 export default function OrbVoices() {
-  const audioRef = useRef(null);
+  const audiosRef = useRef({});
+  const unlockedRef = useRef(false);
   const activeVoiceIdRef = useRef(null);
   const [activeVoiceId, setActiveVoiceId] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -116,39 +130,83 @@ export default function OrbVoices() {
   const satellites = VOICES.filter((voice) => !voice.featured);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return undefined;
+    const audios = {};
 
-    const onEnded = () => {
-      setPlaying(false);
-      activeVoiceIdRef.current = null;
-      setActiveVoiceId(null);
-    };
-    const onPause = () => setPlaying(false);
-    const onPlay = () => setPlaying(true);
+    VOICES.forEach((voice) => {
+      if (!voice.audio) return;
 
-    audio.addEventListener("ended", onEnded);
-    audio.addEventListener("pause", onPause);
-    audio.addEventListener("play", onPlay);
+      const audio = new Audio(voice.audio);
+      audio.preload = "auto";
+      audio.playsInline = true;
+
+      const onEnded = () => {
+        if (activeVoiceIdRef.current !== voice.id) return;
+        setPlaying(false);
+        activeVoiceIdRef.current = null;
+        setActiveVoiceId(null);
+      };
+      const onPause = () => {
+        if (activeVoiceIdRef.current === voice.id) setPlaying(false);
+      };
+      const onPlay = () => {
+        activeVoiceIdRef.current = voice.id;
+        setActiveVoiceId(voice.id);
+        setPlaying(true);
+      };
+
+      audio.addEventListener("ended", onEnded);
+      audio.addEventListener("pause", onPause);
+      audio.addEventListener("play", onPlay);
+      audios[voice.id] = audio;
+    });
+
+    audiosRef.current = audios;
 
     return () => {
-      audio.removeEventListener("ended", onEnded);
-      audio.removeEventListener("pause", onPause);
-      audio.removeEventListener("play", onPlay);
+      Object.values(audios).forEach((audio) => {
+        audio.pause();
+        audio.src = "";
+      });
+      audiosRef.current = {};
     };
   }, []);
 
-  const playVoice = async (voice) => {
-    const audio = audioRef.current;
-    if (!audio || !voice.audio) return;
+  const unlockAudio = async () => {
+    if (unlockedRef.current) return;
+    unlockedRef.current = true;
 
-    if (activeVoiceIdRef.current !== voice.id) {
+    await Promise.all(
+      Object.values(audiosRef.current).map(async (audio) => {
+        try {
+          audio.muted = true;
+          await audio.play();
+          audio.pause();
+          audio.currentTime = 0;
+          audio.muted = false;
+        } catch {
+          /* ignore unlock failures */
+        }
+      }),
+    );
+  };
+
+  const stopAll = (exceptId = null) => {
+    Object.entries(audiosRef.current).forEach(([id, audio]) => {
+      if (id === exceptId) return;
       audio.pause();
-      audio.src = voice.audio;
       audio.currentTime = 0;
-      activeVoiceIdRef.current = voice.id;
-      setActiveVoiceId(voice.id);
-    }
+    });
+  };
+
+  const playVoice = async (voice) => {
+    const audio = audiosRef.current[voice.id];
+    if (!audio) return;
+
+    await unlockAudio();
+    stopAll(voice.id);
+    audio.currentTime = 0;
+    activeVoiceIdRef.current = voice.id;
+    setActiveVoiceId(voice.id);
 
     try {
       await audio.play();
@@ -160,7 +218,7 @@ export default function OrbVoices() {
   };
 
   const stopVoice = (voice) => {
-    const audio = audioRef.current;
+    const audio = audiosRef.current[voice.id];
     if (!audio || activeVoiceIdRef.current !== voice.id) return;
 
     audio.pause();
@@ -176,9 +234,8 @@ export default function OrbVoices() {
       aria-label="VOXA voices"
       data-snap-section
       data-snap-free
+      onPointerDown={unlockAudio}
     >
-      <audio ref={audioRef} preload="metadata" playsInline />
-
       <div className={styles.inner}>
         <ScrollReveal
           as="p"

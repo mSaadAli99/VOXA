@@ -71,6 +71,7 @@
 .bubbleInteractive {
   cursor: pointer;
   transition: box-shadow 0.2s ease;
+  touch-action: manipulation;
 }
 
 .bubbleInteractive:hover .photo {
