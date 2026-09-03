@@ -3,9 +3,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothSnapScroll from "@/components/SmoothSnapScroll";
 import VOXAPageLoader from "@/components/VOXAPageLoader";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import NextThemeProvider from "@/components/NextThemeProvider";
-import { ContactModalProvider } from "@/components/ContactModal";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -13,33 +10,29 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
   variable: "--font-dm-sans",
   display: "swap",
+  preload: true,
 });
 
 export const metadata = {
   title: "VOXA",
-  description: "VOXA frontend",
+  description:
+    "VOXA is a voice agent platform that handles business phone calls and turns conversations into structured action.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="orb" suppressHydrationWarning>
       <body
         className={`${dmSans.variable} ${dmSans.className}`}
-        style={{ background: "#000", color: "#fff" }}
+        suppressHydrationWarning
       >
-        <ThemeProvider>
-          <NextThemeProvider>
-            <VOXAPageLoader />
-            <ContactModalProvider>
-              <div className="site-root">
-                <Navbar />
-                <SmoothSnapScroll />
-                {children}
-                <Footer />
-              </div>
-            </ContactModalProvider>
-          </NextThemeProvider>
-        </ThemeProvider>
+        <VOXAPageLoader />
+        <div className="site-root">
+          <Navbar />
+          <SmoothSnapScroll />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

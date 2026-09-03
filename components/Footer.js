@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { ContactUsButton } from "@/components/ContactModal";
 import styles from "./Footer.module.css";
 
 const columns = [
@@ -25,7 +22,7 @@ const columns = [
     links: [
       { href: "/about", label: "About" },
       { href: "/technology", label: "Technology" },
-      { href: "#contact", label: "Contact", contact: true },
+      { href: "/contact", label: "Contact" },
     ],
   },
 ];
@@ -120,14 +117,7 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer} data-snap-protect>
-      <div className={styles.inner} id="talk">
-        <div className={styles.ctaBlock}>
-          <h2 className={styles.headline}>Ready to talk.</h2>
-          <ContactUsButton className={styles.solid}>
-            <span className={styles.solidLabel}>Contact us</span>
-          </ContactUsButton>
-        </div>
-
+      <div className={styles.inner}>
         <div className={styles.columns}>
           <div className={styles.contact}>
             <p className={styles.heading}>Contact</p>
@@ -148,15 +138,9 @@ export default function Footer() {
                 <ul className={styles.list}>
                   {column.links.map((link) => (
                     <li key={link.label}>
-                      {link.contact ? (
-                        <ContactUsButton className={styles.link}>
-                          {link.label}
-                        </ContactUsButton>
-                      ) : (
-                        <Link href={link.href} className={styles.link}>
-                          {link.label}
-                        </Link>
-                      )}
+                      <Link href={link.href} className={styles.link}>
+                        {link.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -224,7 +208,7 @@ export default function Footer() {
 
       <div className={styles.markWrap}>
         <Image
-          src="/images/logo-beige.png"
+          src="/images/logo-beige.webp"
           alt="VOXA"
           width={1600}
           height={248}

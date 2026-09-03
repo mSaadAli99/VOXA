@@ -9,7 +9,7 @@ const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 const PRODUCTS = [
   {
     id: "voice-agent",
-    src: "/images/products/voice-agent-platform.png",
+    src: "/images/products/voice-agent-platform.webp",
     alt: "VOXA Voice Agent Platform on a laptop display",
     badge: "Voice Agent",
     title: "VOXA Voice Agent Platform",
@@ -19,7 +19,7 @@ const PRODUCTS = [
   },
   {
     id: "communications-suite",
-    src: "/images/products/communications-suite.png",
+    src: "/images/products/communications-suite.webp",
     alt: "VOXA Communications Suite operations center",
     badge: "Communications Suite",
     title: "VOXA Communications Suite",
@@ -32,7 +32,7 @@ const PRODUCTS = [
 const SOLUTIONS = [
   {
     id: "real-estate",
-    src: "/images/solutions/real-estate.png",
+    src: "/images/solutions/real-estate.webp",
     alt: "Modern luxury home for real estate solutions",
     badge: "Real Estate",
     title: "Real Estate",
@@ -42,7 +42,7 @@ const SOLUTIONS = [
   },
   {
     id: "ecommerce",
-    src: "/images/solutions/ecommerce.png",
+    src: "/images/solutions/ecommerce.webp",
     alt: "E-commerce shopping experience on a laptop",
     badge: "E-Commerce",
     title: "E-Commerce",

@@ -1,9 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import OrbHero from "@/components/OrbHero";
-import ProductsProducts from "@/components/ProductsProducts";
-import OrbFAQ from "@/components/OrbFAQ";
 import styles from "./AboutPage.module.css";
+
+const ProductsProducts = dynamic(() => import("@/components/ProductsProducts"));
+const OrbFAQ = dynamic(() => import("@/components/OrbFAQ"));
 
 const PRODUCTS_FAQS = [
   {

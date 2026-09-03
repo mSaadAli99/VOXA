@@ -6,6 +6,7 @@ import OrbShowcaseRail from "@/components/OrbShowcaseRail";
 import OrbCallPreview from "@/components/OrbCallPreview";
 import OrbVoices from "@/components/OrbVoices";
 import OrbFAQ from "@/components/OrbFAQ";
+import ReadyToTalkSection from "@/components/ReadyToTalkSection";
 
 export default function OrbLanding() {
   return (
@@ -16,6 +17,7 @@ export default function OrbLanding() {
       <OrbCallPreview />
       <OrbVoices />
       <OrbFAQ />
+      <ReadyToTalkSection />
     </div>
   );
 }

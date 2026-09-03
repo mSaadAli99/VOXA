@@ -7,7 +7,7 @@ import styles from "./OrbVoices.module.css";
 const VOICES = [
   {
     id: "customer-service",
-    src: "/images/voices/customer-service.png",
+    src: "/images/voices/customer-service.webp",
     alt: "Customer service voice",
     label: "Customer Service",
     placement: "topRight",
@@ -15,7 +15,7 @@ const VOICES = [
   },
   {
     id: "news-anchor-m",
-    src: "/images/voices/news-anchor-m.png",
+    src: "/images/voices/news-anchor-m.webp",
     alt: "News anchor male voice",
     label: "News Anchor",
     featured: true,
@@ -24,7 +24,7 @@ const VOICES = [
   },
   {
     id: "news-anchor-f",
-    src: "/images/voices/news-anchor-f.png",
+    src: "/images/voices/news-anchor-f.webp",
     alt: "News anchor female voice",
     label: "News Anchor",
     placement: "midRight",
@@ -32,7 +32,7 @@ const VOICES = [
   },
   {
     id: "narration",
-    src: "/images/voices/narration.png",
+    src: "/images/voices/narration.webp",
     alt: "Narration voice",
     label: "Narration",
     placement: "bottom",
@@ -135,9 +135,10 @@ export default function OrbVoices() {
     VOICES.forEach((voice) => {
       if (!voice.audio) return;
 
-      const audio = new Audio(voice.audio);
-      audio.preload = "auto";
+      const audio = new Audio();
+      audio.preload = "none";
       audio.playsInline = true;
+      audio.dataset.src = voice.audio;
 
       const onEnded = () => {
         if (activeVoiceIdRef.current !== voice.id) return;
@@ -178,6 +179,11 @@ export default function OrbVoices() {
     await Promise.all(
       Object.values(audiosRef.current).map(async (audio) => {
         try {
+          const src = audio.dataset.src;
+          if (src && !audio.src) {
+            audio.src = src;
+            audio.load();
+          }
           audio.muted = true;
           await audio.play();
           audio.pause();
@@ -201,6 +207,12 @@ export default function OrbVoices() {
   const playVoice = async (voice) => {
     const audio = audiosRef.current[voice.id];
     if (!audio) return;
+
+    const src = audio.dataset.src;
+    if (src && audio.src !== new URL(src, window.location.origin).href) {
+      audio.src = src;
+      audio.load();
+    }
 
     await unlockAudio();
     stopAll(voice.id);
@@ -233,7 +245,7 @@ export default function OrbVoices() {
       className={styles.section}
       aria-label="VOXA voices"
       data-snap-section
-      data-snap-free
+      data-snap-step
       onPointerDown={unlockAudio}
     >
       <div className={styles.inner}>

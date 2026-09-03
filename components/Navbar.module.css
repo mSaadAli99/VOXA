@@ -6,19 +6,13 @@
   z-index: 100;
   width: 100%;
   background: transparent;
-  transform: translateY(0);
-  opacity: 1;
-  transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.35s ease;
-  will-change: transform, opacity;
+  transition: color 0.25s ease;
   pointer-events: auto;
 }
 
-.steelHeaderHidden {
-  transform: translateY(-110%);
-  opacity: 0;
-  pointer-events: none;
+.steelHeaderLight {
+  background: transparent;
+  box-shadow: none;
 }
 
 .steelNav {
@@ -129,12 +123,6 @@
   border-radius: 2px;
 }
 
-.steelRule {
-  width: 100%;
-  height: 1px;
-  background: color-mix(in srgb, #ffffff 22%, transparent);
-}
-
 .steelHeaderLight .steelLink,
 .steelHeaderLight .steelLink:hover,
 .steelHeaderLight .steelActive {
@@ -151,12 +139,13 @@
   color: #01002a !important;
 }
 
-.steelHeaderLight .steelToggle span {
-  background: #01002a;
+.steelHeaderLight .steelCtaDesktop:hover {
+  border-color: #01002a !important;
+  color: #01002a !important;
 }
 
-.steelHeaderLight .steelRule {
-  background: color-mix(in srgb, #01002a 16%, transparent);
+.steelHeaderLight .steelToggle span {
+  background: #01002a;
 }
 
 @media (max-width: 900px) {

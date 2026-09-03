@@ -8,8 +8,8 @@ import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
 import "lenis/dist/lenis.css";
 
 const SNAP_THRESHOLD = 0.28;
-/* Tall scrub sections (gate / rail) only disable snap in their middle.
-   A larger edge keeps Lenis from overshooting into "protect" before snap fires. */
+const STEP_SNAP_THRESHOLD = 0.12;
+/* Tall scrub sections (gate / rail) only disable snap in their middle. */
 const PROTECT_EDGE = 0.9;
 
 export default function SmoothSnapScroll() {
@@ -37,6 +37,7 @@ export default function SmoothSnapScroll() {
     let lenis;
     let tickerFn;
     let snapTrigger;
+    let settledStepIndex = 0;
 
     const teardown = () => {
       snapTrigger?.kill();
@@ -67,6 +68,55 @@ export default function SmoothSnapScroll() {
       );
     };
 
+    const getStepPoints = () => {
+      const max = ScrollTrigger.maxScroll(window);
+      if (!max) return [];
+
+      return [...document.querySelectorAll("[data-snap-step]")]
+        .filter((el) => el instanceof HTMLElement)
+        .map((el) => {
+          const top = el.getBoundingClientRect().top + window.scrollY;
+          return {
+            top,
+            progress: gsap.utils.clamp(0, 1, top / max),
+          };
+        })
+        .sort((a, b) => a.top - b.top);
+    };
+
+    const nearestStepIndex = (scrollY, steps) => {
+      if (!steps.length) return 0;
+      let best = 0;
+      let bestDist = Infinity;
+      steps.forEach((step, index) => {
+        const dist = Math.abs(step.top - scrollY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = index;
+        }
+      });
+      return best;
+    };
+
+    const syncSettledStep = (scrollY) => {
+      const steps = getStepPoints();
+      if (!steps.length) return;
+      settledStepIndex = nearestStepIndex(scrollY, steps);
+    };
+
+    const isInStepRegion = (scrollY) => {
+      const steps = getStepPoints();
+      if (!steps.length) return false;
+      const first = steps[0].top;
+      const last = steps[steps.length - 1];
+      const lastEl = document.querySelectorAll("[data-snap-step]")[steps.length - 1];
+      const lastBottom =
+        lastEl instanceof HTMLElement
+          ? last.top + lastEl.offsetHeight
+          : last.top + window.innerHeight;
+      return scrollY >= first - window.innerHeight * 0.15 && scrollY < lastBottom;
+    };
+
     const isProtected = (scrollY) => {
       const vh = window.innerHeight;
       const edge = vh * PROTECT_EDGE;
@@ -88,19 +138,49 @@ export default function SmoothSnapScroll() {
         return scrollY >= top && scrollY < bottom;
       });
 
+    const snapOneStep = (progress, direction) => {
+      const steps = getStepPoints();
+      if (!steps.length) return progress;
+
+      settledStepIndex = gsap.utils.clamp(0, steps.length - 1, settledStepIndex);
+
+      if (direction >= 0) {
+        const from = settledStepIndex;
+        const to = Math.min(from + 1, steps.length - 1);
+        if (from === to) return steps[from].progress;
+
+        const prev = steps[from].progress;
+        const next = steps[to].progress;
+        const local = (progress - prev) / Math.max(next - prev, 1e-6);
+        return local >= STEP_SNAP_THRESHOLD ? next : prev;
+      }
+
+      const from = settledStepIndex;
+      const to = Math.max(from - 1, 0);
+      if (from === to) return steps[from].progress;
+
+      const prev = steps[to].progress;
+      const next = steps[from].progress;
+      const local = (progress - prev) / Math.max(next - prev, 1e-6);
+      return local <= 1 - STEP_SNAP_THRESHOLD ? prev : next;
+    };
+
     const setup = () => {
       teardown();
       document.documentElement.style.scrollBehavior = "auto";
+      settledStepIndex = 0;
 
       if (mobileMq.matches || motionMq.matches) {
         document.documentElement.style.scrollBehavior = "smooth";
         ScrollTrigger.refresh();
+        syncSettledStep(window.scrollY);
         return;
       }
 
       lenis = new Lenis({
-        lerp: 0.14,
-        wheelMultiplier: 0.85,
+        lerp: 0.12,
+        wheelMultiplier: 0.55,
+        touchMultiplier: 0.75,
         smoothWheel: true,
         autoRaf: false,
       });
@@ -117,11 +197,18 @@ export default function SmoothSnapScroll() {
         end: "max",
         snap: {
           snapTo: (progress, self) => {
-            if (isProtected(self.scroll()) || isSnapFree(self.scroll())) return progress;
+            if (isProtected(self.scroll()) || isSnapFree(self.scroll())) {
+              return progress;
+            }
+
+            /* Call → Voices → FAQ: one wheel = one section max */
+            if (pathname === "/" && isInStepRegion(self.scroll())) {
+              syncSettledStep(self.scroll());
+              return snapOneStep(progress, self.direction);
+            }
 
             const points = getSnapPoints();
             const last = points[points.length - 1];
-            /* Footer sits after the last snap section — don't yank the page */
             if (progress > last + 0.002) return progress;
 
             let index = 0;
@@ -142,15 +229,21 @@ export default function SmoothSnapScroll() {
             }
             return local <= 1 - SNAP_THRESHOLD ? previous : next;
           },
-          duration: { min: 0.12, max: 0.22 },
+          duration: { min: 0.14, max: 0.26 },
           delay: 0,
-          ease: "power4.out",
+          ease: "power3.out",
           directional: true,
           inertia: false,
+          onComplete: (self) => {
+            if (pathname === "/" && isInStepRegion(self.scroll())) {
+              syncSettledStep(self.scroll());
+            }
+          },
         },
       });
 
       ScrollTrigger.refresh();
+      syncSettledStep(window.scrollY);
     };
 
     setup();
@@ -158,21 +251,7 @@ export default function SmoothSnapScroll() {
     motionMq.addEventListener("change", setup);
     window.addEventListener("load", setup);
 
-    /* Theme swap remounts Orb/Studio — rebuild snap so Orb markers are live */
-    const onTheme = () => {
-      window.setTimeout(() => {
-        setup();
-        lenis?.resize?.();
-      }, 60);
-    };
-    const themeWatch = new MutationObserver(onTheme);
-    themeWatch.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
     return () => {
-      themeWatch.disconnect();
       window.removeEventListener("load", setup);
       mobileMq.removeEventListener("change", setup);
       motionMq.removeEventListener("change", setup);

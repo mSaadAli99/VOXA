@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./VOXAPageLoader.module.css";
 
 const LOAD_DELAY = 450;
@@ -168,7 +167,7 @@ export default function VOXAPageLoader() {
       <div className={styles.stage}>
         <div className={styles.logos}>
           <img
-            src="/images/logo-navy.png"
+            src="/images/logo-navy.webp"
             alt=""
             width={1040}
             height={240}
@@ -176,7 +175,7 @@ export default function VOXAPageLoader() {
             draggable="false"
           />
           <img
-            src="/images/logo-beige.png"
+            src="/images/logo-beige.webp"
             alt="VOXA"
             width={1040}
             height={240}
@@ -186,18 +185,9 @@ export default function VOXAPageLoader() {
         </div>
       </div>
 
-      <ScrollReveal
-        as="button"
-        type="button"
-        className={styles.skip}
-        onClick={finish}
-        baseOpacity={0.1}
-        enableBlur
-        baseRotation={3}
-        blurStrength={4}
-      >
+      <button type="button" className={styles.skip} onClick={finish}>
         Skip intro
-      </ScrollReveal>
+      </button>
     </div>
   );
 }

@@ -56,21 +56,21 @@ export default function TechnologySecurity() {
           start: "top top",
           end: "+=220%",
           pin: true,
-          scrub: 0.7,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      tl.to(title, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" });
+      tl.to(title, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power2.out" });
       if (image) {
-        tl.to(image, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }, "<");
+        tl.to(image, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" }, "<");
       }
       tl.to({}, { duration: 0.25 });
       points.forEach((point) => {
-        tl.to(point, { color: "#01002a", duration: 0.55, ease: "none" });
+        tl.to(point, { color: "#01002a", duration: 0.35, ease: "none" });
       });
-      tl.to({}, { duration: 0.4 });
+      tl.to({}, { duration: 0.25 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
@@ -107,8 +107,10 @@ export default function TechnologySecurity() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.featureImage}
-            src="/images/products/security.png"
+            src="/images/products/security.webp"
             alt="Data encryption and access control"
+            loading="lazy"
+            decoding="async"
             data-photo
           />
         </div>

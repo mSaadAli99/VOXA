@@ -25,8 +25,8 @@ const VOICE_AGENT = {
   compact: true,
   showCta: true,
   photos: {
-    front: "/images/products/voice-agent-platform.png",
-    back: "/images/products/voice-agent-front.png",
+    front: "/images/products/voice-agent-platform.webp",
+    back: "/images/products/voice-agent-front.webp",
     frontAlt: "VOXA Voice Agent Platform",
     backAlt: "Voice agent conversation interface",
   },
@@ -50,7 +50,7 @@ const FEATURE_SECTIONS = [
       "Smart call routing & IVR",
       "Call recording & live monitoring",
     ],
-    image: "/images/products/ip-telephony.jpg",
+    image: "/images/products/ip-telephony.webp",
     imageAlt: "Cloud PBX calling infrastructure",
     contentSide: "left",
   },
@@ -75,7 +75,7 @@ const FEATURE_SECTIONS = [
       "One inbox for every channel",
       "Smart routing & reporting",
     ],
-    image: "/images/products/omni-channel.jpg",
+    image: "/images/products/omni-channel.webp",
     imageAlt: "Omni-channel voice and digital connections",
     contentSide: "left",
   },
@@ -150,6 +150,8 @@ function FeatureRow({ section }) {
             className={styles.featureImage}
             src={section.image}
             alt={section.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
             data-photo
           />
         </div>
@@ -216,12 +218,16 @@ function ProductPanel({ data }) {
             className={stack.back}
             src={data.photos.back}
             alt={data.photos.backAlt}
+            loading="lazy"
+            decoding="async"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={stack.front}
             src={data.photos.front}
             alt={data.photos.frontAlt}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       ) : null}
@@ -234,7 +240,7 @@ function paintInk(tl, root) {
     tl.fromTo(
       point,
       { color: "#ffffff" },
-      { color: "#01002a", duration: 0.55, ease: "none" },
+      { color: "#01002a", duration: 0.35, ease: "none" },
     );
   });
 }
@@ -263,7 +269,7 @@ function playFeatureReveal(section) {
       start: "top top",
       end: "+=220%",
       pin: true,
-      scrub: 0.7,
+      scrub: 0.3,
       anticipatePin: 1,
       invalidateOnRefresh: true,
     },
@@ -271,19 +277,19 @@ function playFeatureReveal(section) {
 
   const title = section.querySelector("[data-title]");
   const intro = section.querySelector("[data-intro]");
-  if (title) tl.to(title, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" });
+  if (title) tl.to(title, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power2.out" });
   if (intro) {
-    tl.to(intro, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, "-=0.15");
+    tl.to(intro, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" }, "-=0.15");
   }
   if (image) {
-    tl.to(image, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }, "<");
+    tl.to(image, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" }, "<");
   }
   tl.to({}, { duration: 0.25 });
   paintInk(tl, section);
   if (cta) {
-    tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" });
+    tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" });
   }
-  tl.to({}, { duration: 0.4 });
+  tl.to({}, { duration: 0.25 });
 }
 
 export default function ProductsProducts() {
@@ -347,7 +353,7 @@ export default function ProductsProducts() {
           start: "top top",
           end: "+=420%",
           pin: true,
-          scrub: 0.75,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -356,12 +362,12 @@ export default function ProductsProducts() {
       tl.to(first.querySelector("[data-title]"), {
         autoAlpha: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.32,
         ease: "power2.out",
       });
       tl.to(
         first.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
         "-=0.15",
       );
       tl.to({}, { duration: 0.25 });
@@ -373,17 +379,17 @@ export default function ProductsProducts() {
       tl.to(second.querySelector("[data-title]"), {
         autoAlpha: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.32,
         ease: "power2.out",
       });
       tl.to(
         second.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
         "-=0.15",
       );
       tl.to({}, { duration: 0.25 });
       paintInk(tl, second);
-      tl.to({}, { duration: 0.45 });
+      tl.to({}, { duration: 0.28 });
     }, root);
 
     const featureCtx = gsap.context(() => {

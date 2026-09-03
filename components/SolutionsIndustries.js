@@ -19,8 +19,8 @@ const REAL_ESTATE = {
     "Your team only speaks to leads worth their time",
   ],
   photos: {
-    front: "/images/solutions/real-estate-front.jpg",
-    back: "/images/solutions/real-estate-back.jpg",
+    front: "/images/solutions/real-estate-front.webp",
+    back: "/images/solutions/real-estate-back.webp",
     frontAlt: "Modern home for real estate",
     backAlt: "City skyline for real estate",
   },
@@ -38,8 +38,8 @@ const ECOMMERCE = {
     "Customers ready to reorder flagged for follow-up",
   ],
   photos: {
-    front: "/images/solutions/e-commerce-front.jpg",
-    back: "/images/solutions/e-commerce-back.jpg",
+    front: "/images/solutions/e-commerce-front.webp",
+    back: "/images/solutions/e-commerce-back.webp",
     frontAlt: "Online shopping on a laptop",
     backAlt: "Digital checkout and payments",
   },
@@ -87,12 +87,16 @@ function IndustryPanel({ data }) {
             className={stack.back}
             src={data.photos.back}
             alt={data.photos.backAlt}
+            loading="lazy"
+            decoding="async"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={stack.front}
             src={data.photos.front}
             alt={data.photos.frontAlt}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       ) : null}
@@ -105,7 +109,7 @@ function paintInk(tl, root) {
     tl.fromTo(
       point,
       { color: "#ffffff" },
-      { color: "#01002a", duration: 0.55, ease: "none" },
+      { color: "#01002a", duration: 0.35, ease: "none" },
     );
   });
 }
@@ -165,7 +169,7 @@ export default function SolutionsIndustries() {
           start: "top top",
           end: "+=420%",
           pin: true,
-          scrub: 0.75,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -174,12 +178,12 @@ export default function SolutionsIndustries() {
       tl.to(first.querySelector("[data-title]"), {
         autoAlpha: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.32,
         ease: "power2.out",
       });
       tl.to(
         first.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
         "-=0.15",
       );
       tl.to({}, { duration: 0.25 });
@@ -191,17 +195,17 @@ export default function SolutionsIndustries() {
       tl.to(second.querySelector("[data-title]"), {
         autoAlpha: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.32,
         ease: "power2.out",
       });
       tl.to(
         second.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
         "-=0.15",
       );
       tl.to({}, { duration: 0.25 });
       paintInk(tl, second);
-      tl.to({}, { duration: 0.45 });
+      tl.to({}, { duration: 0.28 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);

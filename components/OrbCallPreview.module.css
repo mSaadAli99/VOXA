@@ -1,53 +1,86 @@
 .section {
   position: relative;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
   background: #f8f0e5;
   color: #01002a;
-  padding: 108px 24px 96px;
+  padding: 96px 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .inner {
-  width: min(760px, 100%);
+  width: min(720px, 100%);
   margin: 0 auto;
   text-align: center;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .kicker {
-  margin: 0 0 14px;
+  margin: 0 0 8px;
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #314057;
+  flex-shrink: 0;
 }
 
 .title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.04em;
-  line-height: 1.1;
+  line-height: 1.08;
+  flex-shrink: 0;
 }
 
 .lede {
-  margin: 14px auto 48px;
+  margin: 10px auto 20px;
   max-width: 34rem;
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.55;
+  font-size: clamp(0.92rem, 1.5vw, 1rem);
+  line-height: 1.45;
   color: #314057;
+  flex-shrink: 0;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 8px;
   text-align: left;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card {
-  padding: 4px 0 8px;
+  padding: 0;
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.cardClosed {
+  flex: 0 0 auto;
+}
+
+.cardOpen {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .trigger {
@@ -55,18 +88,19 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 16px;
-  padding: 10px 6px;
+  gap: 12px;
+  padding: 8px 4px;
   border: 0;
   background: transparent;
   color: inherit;
   text-align: left;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .icon {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -76,38 +110,46 @@
 }
 
 .icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .triggerCopy {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+  min-width: 0;
 }
 
 .cardTitle {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.02rem;
   font-weight: 700;
   letter-spacing: -0.03em;
 }
 
 .cardSummary {
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.45;
+  font-size: 0.84rem;
+  line-height: 1.35;
   color: #314057;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .collapse {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  min-height: 0;
 }
 
 .collapseOpen {
   grid-template-rows: 1fr;
+  flex: 1;
+  min-height: 0;
 }
 
 .collapseInner {
@@ -117,50 +159,50 @@
 
 .panel {
   position: relative;
-  margin: 4px 0 8px 26px;
-  padding: 8px 8px 4px 42px;
+  margin: 2px 0 4px 22px;
+  padding: 4px 4px 0 36px;
 }
 
 .rail {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 18px;
+  bottom: 10px;
   width: 2px;
   background: #01002a;
 }
 
 .panelIntro {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.84rem;
   color: #314057;
 }
 
 .points {
-  margin: 0 0 22px;
-  padding-left: 1.1rem;
+  margin: 0 0 10px;
+  padding-left: 1rem;
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.84rem;
+  line-height: 1.4;
   color: #01002a;
 }
 
 .points li + li {
-  margin-top: 6px;
+  margin-top: 3px;
 }
 
 .form {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .phoneField {
   display: flex;
   align-items: center;
-  min-width: min(100%, 280px);
+  min-width: min(100%, 240px);
   flex: 1;
   border-bottom: 1px solid #01002a;
 }
@@ -169,26 +211,26 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 10px 10px 0;
+  padding: 8px 10px 8px 0;
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .flag {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .input {
   flex: 1;
   min-width: 0;
-  padding: 10px 4px;
+  padding: 8px 4px;
   border: 0;
   background: transparent;
   color: #01002a;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   outline: none;
 }
 
@@ -200,20 +242,21 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border: 0;
   border-radius: 999px;
   background: #01002a;
   color: #f8f0e5;
   font-family: var(--font-body);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .callBtn svg {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
 }
 
 .callBtn:hover {
@@ -222,7 +265,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 88px 18px 72px;
+    padding: 80px 18px 24px;
   }
 
   .callBtn {

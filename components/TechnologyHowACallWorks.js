@@ -56,18 +56,18 @@ export default function TechnologyHowACallWorks() {
           start: "top top",
           end: "+=220%",
           pin: true,
-          scrub: 0.7,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      tl.to(title, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" });
+      tl.to(title, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power2.out" });
       tl.to({}, { duration: 0.25 });
       points.forEach((point) => {
-        tl.to(point, { color: "#01002a", duration: 0.55, ease: "none" });
+        tl.to(point, { color: "#01002a", duration: 0.35, ease: "none" });
       });
-      tl.to({}, { duration: 0.4 });
+      tl.to({}, { duration: 0.25 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);

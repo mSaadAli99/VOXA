@@ -14,7 +14,7 @@ const smoothstep = (edge0, edge1, x) => {
 const SOLUTIONS = [
   {
     id: "real-estate",
-    src: "/images/solutions/real-estate.png",
+    src: "/images/solutions/real-estate.webp",
     alt: "Modern luxury home for real estate solutions",
     badge: "Real Estate",
     title: "Real Estate",
@@ -24,7 +24,7 @@ const SOLUTIONS = [
   },
   {
     id: "ecommerce",
-    src: "/images/solutions/ecommerce.png",
+    src: "/images/solutions/ecommerce.webp",
     alt: "E-commerce shopping experience on a laptop",
     badge: "E-Commerce",
     title: "E-Commerce",
@@ -226,6 +226,8 @@ export default function OrbSolutions() {
                   className={`${styles.media} ${styles.mediaA}`}
                   src={SOLUTIONS[0].src}
                   alt={SOLUTIONS[0].alt}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -234,6 +236,8 @@ export default function OrbSolutions() {
                   className={`${styles.media} ${styles.mediaB}`}
                   src={SOLUTIONS[1].src}
                   alt={SOLUTIONS[1].alt}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
 

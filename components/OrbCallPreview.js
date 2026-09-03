@@ -73,7 +73,7 @@ function ScenarioPanel({ scenario, open, onToggle }) {
   };
 
   return (
-    <article className={styles.card} data-card>
+    <article className={`${styles.card} ${open ? styles.cardOpen : styles.cardClosed}`} data-card>
       <button
         type="button"
         className={styles.trigger}
@@ -85,7 +85,9 @@ function ScenarioPanel({ scenario, open, onToggle }) {
         </span>
         <span className={styles.triggerCopy}>
           <span className={styles.cardTitle}>{scenario.title}</span>
-          <span className={styles.cardSummary}>{scenario.summary}</span>
+          {!open ? (
+            <span className={styles.cardSummary}>{scenario.summary}</span>
+          ) : null}
         </span>
       </button>
 
@@ -132,12 +134,10 @@ function ScenarioPanel({ scenario, open, onToggle }) {
 
 export default function OrbCallPreview() {
   const rootRef = useRef(null);
-  const [openIds, setOpenIds] = useState(["event"]);
+  const [openId, setOpenId] = useState("event");
 
   const onToggle = (id) => {
-    setOpenIds((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
-    );
+    setOpenId(id);
   };
 
   useEffect(() => {
@@ -176,7 +176,7 @@ export default function OrbCallPreview() {
       className={styles.section}
       aria-label="Experience Urdu AI calling"
       data-snap-section
-      data-snap-protect
+      data-snap-step
     >
       <div className={styles.inner}>
         <ScrollReveal as="p" className={styles.kicker} once baseRotation={2} blurStrength={8}>
@@ -194,7 +194,7 @@ export default function OrbCallPreview() {
             <ScenarioPanel
               key={scenario.id}
               scenario={scenario}
-              open={openIds.includes(scenario.id)}
+              open={openId === scenario.id}
               onToggle={() => onToggle(scenario.id)}
             />
           ))}

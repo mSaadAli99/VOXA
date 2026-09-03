@@ -14,7 +14,7 @@ const smoothstep = (edge0, edge1, x) => {
 const PRODUCTS = [
   {
     id: "voice-agent",
-    src: "/images/products/voice-agent-platform.png",
+    src: "/images/products/voice-agent-platform.webp",
     alt: "VOXA Voice Agent Platform on a laptop display",
     badge: "Voice Agent",
     title: "VOXA Voice Agent Platform",
@@ -23,7 +23,7 @@ const PRODUCTS = [
   },
   {
     id: "communications-suite",
-    src: "/images/products/communications-suite.png",
+    src: "/images/products/communications-suite.webp",
     alt: "VOXA Communications Suite operations center",
     badge: "Communications Suite",
     title: "VOXA Communications Suite",
@@ -233,6 +233,8 @@ export default function OrbProducts() {
                   className={`${styles.media} ${styles.mediaA}`}
                   src={PRODUCTS[0].src}
                   alt={PRODUCTS[0].alt}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -241,6 +243,8 @@ export default function OrbProducts() {
                   className={`${styles.media} ${styles.mediaB}`}
                   src={PRODUCTS[1].src}
                   alt={PRODUCTS[1].alt}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
 

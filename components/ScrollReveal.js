@@ -91,7 +91,7 @@ export default function ScrollReveal({
           { transformOrigin, rotate: rotationFrom },
           {
             rotate: 0,
-            duration: 1.35,
+            duration: 0.28,
             ease: "power2.out",
             scrollTrigger: {
               trigger,
@@ -106,16 +106,16 @@ export default function ScrollReveal({
 
         const from = {
           opacity: opacityFrom,
-          y: 22,
+          y: 6,
           willChange: "opacity, filter, transform",
         };
-        if (enableBlur) from.filter = `blur(${blurFrom}px)`;
+        if (enableBlur) from.filter = `blur(${Math.min(blurFrom, 6)}px)`;
 
         const to = {
           opacity: 1,
           y: 0,
-          duration: 1.15,
-          stagger: 0.07,
+          duration: 0.22,
+          stagger: 0.012,
           ease: "power2.out",
           scrollTrigger: {
             trigger,

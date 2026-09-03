@@ -62,7 +62,7 @@ export const LayoutTextFlip = ({
             }}
             exit={{ y: 50, filter: "blur(10px)", opacity: 0 }}
             transition={{
-              duration: 0.5,
+              duration: 0.28,
             }}
             className={cn("inline-block whitespace-nowrap")}
           >

@@ -1,13 +1,19 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import OrbHero from "@/components/OrbHero";
-import TechnologyHowACallWorks from "@/components/TechnologyHowACallWorks";
-import TechnologySecurity from "@/components/TechnologySecurity";
-import OrbFAQ from "@/components/OrbFAQ";
 import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./AboutPage.module.css";
+
+const TechnologyHowACallWorks = dynamic(
+  () => import("@/components/TechnologyHowACallWorks"),
+);
+const TechnologySecurity = dynamic(
+  () => import("@/components/TechnologySecurity"),
+);
+const OrbFAQ = dynamic(() => import("@/components/OrbFAQ"));
 
 const DATA_TITLE = "Your data, captured automatically";
 const DATA_COPY =
@@ -70,10 +76,10 @@ export default function TechnologyPage() {
         defaults: { ease: "power2.out" },
       });
 
-      tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.8 });
-      tl.to(left, { autoAlpha: 1, x: 0, duration: 0.7 }, "-=0.35");
-      tl.to(rule, { scaleY: 1, duration: 0.55 }, "-=0.45");
-      tl.to(right, { autoAlpha: 1, x: 0, duration: 0.7 }, "-=0.4");
+      tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.26 });
+      tl.to(left, { autoAlpha: 1, x: 0, duration: 0.35 }, "-=0.18");
+      tl.to(rule, { scaleY: 1, duration: 0.28 }, "-=0.22");
+      tl.to(right, { autoAlpha: 1, x: 0, duration: 0.35 }, "-=0.2");
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);

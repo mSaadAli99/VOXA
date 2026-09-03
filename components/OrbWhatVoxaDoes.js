@@ -20,17 +20,17 @@ export default function OrbWhatVoxaDoes({
     if (!root) return undefined;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const label = root.querySelector("[data-label]");
+    const labelEl = root.querySelector("[data-label]");
     const copy = root.querySelector("[data-copy]");
 
     if (reduced) {
-      gsap.set(label, { display: "none" });
+      gsap.set(labelEl, { display: "none" });
       gsap.set(copy, { display: "block", autoAlpha: 1 });
       return undefined;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(label, { autoAlpha: 0, y: 20, display: "flex" });
+      gsap.set(labelEl, { autoAlpha: 0, y: 20, display: "flex" });
       gsap.set(copy, { autoAlpha: 0, display: "none" });
 
       const tl = gsap.timeline({
@@ -46,19 +46,21 @@ export default function OrbWhatVoxaDoes({
         },
       });
 
-      tl.to(label, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" });
+      tl.to(labelEl, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" });
       tl.to({}, { duration: 1.4 });
-      tl.to(label, { autoAlpha: 0, y: -28, duration: 1.4, ease: "power1.inOut" });
-      tl.set(label, { display: "none" });
+      tl.to(labelEl, { autoAlpha: 0, y: -28, duration: 1.4, ease: "power1.inOut" });
+      tl.set(labelEl, { display: "none" });
       tl.set(copy, { display: "block", autoAlpha: 0, y: 16 });
       tl.to(copy, { autoAlpha: 1, y: 0, duration: 1.3, ease: "power2.out" });
       tl.to({}, { duration: 0.6 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
+    const refresh2 = window.setTimeout(() => ScrollTrigger.refresh(), 400);
 
     return () => {
       window.clearTimeout(refresh);
+      window.clearTimeout(refresh2);
       ctx.revert();
     };
   }, []);

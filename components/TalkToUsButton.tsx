@@ -24,17 +24,26 @@ export default function TalkToUsButton({
   id,
 }: TalkToUsButtonProps) {
   const external = /^https?:\/\//.test(href);
+  const classNames = cn(styles.btn, className);
+
+  if (external) {
+    return (
+      <a
+        id={id}
+        href={href}
+        onClick={onClick}
+        style={style}
+        className={classNames}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className={styles.label}>{children}</span>
+      </a>
+    );
+  }
 
   return (
-    <Link
-      id={id}
-      href={href}
-      onClick={onClick}
-      style={style}
-      className={cn(styles.btn, className)}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-    >
+    <Link id={id} href={href} onClick={onClick} style={style} className={classNames}>
       <span className={styles.label}>{children}</span>
     </Link>
   );

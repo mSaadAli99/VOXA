@@ -74,11 +74,11 @@ export default function OrbFAQ({ items = FAQS }) {
     }
 
     gsap.killTweensOf([panel, answer, icon]);
-    gsap.to(icon, { rotation: 0, duration: 0.28, ease: "power2.out" });
-    gsap.to(answer, { opacity: 0, y: 10, duration: 0.2, ease: "power2.in" });
+    gsap.to(icon, { rotation: 0, duration: 0.18, ease: "power2.out" });
+    gsap.to(answer, { opacity: 0, y: 6, duration: 0.14, ease: "power2.in" });
     gsap.to(panel, {
       height: 0,
-      duration: 0.4,
+      duration: 0.26,
       ease: "power3.inOut",
     });
   };
@@ -100,12 +100,12 @@ export default function OrbFAQ({ items = FAQS }) {
     gsap.set(panel, { height: "auto" });
     const target = panel.offsetHeight;
     gsap.set(panel, { height: 0 });
-    gsap.set(answer, { opacity: 0, y: 14 });
+    gsap.set(answer, { opacity: 0, y: 8 });
 
-    gsap.to(icon, { rotation: 45, duration: 0.35, ease: "power2.out" });
+    gsap.to(icon, { rotation: 45, duration: 0.22, ease: "power2.out" });
     gsap.to(panel, {
       height: target,
-      duration: 0.48,
+      duration: 0.3,
       ease: "power3.out",
       onComplete: () => {
         gsap.set(panel, { height: "auto" });
@@ -114,8 +114,8 @@ export default function OrbFAQ({ items = FAQS }) {
     gsap.to(answer, {
       opacity: 1,
       y: 0,
-      duration: 0.42,
-      delay: 0.08,
+      duration: 0.26,
+      delay: 0.05,
       ease: "power2.out",
     });
   };
@@ -143,6 +143,7 @@ export default function OrbFAQ({ items = FAQS }) {
       className={`${styles.section} ${faqSerif.variable}`}
       aria-label="Frequently asked questions"
       data-snap-section
+      data-snap-step
     >
       <div className={styles.inner}>
         <header className={styles.header}>

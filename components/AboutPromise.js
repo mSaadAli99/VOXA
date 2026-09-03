@@ -65,36 +65,36 @@ export default function AboutPromise({
           start: "top top",
           end: showLines ? "+=320%" : "+=260%",
           pin: true,
-          scrub: 0.7,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
       if (!photos) {
-        tl.to(heading, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" });
+        tl.to(heading, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power2.out" });
       }
       if (lede) {
-        tl.to(lede, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, "-=0.15");
+        tl.to(lede, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" }, "-=0.15");
       }
       tl.to({}, { duration: 0.3 });
 
       items.forEach((point, index) => {
         tl.to(point, {
           color: "#01002a",
-          duration: 0.55,
+          duration: 0.35,
           ease: "none",
         });
         if (showLines && fills[index]) {
-          tl.to(fills[index], { scaleY: 1, duration: 0.7, ease: "power1.inOut" });
+          tl.to(fills[index], { scaleY: 1, duration: 0.45, ease: "power1.inOut" });
           tl.to(arrows[index], { color: "#01002a", duration: 0.2 }, "-=0.15");
         }
       });
 
       if (cta) {
-        tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" });
+        tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" });
       }
-      tl.to({}, { duration: 0.4 });
+      tl.to({}, { duration: 0.25 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
@@ -190,9 +190,21 @@ export default function AboutPromise({
         {photos ? (
           <div className={`${stack.stack} ${styles.photos}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={stack.back} src={photos.back} alt={photos.backAlt || ""} />
+            <img
+              className={stack.back}
+              src={photos.back}
+              alt={photos.backAlt || ""}
+              loading="lazy"
+              decoding="async"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={stack.front} src={photos.front} alt={photos.frontAlt || ""} />
+            <img
+              className={stack.front}
+              src={photos.front}
+              alt={photos.frontAlt || ""}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         ) : null}
       </div>

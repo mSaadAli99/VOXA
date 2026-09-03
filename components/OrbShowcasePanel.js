@@ -172,6 +172,8 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               className={`${styles.media} ${styles.mediaA}`}
               src={items[0].src}
               alt={items[0].alt}
+              loading="lazy"
+              decoding="async"
               draggable={false}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -180,6 +182,8 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               className={`${styles.media} ${styles.mediaB}`}
               src={items[1].src}
               alt={items[1].alt}
+              loading="lazy"
+              decoding="async"
               draggable={false}
             />
 
