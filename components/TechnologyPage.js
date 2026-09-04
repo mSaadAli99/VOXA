@@ -1,19 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import OrbHero from "@/components/OrbHero";
-import ScrollReveal from "@/components/ScrollReveal";
+import TechnologyHowACallWorks from "@/components/TechnologyHowACallWorks";
+import TechnologySecurity from "@/components/TechnologySecurity";
+import OrbFAQ from "@/components/OrbFAQ";
 import styles from "./AboutPage.module.css";
-
-const TechnologyHowACallWorks = dynamic(
-  () => import("@/components/TechnologyHowACallWorks"),
-);
-const TechnologySecurity = dynamic(
-  () => import("@/components/TechnologySecurity"),
-);
-const OrbFAQ = dynamic(() => import("@/components/OrbFAQ"));
 
 const DATA_TITLE = "Your data, captured automatically";
 const DATA_COPY =
@@ -60,26 +53,27 @@ export default function TechnologyPage() {
     const left = root.querySelector("[data-col-left]");
     const right = root.querySelector("[data-col-right]");
     const rule = root.querySelector("[data-rule]");
+    if (!card || !left || !right || !rule) return undefined;
 
     const ctx = gsap.context(() => {
-      gsap.set(card, { autoAlpha: 0, y: 48, scale: 0.985 });
-      gsap.set(left, { autoAlpha: 0, x: -36 });
-      gsap.set(right, { autoAlpha: 0, x: 36 });
+      gsap.set(card, { autoAlpha: 0, y: 36, scale: 0.985 });
+      gsap.set(left, { autoAlpha: 0, x: -24 });
+      gsap.set(right, { autoAlpha: 0, x: 24 });
       gsap.set(rule, { scaleY: 0, transformOrigin: "top center" });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: root,
-          start: "top 78%",
+          start: "top 72%",
           once: true,
         },
         defaults: { ease: "power2.out" },
       });
 
-      tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.26 });
-      tl.to(left, { autoAlpha: 1, x: 0, duration: 0.35 }, "-=0.18");
-      tl.to(rule, { scaleY: 1, duration: 0.28 }, "-=0.22");
-      tl.to(right, { autoAlpha: 1, x: 0, duration: 0.35 }, "-=0.2");
+      tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55 });
+      tl.to(left, { autoAlpha: 1, x: 0, duration: 0.45 }, "-=0.28");
+      tl.to(rule, { scaleY: 1, duration: 0.4 }, "-=0.32");
+      tl.to(right, { autoAlpha: 1, x: 0, duration: 0.45 }, "-=0.3");
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
@@ -101,25 +95,16 @@ export default function TechnologyPage() {
         className={styles.splitSection}
         aria-label="Data capture and isolation"
         data-snap-section
-        data-snap-protect
       >
         <div className={styles.card} data-card>
           <div className={styles.col} data-col-left>
-            <ScrollReveal as="h2" className={styles.heading} once baseRotation={2} blurStrength={8}>
-              {DATA_TITLE}
-            </ScrollReveal>
-            <ScrollReveal as="p" className={styles.copy} once baseRotation={2} blurStrength={8}>
-              {DATA_COPY}
-            </ScrollReveal>
+            <h2 className={styles.heading}>{DATA_TITLE}</h2>
+            <p className={styles.copy}>{DATA_COPY}</p>
           </div>
           <div className={styles.rule} data-rule aria-hidden="true" />
           <div className={styles.col} data-col-right>
-            <ScrollReveal as="h2" className={styles.heading} once baseRotation={2} blurStrength={8}>
-              {ISOLATION_TITLE}
-            </ScrollReveal>
-            <ScrollReveal as="p" className={styles.copy} once baseRotation={2} blurStrength={8}>
-              {ISOLATION_COPY}
-            </ScrollReveal>
+            <h2 className={styles.heading}>{ISOLATION_TITLE}</h2>
+            <p className={styles.copy}>{ISOLATION_COPY}</p>
           </div>
         </div>
       </section>
