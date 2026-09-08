@@ -40,10 +40,10 @@
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
-  width: min(260px, 22vw);
+  width: min(300px, 26vw);
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+  font-size: clamp(3.1rem, 6.8vw, 5.8rem);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.92;
@@ -246,7 +246,7 @@
 
   .sideTitle {
     width: auto;
-    font-size: clamp(2.2rem, 11vw, 3.4rem);
+    font-size: clamp(2.6rem, 12vw, 3.9rem);
   }
 
   .stage {
