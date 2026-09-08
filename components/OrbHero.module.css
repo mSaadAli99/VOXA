@@ -90,6 +90,16 @@
   text-align: center;
 }
 
+.copyInnerCenter .description {
+  text-align: center;
+  max-width: 36rem;
+}
+
+.copyInnerCenter .titleWrap {
+  display: flex;
+  justify-content: center;
+}
+
 .titleWrap {
   width: 100%;
 }
@@ -151,6 +161,7 @@
   line-height: 1.65;
   color: color-mix(in srgb, #f8f0e5 88%, #ffffff);
   text-shadow: 0 1px 16px rgba(0, 0, 0, 0.28);
+  text-align: left;
 }
 
 .cta {

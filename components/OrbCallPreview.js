@@ -176,7 +176,7 @@ export default function OrbCallPreview() {
       className={styles.section}
       aria-label="Experience Urdu AI calling"
       data-snap-section
-      data-snap-step
+      data-snap-free
     >
       <div className={styles.inner}>
         <ScrollReveal as="p" className={styles.kicker} once baseRotation={2} blurStrength={8}>

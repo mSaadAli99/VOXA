@@ -143,7 +143,7 @@ export default function OrbFAQ({ items = FAQS }) {
       className={`${styles.section} ${faqSerif.variable}`}
       aria-label="Frequently asked questions"
       data-snap-section
-      data-snap-step
+      data-snap-free
     >
       <div className={styles.inner}>
         <header className={styles.header}>

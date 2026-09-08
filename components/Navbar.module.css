@@ -6,8 +6,15 @@
   z-index: 100;
   width: 100%;
   background: transparent;
-  transition: color 0.25s ease;
+  transform: translateY(0);
+  transition: color 0.25s ease, transform 0.32s ease;
   pointer-events: auto;
+  will-change: transform;
+}
+
+.steelHeaderHidden {
+  transform: translateY(-110%);
+  pointer-events: none;
 }
 
 .steelHeaderLight {

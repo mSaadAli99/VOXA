@@ -43,5 +43,5 @@
   .label {
     font-size: clamp(2.1rem, 12vw, 3.2rem);
     padding: 0 18px;
-    }
+  }
 }

@@ -17,6 +17,9 @@
   margin-top: 22px;
   padding-top: 0;
   flex-shrink: 0;
+  justify-content: flex-start;
+  align-self: flex-start;
+  width: auto;
 }
 
 .cta :global(a) {

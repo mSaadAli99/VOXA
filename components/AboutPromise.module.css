@@ -198,8 +198,12 @@
   margin-top: 36px;
   padding-top: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
+}
+
+.copyCentered .cta {
+  justify-content: center;
 }
 
 .pinLeft .cta,

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import TalkToUsButton from "@/components/TalkToUsButton";
-import ScrollReveal from "@/components/ScrollReveal";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 import styles from "./OrbHero.module.css";
 
@@ -92,16 +91,14 @@ export default function OrbHero({ title, description = HOME_DESCRIPTION }) {
             )}
           </motion.div>
 
-          <ScrollReveal
-            as="p"
+          <motion.p
             className={styles.description}
-            baseOpacity={0.1}
-            enableBlur
-            baseRotation={3}
-            blurStrength={4}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
             {description}
-          </ScrollReveal>
+          </motion.p>
 
           <div className={styles.cta}>
             <TalkToUsButton className={styles.ctaBtn} />

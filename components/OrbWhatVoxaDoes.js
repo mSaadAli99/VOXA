@@ -19,18 +19,18 @@ export default function OrbWhatVoxaDoes({
     const root = rootRef.current;
     if (!root) return undefined;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const labelEl = root.querySelector("[data-label]");
     const copy = root.querySelector("[data-copy]");
+    if (!labelEl || !copy) return undefined;
 
-    if (reduced) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(labelEl, { display: "none" });
       gsap.set(copy, { display: "block", autoAlpha: 1 });
       return undefined;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(labelEl, { autoAlpha: 0, y: 20, display: "flex" });
+      gsap.set(labelEl, { autoAlpha: 0, y: 24, display: "block" });
       gsap.set(copy, { autoAlpha: 0, display: "none" });
 
       const tl = gsap.timeline({
@@ -38,25 +38,29 @@ export default function OrbWhatVoxaDoes({
         scrollTrigger: {
           trigger: root,
           start: "top top",
-          end: "+=280%",
+          end: "+=120%",
           pin: true,
-          scrub: 0.85,
+          scrub: 0.55,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
+      /* 1) Title fades in */
       tl.to(labelEl, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" });
-      tl.to({}, { duration: 1.4 });
-      tl.to(labelEl, { autoAlpha: 0, y: -28, duration: 1.4, ease: "power1.inOut" });
+      /* 2) Hold title briefly */
+      tl.to({}, { duration: 0.7 });
+      /* 3) Title out → description in (never both visible) */
+      tl.to(labelEl, { autoAlpha: 0, y: -24, duration: 0.55, ease: "power1.inOut" });
       tl.set(labelEl, { display: "none" });
-      tl.set(copy, { display: "block", autoAlpha: 0, y: 16 });
-      tl.to(copy, { autoAlpha: 1, y: 0, duration: 1.3, ease: "power2.out" });
-      tl.to({}, { duration: 0.6 });
+      tl.set(copy, { display: "block", autoAlpha: 0, y: 18 });
+      tl.to(copy, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" });
+      /* 4) Hold description, then release pin */
+      tl.to({}, { duration: 0.45 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
-    const refresh2 = window.setTimeout(() => ScrollTrigger.refresh(), 400);
+    const refresh2 = window.setTimeout(() => ScrollTrigger.refresh(), 350);
 
     return () => {
       window.clearTimeout(refresh);
@@ -72,7 +76,7 @@ export default function OrbWhatVoxaDoes({
       className={styles.track}
       aria-label={ariaLabel || label}
       data-snap-section
-      data-snap-protect
+      data-snap-gate
     >
       <div className={styles.pin}>
         <h2 className={styles.label} data-label>

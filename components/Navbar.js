@@ -85,6 +85,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [onLight, setOnLight] = useState(!DARK_HERO_PAGES.has(pathname));
 
   useEffect(() => {
@@ -94,15 +95,44 @@ export default function Navbar() {
 
   useEffect(() => {
     setOpen(false);
+    setHidden(false);
+  }, [pathname]);
 
+  useEffect(() => {
     if (!DARK_HERO_PAGES.has(pathname)) {
       setOnLight(true);
-      return undefined;
     }
 
     let raf = 0;
+    let lastY = window.scrollY;
+    let lastHidden = false;
+
     const update = () => {
       raf = 0;
+      const y = window.scrollY;
+      const delta = y - lastY;
+
+      if (open || y < 24) {
+        if (lastHidden) {
+          lastHidden = false;
+          setHidden(false);
+        }
+      } else if (delta > 8) {
+        if (!lastHidden) {
+          lastHidden = true;
+          setHidden(true);
+        }
+      } else if (delta < -8) {
+        if (lastHidden) {
+          lastHidden = false;
+          setHidden(false);
+        }
+      }
+
+      lastY = y;
+
+      if (!DARK_HERO_PAGES.has(pathname)) return;
+
       const header = document.querySelector("header");
       const prev = header instanceof HTMLElement ? header.style.pointerEvents : "";
       if (header instanceof HTMLElement) header.style.pointerEvents = "none";
@@ -117,7 +147,6 @@ export default function Navbar() {
     };
 
     update();
-    /* Re-check after layout/paint so hero video/poster is in place. */
     const boot = window.setTimeout(update, 120);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -127,11 +156,11 @@ export default function Navbar() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [pathname]);
+  }, [pathname, open]);
 
   return (
     <header
-      className={`${styles.steelHeader} ${onLight ? styles.steelHeaderLight : ""}`}
+      className={`${styles.steelHeader} ${onLight ? styles.steelHeaderLight : ""} ${hidden && !open ? styles.steelHeaderHidden : ""}`}
     >
       <nav className={styles.steelNav} aria-label="Primary">
         <Link

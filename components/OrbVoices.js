@@ -245,7 +245,7 @@ export default function OrbVoices() {
       className={styles.section}
       aria-label="VOXA voices"
       data-snap-section
-      data-snap-step
+      data-snap-free
       onPointerDown={unlockAudio}
     >
       <div className={styles.inner}>

@@ -58,6 +58,7 @@ export default function SmoothSnapScroll() {
       const points = [0];
       document.querySelectorAll("[data-snap-section]").forEach((el) => {
         if (!(el instanceof HTMLElement)) return;
+        if (el.hasAttribute("data-snap-free")) return;
         if (el.offsetParent === null && el.offsetHeight === 0) return;
         const top = el.getBoundingClientRect().top + window.scrollY;
         points.push(gsap.utils.clamp(0, 1, top / max));
@@ -130,13 +131,26 @@ export default function SmoothSnapScroll() {
       });
     };
 
-    const isSnapFree = (scrollY) =>
-      [...document.querySelectorAll("[data-snap-free]")].some((el) => {
+    /* Keep page snap off while the title→copy beat plays. */
+    const isGated = (scrollY) => {
+      const vh = window.innerHeight;
+      const enter = vh * 0.08;
+      const leave = vh * 0.1;
+
+      return [...document.querySelectorAll("[data-snap-gate]")].some((el) => {
         if (!(el instanceof HTMLElement)) return false;
         const top = el.getBoundingClientRect().top + window.scrollY;
         const bottom = top + el.offsetHeight;
-        return scrollY >= top && scrollY < bottom;
+        return scrollY >= top + enter && scrollY < bottom - leave;
       });
+    };
+
+    const isSnapFree = (scrollY) => {
+      const first = document.querySelector("[data-snap-free]");
+      if (!(first instanceof HTMLElement)) return false;
+      const top = first.getBoundingClientRect().top + window.scrollY;
+      return scrollY >= top - window.innerHeight * 0.06;
+    };
 
     const snapOneStep = (progress, direction) => {
       const steps = getStepPoints();
@@ -197,7 +211,11 @@ export default function SmoothSnapScroll() {
         end: "max",
         snap: {
           snapTo: (progress, self) => {
-            if (isProtected(self.scroll()) || isSnapFree(self.scroll())) {
+            if (
+              isProtected(self.scroll()) ||
+              isSnapFree(self.scroll()) ||
+              isGated(self.scroll())
+            ) {
               return progress;
             }
 
