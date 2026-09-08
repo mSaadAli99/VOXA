@@ -196,10 +196,10 @@ export default function Footer() {
         <div className={styles.legal}>
           <p className={styles.copy}>{`\u00A9 ${year} VOXA. All rights reserved.`}</p>
           <div className={styles.policies}>
-            <Link href="#" className={styles.policy}>
+            <Link href="/terms" className={styles.policy}>
               Terms & Conditions
             </Link>
-            <Link href="#" className={styles.policy}>
+            <Link href="/privacy" className={styles.policy}>
               Privacy Policy
             </Link>
           </div>

@@ -21,6 +21,8 @@ const DARK_HERO_PAGES = new Set([
   "/solutions",
   "/products",
   "/technology",
+  "/privacy",
+  "/terms",
 ]);
 
 function isActiveLink(pathname, href) {

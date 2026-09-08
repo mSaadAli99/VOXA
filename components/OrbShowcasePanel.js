@@ -22,7 +22,6 @@ export function applyShowcaseProgress(refs, p) {
     scaleFillRef,
     overlayARef,
     overlayBRef,
-    bgTitleRef,
   } = refs;
 
   const expand1 = smoothstep(0, 0.32, p);
@@ -30,8 +29,13 @@ export function applyShowcaseProgress(refs, p) {
   const expand2 = smoothstep(0.55, 0.88, p);
   const swap = smoothstep(0.42, 0.55, p);
 
-  const startW = 36;
-  const endW = 56;
+  /*
+    Viewport-locked size so the card matches the original showcase
+    regardless of the left heading column.
+    Width ~280→440px, height ~48→72vh.
+  */
+  const startW = 280;
+  const endW = 440;
   const startH = 48;
   const endH = 72;
 
@@ -48,8 +52,8 @@ export function applyShowcaseProgress(refs, p) {
   const drift = Math.sin(swap * Math.PI) * 0.02;
 
   if (frameRef.current) {
-    frameRef.current.style.width = `${w}%`;
-    frameRef.current.style.height = `${h}%`;
+    frameRef.current.style.width = `${w}px`;
+    frameRef.current.style.height = `${h}vh`;
   }
 
   if (mediaARef.current) {
@@ -90,7 +94,7 @@ export function applyShowcaseProgress(refs, p) {
 
   if (overlayARef.current) {
     const show =
-      softstepShow(0.26, 0.38, 0.4, 0.48, p);
+      smoothstep(0.26, 0.38, p) * (1 - smoothstep(0.4, 0.48, p));
     overlayARef.current.style.opacity = `${show}`;
     overlayARef.current.style.transform = `translate3d(0, ${(1 - show) * 12}px, 0)`;
     overlayARef.current.style.pointerEvents = show > 0.55 ? "auto" : "none";
@@ -101,16 +105,6 @@ export function applyShowcaseProgress(refs, p) {
     overlayBRef.current.style.transform = `translate3d(0, ${(1 - show) * 12}px, 0)`;
     overlayBRef.current.style.pointerEvents = show > 0.55 ? "auto" : "none";
   }
-
-  if (bgTitleRef.current) {
-    const sink = smoothstep(0.05, 0.5, p);
-    bgTitleRef.current.style.transform = `translate3d(0, ${sink * -6}px, 0)`;
-    bgTitleRef.current.style.opacity = `${1 - sink * 0.06}`;
-  }
-}
-
-function softstepShow(a0, a1, b0, b1, p) {
-  return smoothstep(a0, a1, p) * (1 - smoothstep(b0, b1, p));
 }
 
 const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
@@ -125,7 +119,6 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
   const scaleFillRef = useRef(null);
   const overlayARef = useRef(null);
   const overlayBRef = useRef(null);
-  const bgTitleRef = useRef(null);
   const refsRef = useRef(null);
   refsRef.current = {
     frameRef,
@@ -136,7 +129,6 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
     scaleFillRef,
     overlayARef,
     overlayBRef,
-    bgTitleRef,
   };
 
   useImperativeHandle(ref, () => ({
@@ -147,17 +139,27 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
     applyShowcaseProgress(refsRef.current, 0);
   }, []);
 
+  const overlay = (item, overlayRef) => (
+    <div ref={overlayRef} className={styles.overlay}>
+      <h3 className={styles.productTitle}>{item.title}</h3>
+      <p className={styles.productBody}>{item.body}</p>
+      <Link href={item.href} className={styles.seeProduct}>
+        {item.cta}
+      </Link>
+    </div>
+  );
+
   const inner = (
     <div className={embedded ? styles.pinEmbedded : styles.pin}>
-      <h2 ref={bgTitleRef} className={styles.bgTitle}>
+      <h2 className={styles.sideTitle}>
         <ScrollReveal
           as="span"
-          className={styles.bgTitleText}
+          className={styles.sideTitleText}
           once
-          baseOpacity={0.1}
+          baseOpacity={0.15}
           enableBlur
-          baseRotation={2}
-          blurStrength={4}
+          baseRotation={0}
+          blurStrength={3}
         >
           {heading}
         </ScrollReveal>
@@ -187,61 +189,8 @@ const OrbShowcasePanel = forwardRef(function OrbShowcasePanel(
               draggable={false}
             />
 
-            <div ref={overlayARef} className={styles.overlay}>
-              <ScrollReveal
-                as="h3"
-                className={styles.productTitle}
-                once
-                baseOpacity={0.1}
-                enableBlur
-                baseRotation={2}
-                blurStrength={3}
-              >
-                {items[0].title}
-              </ScrollReveal>
-              <ScrollReveal
-                as="p"
-                className={styles.productBody}
-                once
-                baseOpacity={0.1}
-                enableBlur
-                baseRotation={2}
-                blurStrength={3}
-              >
-                {items[0].body}
-              </ScrollReveal>
-              <Link href={items[0].href} className={styles.seeProduct}>
-                {items[0].cta}
-              </Link>
-            </div>
-
-            <div ref={overlayBRef} className={styles.overlay}>
-              <ScrollReveal
-                as="h3"
-                className={styles.productTitle}
-                once
-                baseOpacity={0.1}
-                enableBlur
-                baseRotation={2}
-                blurStrength={3}
-              >
-                {items[1].title}
-              </ScrollReveal>
-              <ScrollReveal
-                as="p"
-                className={styles.productBody}
-                once
-                baseOpacity={0.1}
-                enableBlur
-                baseRotation={2}
-                blurStrength={3}
-              >
-                {items[1].body}
-              </ScrollReveal>
-              <Link href={items[1].href} className={styles.seeProduct}>
-                {items[1].cta}
-              </Link>
-            </div>
+            {overlay(items[0], overlayARef)}
+            {overlay(items[1], overlayBRef)}
           </div>
 
           <div ref={badgeARef} className={styles.badge}>
