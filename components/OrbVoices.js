@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import {
+  getVoiceObjectUrl,
+  resolveVoiceObjectUrl,
+  warmVoiceAudio,
+  VOICE_AUDIO_PATHS,
+} from "@/lib/voiceAudioCache";
 import styles from "./OrbVoices.module.css";
 
 const VOICES = [
@@ -11,7 +17,7 @@ const VOICES = [
     alt: "Customer service voice",
     label: "Customer Service",
     placement: "topRight",
-    audio: "/audio/customer-service-voice.mp3",
+    audio: "/audio/customer-service-voice.mp3?v=48k",
   },
   {
     id: "news-anchor-m",
@@ -20,7 +26,7 @@ const VOICES = [
     label: "News Anchor",
     featured: true,
     placement: "featured",
-    audio: "/audio/featured-voice.mp3",
+    audio: "/audio/featured-voice.mp3?v=48k",
   },
   {
     id: "news-anchor-f",
@@ -28,7 +34,7 @@ const VOICES = [
     alt: "News anchor female voice",
     label: "News Anchor",
     placement: "midRight",
-    audio: "/audio/news-anchor-f-voice.mp3",
+    audio: "/audio/news-anchor-f-voice.mp3?v=48k",
   },
   {
     id: "narration",
@@ -36,7 +42,7 @@ const VOICES = [
     alt: "Narration voice",
     label: "Narration",
     placement: "bottom",
-    audio: "/audio/narration-voice.mp3",
+    audio: "/audio/narration-voice.mp3?v=48k",
   },
 ];
 
@@ -120,51 +126,9 @@ function VoiceBubble({ voice, playing = false, onHoverStart, onHoverEnd }) {
   return <figure className={bubbleClass}>{content}</figure>;
 }
 
-function resolveAudioHref(src) {
-  if (typeof window === "undefined") return src;
-  return new URL(src, window.location.origin).href;
-}
-
-function ensureAudioSrc(audio) {
-  const src = audio?.dataset?.src;
-  if (!src) return false;
-
-  const href = resolveAudioHref(src);
-  if (audio.src !== href) {
-    audio.preload = "auto";
-    audio.src = href;
-    audio.load();
-  }
-  return true;
-}
-
-function waitUntilCanPlay(audio, timeoutMs = 8000) {
-  if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
-    return Promise.resolve();
-  }
-
-  return new Promise((resolve) => {
-    let settled = false;
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      audio.removeEventListener("canplay", finish);
-      audio.removeEventListener("error", finish);
-      window.clearTimeout(timer);
-      resolve();
-    };
-
-    const timer = window.setTimeout(finish, timeoutMs);
-    audio.addEventListener("canplay", finish);
-    audio.addEventListener("error", finish);
-  });
-}
-
 export default function OrbVoices() {
-  const sectionRef = useRef(null);
   const audiosRef = useRef({});
-  const unlockedRef = useRef(false);
-  const prefetchedRef = useRef(false);
+  const unlockPromiseRef = useRef(null);
   const activeVoiceIdRef = useRef(null);
   const [activeVoiceId, setActiveVoiceId] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -173,14 +137,14 @@ export default function OrbVoices() {
 
   useEffect(() => {
     const audios = {};
+    let cancelled = false;
 
     VOICES.forEach((voice) => {
       if (!voice.audio) return;
 
       const audio = new Audio();
-      audio.preload = "none";
+      audio.preload = "auto";
       audio.playsInline = true;
-      audio.dataset.src = voice.audio;
 
       const onEnded = () => {
         if (activeVoiceIdRef.current !== voice.id) return;
@@ -205,91 +169,68 @@ export default function OrbVoices() {
 
     audiosRef.current = audios;
 
+    const attachSources = async () => {
+      await warmVoiceAudio();
+      if (cancelled) return;
+
+      await Promise.all(
+        VOICES.map(async (voice) => {
+          if (!voice.audio || cancelled) return;
+          const audio = audios[voice.id];
+          if (!audio) return;
+
+          try {
+            const objectUrl =
+              getVoiceObjectUrl(voice.audio) || (await resolveVoiceObjectUrl(voice.audio));
+            if (cancelled) return;
+            audio.src = objectUrl;
+            audio.load();
+          } catch {
+            if (cancelled) return;
+            audio.src = voice.audio;
+            audio.load();
+          }
+        }),
+      );
+    };
+
+    void attachSources();
+
     return () => {
+      cancelled = true;
       Object.values(audios).forEach((audio) => {
         audio.pause();
-        audio.src = "";
+        audio.removeAttribute("src");
+        audio.load();
       });
       audiosRef.current = {};
     };
   }, []);
 
-  const prefetchVoices = () => {
-    if (prefetchedRef.current) return;
-    prefetchedRef.current = true;
+  const unlockAudio = () => {
+    if (unlockPromiseRef.current) return unlockPromiseRef.current;
 
-    Object.values(audiosRef.current).forEach((audio) => {
-      ensureAudioSrc(audio);
-    });
-
-    // Warm HTTP cache for browsers that ignore MediaElement preload.
-    VOICES.forEach((voice) => {
-      if (!voice.audio) return;
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.as = "audio";
-      link.href = voice.audio;
-      document.head.appendChild(link);
-    });
-  };
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        prefetchVoices();
-        observer.disconnect();
-      },
-      { rootMargin: "80% 0px" },
-    );
-
-    observer.observe(section);
-
-    let idleId = null;
-    let timeoutId = null;
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(() => prefetchVoices(), { timeout: 3500 });
-    } else {
-      timeoutId = window.setTimeout(prefetchVoices, 2200);
-    }
-
-    return () => {
-      observer.disconnect();
-      if (idleId != null && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
+    unlockPromiseRef.current = (async () => {
+      const audio =
+        audiosRef.current["news-anchor-m"] ||
+        Object.values(audiosRef.current).find((item) => item?.src);
+      if (!audio?.src) {
+        unlockPromiseRef.current = null;
+        return;
       }
-      if (timeoutId != null) window.clearTimeout(timeoutId);
-    };
-  }, []);
 
-  const unlockOne = async (audio) => {
-    try {
-      ensureAudioSrc(audio);
-      audio.muted = true;
-      await audio.play();
-      audio.pause();
-      audio.currentTime = 0;
-      audio.muted = false;
-    } catch {
-      /* ignore unlock failures */
-    }
-  };
+      try {
+        audio.muted = true;
+        await audio.play();
+        audio.pause();
+        audio.currentTime = 0;
+        audio.muted = false;
+      } catch {
+        unlockPromiseRef.current = null;
+      }
+    })();
 
-  const unlockAudio = async (preferredId = null) => {
-    if (unlockedRef.current) return;
-    unlockedRef.current = true;
-
-    const preferred = preferredId ? audiosRef.current[preferredId] : null;
-    if (preferred) await unlockOne(preferred);
-
-    // Warm the rest without blocking playback of the hovered voice.
-    Object.entries(audiosRef.current).forEach(([id, audio]) => {
-      if (id === preferredId) return;
-      void unlockOne(audio);
-    });
+    return unlockPromiseRef.current;
   };
 
   const stopAll = (exceptId = null) => {
@@ -304,22 +245,38 @@ export default function OrbVoices() {
     const audio = audiosRef.current[voice.id];
     if (!audio) return;
 
-    prefetchVoices();
-    ensureAudioSrc(audio);
-    await unlockAudio(voice.id);
-    stopAll(voice.id);
-    audio.currentTime = 0;
     activeVoiceIdRef.current = voice.id;
     setActiveVoiceId(voice.id);
+    void unlockAudio();
 
+    if (!audio.src) {
+      try {
+        audio.src =
+          getVoiceObjectUrl(voice.audio) || (await resolveVoiceObjectUrl(voice.audio));
+        audio.load();
+      } catch {
+        audio.src = voice.audio;
+        audio.load();
+      }
+    }
+
+    if (activeVoiceIdRef.current !== voice.id) return;
+
+    stopAll(voice.id);
     try {
-      await waitUntilCanPlay(audio);
-      if (activeVoiceIdRef.current !== voice.id) return;
+      audio.currentTime = 0;
       await audio.play();
     } catch {
-      setPlaying(false);
-      activeVoiceIdRef.current = null;
-      setActiveVoiceId(null);
+      try {
+        await unlockAudio();
+        if (activeVoiceIdRef.current !== voice.id) return;
+        audio.currentTime = 0;
+        await audio.play();
+      } catch {
+        setPlaying(false);
+        activeVoiceIdRef.current = null;
+        setActiveVoiceId(null);
+      }
     }
   };
 
@@ -336,16 +293,15 @@ export default function OrbVoices() {
 
   return (
     <section
-      ref={sectionRef}
       className={styles.section}
       aria-label="VOXA voices"
       data-snap-section
       data-snap-free
-      onPointerDown={() => {
-        prefetchVoices();
-        unlockAudio();
-      }}
+      onPointerDown={unlockAudio}
     >
+      {VOICE_AUDIO_PATHS.map((path) => (
+        <link key={path} rel="preload" as="audio" href={path} />
+      ))}
       <div className={styles.inner}>
         <ScrollReveal
           as="p"
