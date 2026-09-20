@@ -17,7 +17,7 @@ const VOICES = [
     alt: "Customer service voice",
     label: "Customer Service",
     placement: "topRight",
-    audio: "/audio/customer-service-voice.mp3?v=48k",
+    audio: "/audio/customer-service-voice.mp3?v=4s40k",
   },
   {
     id: "news-anchor-m",
@@ -26,7 +26,7 @@ const VOICES = [
     label: "News Anchor",
     featured: true,
     placement: "featured",
-    audio: "/audio/featured-voice.mp3?v=48k",
+    audio: "/audio/featured-voice.mp3?v=4s40k",
   },
   {
     id: "news-anchor-f",
@@ -34,7 +34,7 @@ const VOICES = [
     alt: "News anchor female voice",
     label: "News Anchor",
     placement: "midRight",
-    audio: "/audio/news-anchor-f-voice.mp3?v=48k",
+    audio: "/audio/news-anchor-f-voice.mp3?v=4s40k",
   },
   {
     id: "narration",
@@ -42,7 +42,7 @@ const VOICES = [
     alt: "Narration voice",
     label: "Narration",
     placement: "bottom",
-    audio: "/audio/narration-voice.mp3?v=48k",
+    audio: "/audio/narration-voice.mp3?v=4s40k",
   },
 ];
 

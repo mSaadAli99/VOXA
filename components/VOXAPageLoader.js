@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { warmVoiceAudio } from "@/lib/voiceAudioCache";
 import styles from "./VOXAPageLoader.module.css";
 
 const LOAD_DELAY = 450;
@@ -110,6 +111,9 @@ export default function VOXAPageLoader() {
   }, [queue]);
 
   useEffect(() => {
+    // Warm voice previews during the intro so hover is instant afterward.
+    void warmVoiceAudio();
+
     document.body.style.overflow = "hidden";
 
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
