@@ -82,14 +82,16 @@ export function applyShowcaseProgress(refs, p) {
   const badge1In = smoothstep(0.06, 0.28, p);
   const badge1Out = 1 - smoothstep(0.42, 0.52, p);
   const badge2In = smoothstep(0.52, 0.68, p);
+  const badgeHang =
+    typeof window !== "undefined" && window.innerWidth <= 900 ? 0 : -24;
   if (badgeARef.current) {
     const o = badge1In * badge1Out;
     badgeARef.current.style.opacity = `${o}`;
-    badgeARef.current.style.transform = `translate3d(calc(-42% + ${(1 - o) * -16}px), -50%, 0)`;
+    badgeARef.current.style.transform = `translate3d(calc(${badgeHang}% + ${(1 - o) * -12}px), 0, 0)`;
   }
   if (badgeBRef.current) {
     badgeBRef.current.style.opacity = `${badge2In}`;
-    badgeBRef.current.style.transform = `translate3d(calc(-42% + ${(1 - badge2In) * -16}px), -50%, 0)`;
+    badgeBRef.current.style.transform = `translate3d(calc(${badgeHang}% + ${(1 - badge2In) * -12}px), 0, 0)`;
   }
 
   if (overlayARef.current) {

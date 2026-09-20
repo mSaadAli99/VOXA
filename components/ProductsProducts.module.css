@@ -5,7 +5,8 @@
 
 .tightCopy :global(h2) {
   margin: 0 0 14px;
-  line-height: 0.9;
+  line-height: 0.95;
+  white-space: nowrap;
 }
 
 .tightCopy :global(p[data-intro]) {
@@ -124,6 +125,10 @@
   .wide,
   .featureSection {
     padding: 72px 20px 36px;
+  }
+
+  .tightCopy :global(h2) {
+    white-space: normal;
   }
 
   .featureRow,

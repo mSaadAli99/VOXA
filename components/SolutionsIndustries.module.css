@@ -11,12 +11,13 @@
 .copyCol {
   flex: 1;
   min-width: 0;
-  max-width: 34rem;
+  max-width: 42rem;
   text-align: left;
 }
 
 .heading {
   text-align: left !important;
+  white-space: nowrap;
 }
 
 .lede {
@@ -65,6 +66,10 @@
     justify-content: center;
     padding: 72px 20px 36px;
     gap: 28px;
+  }
+
+  .heading {
+    white-space: normal;
   }
 
   .stack {
