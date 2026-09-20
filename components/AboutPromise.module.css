@@ -149,7 +149,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #ffffff;
+  color: #01002a;
 }
 
 .point {
@@ -175,7 +175,7 @@
   display: block;
   width: 1px;
   flex: 1;
-  background: #ffffff;
+  background: rgba(1, 0, 42, 0.18);
   overflow: hidden;
 }
 
@@ -183,14 +183,14 @@
   position: absolute;
   inset: 0;
   background: #01002a;
-  transform: scaleY(0);
+  transform: scaleY(1);
   transform-origin: top center;
 }
 
 .arrow {
   font-size: 0.55rem;
   line-height: 1;
-  color: #ffffff;
+  color: #01002a;
   transform: translateY(-1px);
 }
 

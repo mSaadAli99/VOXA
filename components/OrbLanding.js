@@ -8,12 +8,15 @@ import OrbVoices from "@/components/OrbVoices";
 import OrbFAQ from "@/components/OrbFAQ";
 import ReadyToTalkSection from "@/components/ReadyToTalkSection";
 
-export default function OrbLanding() {
+export default function OrbLanding({ hero, products, solutions }) {
   return (
     <div className="text-foreground" style={{ background: "#f8f0e5" }}>
-      <OrbHero />
+      <OrbHero
+        title={hero?.title || undefined}
+        description={hero?.description}
+      />
       <OrbWhatVoxaDoes />
-      <OrbShowcaseRail />
+      <OrbShowcaseRail products={products} solutions={solutions} />
       <OrbCallPreview />
       <OrbVoices />
       <OrbFAQ />

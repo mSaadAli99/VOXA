@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
+import ScrollReveal from "@/components/ScrollReveal";
 import rail from "./OrbShowcaseRail.module.css";
 import copy from "./AboutPromise.module.css";
 import stack from "./SolutionsIndustries.module.css";
@@ -65,17 +66,43 @@ function IndustryPanel({ data }) {
   return (
     <div id={data.id} className={stack.panelInner}>
       <div className={stack.copyCol}>
-        <h2 className={`${copy.title} ${stack.heading}`} data-title>
+        <ScrollReveal
+          as="h2"
+          className={`${copy.title} ${stack.heading}`}
+          once
+          baseOpacity={0.12}
+          enableBlur
+          baseRotation={0}
+          blurStrength={4}
+        >
           {data.title}
-        </h2>
-        <p className={`${copy.intro} ${stack.lede}`} data-intro>
+        </ScrollReveal>
+        <ScrollReveal
+          as="p"
+          className={`${copy.intro} ${stack.lede}`}
+          once
+          baseOpacity={0.15}
+          enableBlur
+          baseRotation={0}
+          blurStrength={3}
+        >
           {data.intro}
-        </p>
+        </ScrollReveal>
         <ol className={`${copy.list} ${copy.listPlain} ${copy.listBullets}`}>
           {data.points.map((line) => (
-            <li key={line} className={copy.item} data-point>
+            <li key={line} className={copy.item}>
               <Arrow />
-              <p className={copy.point}>{line}</p>
+              <ScrollReveal
+                as="p"
+                className={copy.point}
+                once
+                baseOpacity={0.15}
+                enableBlur
+                baseRotation={0}
+                blurStrength={3}
+              >
+                {line}
+              </ScrollReveal>
             </li>
           ))}
         </ol>
@@ -104,24 +131,6 @@ function IndustryPanel({ data }) {
   );
 }
 
-function paintInk(tl, root) {
-  root.querySelectorAll("[data-point]").forEach((point) => {
-    tl.fromTo(
-      point,
-      { color: "#ffffff" },
-      { color: "#01002a", duration: 0.35, ease: "none" },
-    );
-  });
-}
-
-function prepPanel(root) {
-  const title = root.querySelector("[data-title]");
-  const intro = root.querySelector("[data-intro]");
-  gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(intro, { autoAlpha: 0, y: 16 });
-  gsap.set(root.querySelectorAll("[data-point]"), { color: "#ffffff" });
-}
-
 export default function SolutionsIndustries() {
   const rootRef = useRef(null);
   const sliderRef = useRef(null);
@@ -131,13 +140,7 @@ export default function SolutionsIndustries() {
     const slider = sliderRef.current;
     if (!root || !slider) return undefined;
 
-    const panels = root.querySelectorAll("[data-panel]");
-    const first = panels[0];
-    const second = panels[1];
-
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(root.querySelectorAll("[data-point]"), { color: "#01002a" });
-      gsap.set(root.querySelectorAll("[data-title], [data-intro]"), { autoAlpha: 1 });
       const hash = window.location.hash.replace(/^#/, "");
       if (hash === "e-commerce") {
         gsap.set(slider, { xPercent: -50 });
@@ -157,55 +160,24 @@ export default function SolutionsIndustries() {
     }
 
     const ctx = gsap.context(() => {
-      prepPanel(first);
-      prepPanel(second);
       gsap.set(slider, { xPercent: 0 });
 
-      const tl = gsap.timeline({
+      gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           id: "solutions-rail",
           trigger: root,
           start: "top top",
-          end: "+=420%",
+          end: "+=180%",
           pin: true,
           scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
-      });
-
-      tl.to(first.querySelector("[data-title]"), {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.32,
-        ease: "power2.out",
-      });
-      tl.to(
-        first.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
-        "-=0.15",
-      );
-      tl.to({}, { duration: 0.25 });
-      paintInk(tl, first);
-      tl.to({}, { duration: 0.35 });
-
-      tl.to(slider, { xPercent: -50, duration: 1, ease: "power2.inOut" });
-
-      tl.to(second.querySelector("[data-title]"), {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.32,
-        ease: "power2.out",
-      });
-      tl.to(
-        second.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
-        "-=0.15",
-      );
-      tl.to({}, { duration: 0.25 });
-      paintInk(tl, second);
-      tl.to({}, { duration: 0.28 });
+      })
+        .to({}, { duration: 0.25 })
+        .to(slider, { xPercent: -50, duration: 1, ease: "power2.inOut" })
+        .to({}, { duration: 0.25 });
     }, root);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);

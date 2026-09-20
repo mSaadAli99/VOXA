@@ -1,9 +1,16 @@
 import OrbLanding from "@/components/OrbLanding";
+import { getHomeContent } from "@/lib/cms";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getHomeContent();
+
   return (
     <main>
-      <OrbLanding />
+      <OrbLanding
+        hero={content.hero}
+        products={content.products}
+        solutions={content.solutions}
+      />
     </main>
   );
 }

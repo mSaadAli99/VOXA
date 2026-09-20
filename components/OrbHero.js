@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "motion/react";
 import TalkToUsButton from "@/components/TalkToUsButton";
+import ScrollReveal from "@/components/ScrollReveal";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 import styles from "./OrbHero.module.css";
 
@@ -71,14 +71,19 @@ export default function OrbHero({ title, description = HOME_DESCRIPTION }) {
         <div
           className={`${styles.copyInner} ${title ? styles.copyInnerCenter : ""}`}
         >
-          <motion.div
-            className={styles.titleWrap}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <div className={styles.titleWrap}>
             {title ? (
-              <h1 className={styles.heading}>{title}</h1>
+              <ScrollReveal
+                as="h1"
+                className={styles.heading}
+                once
+                baseOpacity={0.12}
+                enableBlur
+                baseRotation={0}
+                blurStrength={4}
+              >
+                {title}
+              </ScrollReveal>
             ) : (
               <LayoutTextFlip
                 text="Turns conversations into"
@@ -89,16 +94,23 @@ export default function OrbHero({ title, description = HOME_DESCRIPTION }) {
                 wordClassName={styles.flipWord}
               />
             )}
-          </motion.div>
+          </div>
 
-          <motion.p
-            className={styles.description}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {description}
-          </motion.p>
+          {title ? (
+            <ScrollReveal
+              as="p"
+              className={styles.description}
+              once
+              baseOpacity={0.15}
+              enableBlur
+              baseRotation={0}
+              blurStrength={3}
+            >
+              {description}
+            </ScrollReveal>
+          ) : (
+            <p className={styles.description}>{description}</p>
+          )}
 
           <div className={styles.cta}>
             <TalkToUsButton className={styles.ctaBtn} />

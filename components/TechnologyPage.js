@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 import OrbHero from "@/components/OrbHero";
 import TechnologyHowACallWorks from "@/components/TechnologyHowACallWorks";
 import TechnologySecurity from "@/components/TechnologySecurity";
 import OrbFAQ from "@/components/OrbFAQ";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./AboutPage.module.css";
 
 const DATA_TITLE = "Your data, captured automatically";
@@ -40,49 +39,6 @@ const TECHNOLOGY_FAQS = [
 ];
 
 export default function TechnologyPage() {
-  const splitRef = useRef(null);
-
-  useEffect(() => {
-    const root = splitRef.current;
-    if (!root) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return undefined;
-    }
-
-    const card = root.querySelector("[data-card]");
-    const left = root.querySelector("[data-col-left]");
-    const right = root.querySelector("[data-col-right]");
-    const rule = root.querySelector("[data-rule]");
-    if (!card || !left || !right || !rule) return undefined;
-
-    const ctx = gsap.context(() => {
-      gsap.set(card, { autoAlpha: 0, y: 36, scale: 0.985 });
-      gsap.set(left, { autoAlpha: 0, x: -24 });
-      gsap.set(right, { autoAlpha: 0, x: 24 });
-      gsap.set(rule, { scaleY: 0, transformOrigin: "top center" });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: "top 72%",
-          once: true,
-        },
-        defaults: { ease: "power2.out" },
-      });
-
-      tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55 });
-      tl.to(left, { autoAlpha: 1, x: 0, duration: 0.45 }, "-=0.28");
-      tl.to(rule, { scaleY: 1, duration: 0.4 }, "-=0.32");
-      tl.to(right, { autoAlpha: 1, x: 0, duration: 0.45 }, "-=0.3");
-    }, root);
-
-    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
-    return () => {
-      window.clearTimeout(refresh);
-      ctx.revert();
-    };
-  }, []);
-
   return (
     <main className={styles.page}>
       <OrbHero
@@ -91,20 +47,59 @@ export default function TechnologyPage() {
       />
       <TechnologyHowACallWorks />
       <section
-        ref={splitRef}
         className={styles.splitSection}
         aria-label="Data capture and isolation"
         data-snap-section
       >
-        <div className={styles.card} data-card>
-          <div className={styles.col} data-col-left>
-            <h2 className={styles.heading}>{DATA_TITLE}</h2>
-            <p className={styles.copy}>{DATA_COPY}</p>
+        <div className={styles.card}>
+          <div className={styles.col}>
+            <ScrollReveal
+              as="h2"
+              className={styles.heading}
+              once
+              baseOpacity={0.12}
+              enableBlur
+              baseRotation={0}
+              blurStrength={4}
+            >
+              {DATA_TITLE}
+            </ScrollReveal>
+            <ScrollReveal
+              as="p"
+              className={styles.copy}
+              once
+              baseOpacity={0.15}
+              enableBlur
+              baseRotation={0}
+              blurStrength={3}
+            >
+              {DATA_COPY}
+            </ScrollReveal>
           </div>
-          <div className={styles.rule} data-rule aria-hidden="true" />
-          <div className={styles.col} data-col-right>
-            <h2 className={styles.heading}>{ISOLATION_TITLE}</h2>
-            <p className={styles.copy}>{ISOLATION_COPY}</p>
+          <div className={styles.rule} aria-hidden="true" />
+          <div className={styles.col}>
+            <ScrollReveal
+              as="h2"
+              className={styles.heading}
+              once
+              baseOpacity={0.12}
+              enableBlur
+              baseRotation={0}
+              blurStrength={4}
+            >
+              {ISOLATION_TITLE}
+            </ScrollReveal>
+            <ScrollReveal
+              as="p"
+              className={styles.copy}
+              once
+              baseOpacity={0.15}
+              enableBlur
+              baseRotation={0}
+              blurStrength={3}
+            >
+              {ISOLATION_COPY}
+            </ScrollReveal>
           </div>
         </div>
       </section>

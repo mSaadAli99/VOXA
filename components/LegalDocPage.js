@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import styles from "./LegalDocPage.module.css";
 
 export default function LegalDocPage({
@@ -49,8 +50,28 @@ export default function LegalDocPage({
     <main className={styles.page}>
       <section className={styles.hero} aria-label={title} data-nav-tone="dark">
         <div className={styles.heroInner}>
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.effective}>{effectiveDate}</p>
+          <ScrollReveal
+            as="h1"
+            className={styles.title}
+            once
+            baseOpacity={0.12}
+            enableBlur
+            baseRotation={0}
+            blurStrength={4}
+          >
+            {title}
+          </ScrollReveal>
+          <ScrollReveal
+            as="p"
+            className={styles.effective}
+            once
+            baseOpacity={0.15}
+            enableBlur
+            baseRotation={0}
+            blurStrength={3}
+          >
+            {effectiveDate}
+          </ScrollReveal>
         </div>
         <svg
           className={styles.heroCurve}
@@ -92,19 +113,68 @@ export default function LegalDocPage({
                 id={section.id}
                 className={styles.section}
               >
-                <h2 className={styles.heading}>{section.title}</h2>
+                <ScrollReveal
+                  as="h2"
+                  className={styles.heading}
+                  once
+                  baseOpacity={0.12}
+                  enableBlur
+                  baseRotation={0}
+                  blurStrength={4}
+                >
+                  {section.title}
+                </ScrollReveal>
                 {section.intro ? (
-                  <p className={styles.copy}>{section.intro}</p>
+                  <ScrollReveal
+                    as="p"
+                    className={styles.copy}
+                    once
+                    baseOpacity={0.15}
+                    enableBlur
+                    baseRotation={0}
+                    blurStrength={3}
+                  >
+                    {section.intro}
+                  </ScrollReveal>
                 ) : null}
                 {section.body?.map((paragraph) => (
-                  <p key={paragraph.slice(0, 48)} className={styles.copy}>
+                  <ScrollReveal
+                    key={paragraph.slice(0, 48)}
+                    as="p"
+                    className={styles.copy}
+                    once
+                    baseOpacity={0.15}
+                    enableBlur
+                    baseRotation={0}
+                    blurStrength={3}
+                  >
                     {paragraph}
-                  </p>
+                  </ScrollReveal>
                 ))}
                 {section.subsections?.map((sub) => (
                   <div key={sub.title} className={styles.subblock}>
-                    <h3 className={styles.subheading}>{sub.title}</h3>
-                    <p className={styles.copy}>{sub.body}</p>
+                    <ScrollReveal
+                      as="h3"
+                      className={styles.subheading}
+                      once
+                      baseOpacity={0.12}
+                      enableBlur
+                      baseRotation={0}
+                      blurStrength={4}
+                    >
+                      {sub.title}
+                    </ScrollReveal>
+                    <ScrollReveal
+                      as="p"
+                      className={styles.copy}
+                      once
+                      baseOpacity={0.15}
+                      enableBlur
+                      baseRotation={0}
+                      blurStrength={3}
+                    >
+                      {sub.body}
+                    </ScrollReveal>
                   </div>
                 ))}
               </article>

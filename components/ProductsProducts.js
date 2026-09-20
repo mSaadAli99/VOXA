@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { scheduleSectionHashScroll } from "@/lib/scrollToSection";
 import TalkToUsButton from "@/components/TalkToUsButton";
+import ScrollReveal from "@/components/ScrollReveal";
 import rail from "./OrbShowcaseRail.module.css";
 import copy from "./AboutPromise.module.css";
 import stack from "./SolutionsIndustries.module.css";
@@ -119,26 +120,52 @@ function FeatureRow({ section }) {
       }`}
     >
       <div className={styles.featureCopy}>
-        <h2 className={styles.featureTitle} data-title>
+        <ScrollReveal
+          as="h2"
+          className={styles.featureTitle}
+          once
+          baseOpacity={0.12}
+          enableBlur
+          baseRotation={0}
+          blurStrength={4}
+        >
           {section.title}
-        </h2>
+        </ScrollReveal>
         {section.intro ? (
-          <p className={styles.featureIntro} data-intro>
+          <ScrollReveal
+            as="p"
+            className={styles.featureIntro}
+            once
+            baseOpacity={0.15}
+            enableBlur
+            baseRotation={0}
+            blurStrength={3}
+          >
             {section.intro}
-          </p>
+          </ScrollReveal>
         ) : null}
-        {section.points?.length ? (
+          {section.points?.length ? (
           <ol className={`${copy.list} ${copy.listPlain} ${copy.listBullets}`}>
             {section.points.map((line) => (
-              <li key={line} className={copy.item} data-point>
+              <li key={line} className={copy.item}>
                 <Arrow />
-                <p className={copy.point}>{line}</p>
+                <ScrollReveal
+                  as="p"
+                  className={copy.point}
+                  once
+                  baseOpacity={0.15}
+                  enableBlur
+                  baseRotation={0}
+                  blurStrength={3}
+                >
+                  {line}
+                </ScrollReveal>
               </li>
             ))}
           </ol>
         ) : null}
         {section.showCta ? (
-          <div className={`${copy.cta} ${styles.cta}`} data-cta>
+          <div className={`${copy.cta} ${styles.cta}`}>
             <TalkToUsButton />
           </div>
         ) : null}
@@ -175,22 +202,32 @@ function ProductPanel({ data }) {
             : `${stack.copyCol} ${data.compact ? styles.tightCopy : ""}`
         }
       >
-        <h2
+        <ScrollReveal
+          as="h2"
           className={`${copy.title} ${stack.heading} ${
             data.fullWidth ? styles.wideTitle : ""
           }`}
-          data-title
+          once
+          baseOpacity={0.12}
+          enableBlur
+          baseRotation={0}
+          blurStrength={4}
         >
           {data.title}
-        </h2>
-        <p
+        </ScrollReveal>
+        <ScrollReveal
+          as="p"
           className={`${copy.intro} ${stack.lede} ${
             data.fullWidth ? styles.wideIntro : ""
           }`}
-          data-intro
+          once
+          baseOpacity={0.15}
+          enableBlur
+          baseRotation={0}
+          blurStrength={3}
         >
           {data.intro}
-        </p>
+        </ScrollReveal>
         {data.points?.length ? (
         <ol
           className={`${copy.list} ${copy.listPlain} ${copy.listBullets} ${
@@ -198,15 +235,25 @@ function ProductPanel({ data }) {
           }`}
         >
           {data.points.map((line) => (
-            <li key={line} className={copy.item} data-point>
+            <li key={line} className={copy.item}>
               <Arrow />
-              <p className={copy.point}>{line}</p>
+              <ScrollReveal
+                as="p"
+                className={copy.point}
+                once
+                baseOpacity={0.15}
+                enableBlur
+                baseRotation={0}
+                blurStrength={3}
+              >
+                {line}
+              </ScrollReveal>
             </li>
           ))}
         </ol>
         ) : null}
         {data.showCta ? (
-          <div className={`${copy.cta} ${styles.cta}`} data-cta>
+          <div className={`${copy.cta} ${styles.cta}`}>
             <TalkToUsButton />
           </div>
         ) : null}
@@ -235,93 +282,16 @@ function ProductPanel({ data }) {
   );
 }
 
-function paintInk(tl, root) {
-  root.querySelectorAll("[data-point]").forEach((point) => {
-    tl.fromTo(
-      point,
-      { color: "#ffffff" },
-      { color: "#01002a", duration: 0.35, ease: "none" },
-    );
-  });
-}
-
-function prepPanel(root) {
-  const title = root.querySelector("[data-title]");
-  const intro = root.querySelector("[data-intro]");
-  const cta = root.querySelector("[data-cta]");
-  gsap.set(title, { autoAlpha: 0, y: 20 });
-  if (intro) gsap.set(intro, { autoAlpha: 0, y: 16 });
-  gsap.set(root.querySelectorAll("[data-point]"), { color: "#ffffff" });
-  if (cta) gsap.set(cta, { autoAlpha: 1, y: 0 });
-}
-
-function playFeatureReveal(section) {
-  prepPanel(section);
-  const image = section.querySelector("[data-photo]");
-  const cta = section.querySelector("[data-cta]");
-  if (image) gsap.set(image, { autoAlpha: 0, y: 24 });
-  if (cta) gsap.set(cta, { autoAlpha: 0, y: 12 });
-
-  const tl = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: section,
-      start: "top top",
-      end: "+=220%",
-      pin: true,
-      scrub: 0.3,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  const title = section.querySelector("[data-title]");
-  const intro = section.querySelector("[data-intro]");
-  if (title) tl.to(title, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power2.out" });
-  if (intro) {
-    tl.to(intro, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" }, "-=0.15");
-  }
-  if (image) {
-    tl.to(image, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" }, "<");
-  }
-  tl.to({}, { duration: 0.25 });
-  paintInk(tl, section);
-  if (cta) {
-    tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" });
-  }
-  tl.to({}, { duration: 0.25 });
-}
-
 export default function ProductsProducts() {
   const rootRef = useRef(null);
   const sliderRef = useRef(null);
-  const featuresRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
     const slider = sliderRef.current;
     if (!root || !slider) return undefined;
 
-    const panels = root.querySelectorAll("[data-panel]");
-    const first = panels[0];
-    const second = panels[1];
-    const featureRoot = featuresRef.current;
-    const featureSections = featureRoot
-      ? [...featureRoot.querySelectorAll("[data-feature-section]")]
-      : [];
-
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(root.querySelectorAll("[data-point]"), { color: "#01002a" });
-      gsap.set(root.querySelectorAll("[data-title], [data-intro], [data-cta]"), {
-        autoAlpha: 1,
-      });
-      featureSections.forEach((section) => {
-        gsap.set(section.querySelectorAll("[data-point]"), { color: "#01002a" });
-        gsap.set(
-          section.querySelectorAll("[data-title], [data-intro], [data-photo], [data-cta]"),
-          { autoAlpha: 1 },
-        );
-      });
       const hash = window.location.hash.replace(/^#/, "");
       if (hash === "communications-suite") {
         gsap.set(slider, { xPercent: -50 });
@@ -341,60 +311,25 @@ export default function ProductsProducts() {
     }
 
     const ctx = gsap.context(() => {
-      prepPanel(first);
-      prepPanel(second);
       gsap.set(slider, { xPercent: 0 });
 
-      const tl = gsap.timeline({
+      gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           id: "products-rail",
           trigger: root,
           start: "top top",
-          end: "+=420%",
+          end: "+=180%",
           pin: true,
           scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
-      });
-
-      tl.to(first.querySelector("[data-title]"), {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.32,
-        ease: "power2.out",
-      });
-      tl.to(
-        first.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
-        "-=0.15",
-      );
-      tl.to({}, { duration: 0.25 });
-      paintInk(tl, first);
-      tl.to({}, { duration: 0.35 });
-
-      tl.to(slider, { xPercent: -50, duration: 1, ease: "power2.inOut" });
-
-      tl.to(second.querySelector("[data-title]"), {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.32,
-        ease: "power2.out",
-      });
-      tl.to(
-        second.querySelector("[data-intro]"),
-        { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
-        "-=0.15",
-      );
-      tl.to({}, { duration: 0.25 });
-      paintInk(tl, second);
-      tl.to({}, { duration: 0.28 });
+      })
+        .to({}, { duration: 0.25 })
+        .to(slider, { xPercent: -50, duration: 1, ease: "power2.inOut" })
+        .to({}, { duration: 0.25 });
     }, root);
-
-    const featureCtx = gsap.context(() => {
-      featureSections.forEach((section) => playFeatureReveal(section));
-    }, featureRoot);
 
     const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 80);
     const refreshAgain = window.setTimeout(() => ScrollTrigger.refresh(), 280);
@@ -410,9 +345,8 @@ export default function ProductsProducts() {
       clearHashScroll();
       window.removeEventListener("hashchange", onHashChange);
       ctx.revert();
-      featureCtx.revert();
     };
-  }, [FEATURE_SECTIONS.length]);
+  }, []);
 
   return (
     <>
@@ -434,7 +368,6 @@ export default function ProductsProducts() {
           </div>
         </div>
       </section>
-      <div ref={featuresRef}>
       {FEATURE_SECTIONS.map((section) => (
         <section
           key={section.id}
@@ -442,13 +375,10 @@ export default function ProductsProducts() {
           className={styles.featureSection}
           aria-label={section.title}
           data-snap-section
-          data-snap-protect
-          data-feature-section
         >
           <FeatureRow section={section} />
         </section>
       ))}
-      </div>
     </>
   );
 }

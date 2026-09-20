@@ -2,55 +2,10 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import OrbShowcasePanel from "@/components/OrbShowcasePanel";
+import { DEFAULT_PRODUCTS, DEFAULT_SOLUTIONS } from "@/lib/cms";
 import styles from "./OrbShowcaseRail.module.css";
 
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
-
-const PRODUCTS = [
-  {
-    id: "voice-agent",
-    src: "/images/products/voice-agent-platform.webp",
-    alt: "VOXA Voice Agent Platform on a laptop display",
-    badge: "Voice Agent",
-    title: "VOXA Voice Agent Platform",
-    body: "An AI voice agent for real estate and e-commerce businesses. It handles lead qualification, order confirmation, and customer follow-up calls.",
-    href: "/products#voice-agent",
-    cta: "See product →",
-  },
-  {
-    id: "communications-suite",
-    src: "/images/products/communications-suite.webp",
-    alt: "VOXA Communications Suite operations center",
-    badge: "Communications Suite",
-    title: "VOXA Communications Suite",
-    body: "A complete calling platform for contact centers and enterprises — telephony, CRM, omni-channel support, and AI automation in one system.",
-    href: "/products#communications-suite",
-    cta: "See product →",
-  },
-];
-
-const SOLUTIONS = [
-  {
-    id: "real-estate",
-    src: "/images/solutions/real-estate.webp",
-    alt: "Modern luxury home for real estate solutions",
-    badge: "Real Estate",
-    title: "Real Estate",
-    body: "Every lead answered and qualified within seconds, day or night.",
-    href: "/solutions#real-estate",
-    cta: "See solution →",
-  },
-  {
-    id: "ecommerce",
-    src: "/images/solutions/ecommerce.webp",
-    alt: "E-commerce shopping experience on a laptop",
-    badge: "E-Commerce",
-    title: "E-Commerce",
-    body: "Every order confirmed before dispatch. Every delivery followed up automatically.",
-    href: "/solutions#e-commerce",
-    cta: "See solution →",
-  },
-];
 
 const PRODUCTS_SCROLL = 2.85;
 const PRODUCTS_HOLD = 0.35;
@@ -58,7 +13,10 @@ const HORIZONTAL_SCROLL = 1.15;
 const SOLUTIONS_SCROLL = 2.85;
 const SOLUTIONS_HOLD = 0.35;
 
-export default function OrbShowcaseRail() {
+export default function OrbShowcaseRail({
+  products = DEFAULT_PRODUCTS,
+  solutions = DEFAULT_SOLUTIONS,
+}) {
   const trackRef = useRef(null);
   const sliderRef = useRef(null);
   const productsRef = useRef(null);
@@ -194,7 +152,7 @@ export default function OrbShowcaseRail() {
               sectionId="our-products"
               ariaLabel="Our products"
               heading="Our Products"
-              items={PRODUCTS}
+              items={products}
             />
           </div>
           <div className={styles.panel}>
@@ -204,7 +162,7 @@ export default function OrbShowcaseRail() {
               sectionId="our-solutions"
               ariaLabel="Our solutions"
               heading="Our Solutions"
-              items={SOLUTIONS}
+              items={solutions}
             />
           </div>
         </div>
