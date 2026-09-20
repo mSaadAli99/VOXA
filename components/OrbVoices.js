@@ -120,9 +120,51 @@ function VoiceBubble({ voice, playing = false, onHoverStart, onHoverEnd }) {
   return <figure className={bubbleClass}>{content}</figure>;
 }
 
+function resolveAudioHref(src) {
+  if (typeof window === "undefined") return src;
+  return new URL(src, window.location.origin).href;
+}
+
+function ensureAudioSrc(audio) {
+  const src = audio?.dataset?.src;
+  if (!src) return false;
+
+  const href = resolveAudioHref(src);
+  if (audio.src !== href) {
+    audio.preload = "auto";
+    audio.src = href;
+    audio.load();
+  }
+  return true;
+}
+
+function waitUntilCanPlay(audio, timeoutMs = 8000) {
+  if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      audio.removeEventListener("canplay", finish);
+      audio.removeEventListener("error", finish);
+      window.clearTimeout(timer);
+      resolve();
+    };
+
+    const timer = window.setTimeout(finish, timeoutMs);
+    audio.addEventListener("canplay", finish);
+    audio.addEventListener("error", finish);
+  });
+}
+
 export default function OrbVoices() {
+  const sectionRef = useRef(null);
   const audiosRef = useRef({});
   const unlockedRef = useRef(false);
+  const prefetchedRef = useRef(false);
   const activeVoiceIdRef = useRef(null);
   const [activeVoiceId, setActiveVoiceId] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -172,28 +214,82 @@ export default function OrbVoices() {
     };
   }, []);
 
-  const unlockAudio = async () => {
+  const prefetchVoices = () => {
+    if (prefetchedRef.current) return;
+    prefetchedRef.current = true;
+
+    Object.values(audiosRef.current).forEach((audio) => {
+      ensureAudioSrc(audio);
+    });
+
+    // Warm HTTP cache for browsers that ignore MediaElement preload.
+    VOICES.forEach((voice) => {
+      if (!voice.audio) return;
+      const link = document.createElement("link");
+      link.rel = "prefetch";
+      link.as = "audio";
+      link.href = voice.audio;
+      document.head.appendChild(link);
+    });
+  };
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        prefetchVoices();
+        observer.disconnect();
+      },
+      { rootMargin: "80% 0px" },
+    );
+
+    observer.observe(section);
+
+    let idleId = null;
+    let timeoutId = null;
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(() => prefetchVoices(), { timeout: 3500 });
+    } else {
+      timeoutId = window.setTimeout(prefetchVoices, 2200);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (idleId != null && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId != null) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
+  const unlockOne = async (audio) => {
+    try {
+      ensureAudioSrc(audio);
+      audio.muted = true;
+      await audio.play();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.muted = false;
+    } catch {
+      /* ignore unlock failures */
+    }
+  };
+
+  const unlockAudio = async (preferredId = null) => {
     if (unlockedRef.current) return;
     unlockedRef.current = true;
 
-    await Promise.all(
-      Object.values(audiosRef.current).map(async (audio) => {
-        try {
-          const src = audio.dataset.src;
-          if (src && !audio.src) {
-            audio.src = src;
-            audio.load();
-          }
-          audio.muted = true;
-          await audio.play();
-          audio.pause();
-          audio.currentTime = 0;
-          audio.muted = false;
-        } catch {
-          /* ignore unlock failures */
-        }
-      }),
-    );
+    const preferred = preferredId ? audiosRef.current[preferredId] : null;
+    if (preferred) await unlockOne(preferred);
+
+    // Warm the rest without blocking playback of the hovered voice.
+    Object.entries(audiosRef.current).forEach(([id, audio]) => {
+      if (id === preferredId) return;
+      void unlockOne(audio);
+    });
   };
 
   const stopAll = (exceptId = null) => {
@@ -208,19 +304,17 @@ export default function OrbVoices() {
     const audio = audiosRef.current[voice.id];
     if (!audio) return;
 
-    const src = audio.dataset.src;
-    if (src && audio.src !== new URL(src, window.location.origin).href) {
-      audio.src = src;
-      audio.load();
-    }
-
-    await unlockAudio();
+    prefetchVoices();
+    ensureAudioSrc(audio);
+    await unlockAudio(voice.id);
     stopAll(voice.id);
     audio.currentTime = 0;
     activeVoiceIdRef.current = voice.id;
     setActiveVoiceId(voice.id);
 
     try {
+      await waitUntilCanPlay(audio);
+      if (activeVoiceIdRef.current !== voice.id) return;
       await audio.play();
     } catch {
       setPlaying(false);
@@ -242,11 +336,15 @@ export default function OrbVoices() {
 
   return (
     <section
+      ref={sectionRef}
       className={styles.section}
       aria-label="VOXA voices"
       data-snap-section
       data-snap-free
-      onPointerDown={unlockAudio}
+      onPointerDown={() => {
+        prefetchVoices();
+        unlockAudio();
+      }}
     >
       <div className={styles.inner}>
         <ScrollReveal
