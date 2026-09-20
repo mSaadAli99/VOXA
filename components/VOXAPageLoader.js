@@ -184,10 +184,6 @@ export default function VOXAPageLoader() {
           />
         </div>
       </div>
-
-      <button type="button" className={styles.skip} onClick={finish}>
-        Skip intro
-      </button>
     </div>
   );
 }
