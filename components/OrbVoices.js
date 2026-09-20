@@ -17,7 +17,7 @@ const VOICES = [
     alt: "Customer service voice",
     label: "Customer Service",
     placement: "topRight",
-    audio: "/audio/customer-service-voice.mp3?v=4s40k",
+    audio: "/audio/customer-service-voice.mp3?v=full48k",
   },
   {
     id: "news-anchor-m",
@@ -26,7 +26,7 @@ const VOICES = [
     label: "News Anchor",
     featured: true,
     placement: "featured",
-    audio: "/audio/featured-voice.mp3?v=4s40k",
+    audio: "/audio/featured-voice.mp3?v=full48k",
   },
   {
     id: "news-anchor-f",
@@ -34,7 +34,7 @@ const VOICES = [
     alt: "News anchor female voice",
     label: "News Anchor",
     placement: "midRight",
-    audio: "/audio/news-anchor-f-voice.mp3?v=4s40k",
+    audio: "/audio/news-anchor-f-voice.mp3?v=full48k",
   },
   {
     id: "narration",
@@ -42,7 +42,7 @@ const VOICES = [
     alt: "Narration voice",
     label: "Narration",
     placement: "bottom",
-    audio: "/audio/narration-voice.mp3?v=4s40k",
+    audio: "/audio/narration-voice.mp3?v=full48k",
   },
 ];
 
@@ -170,7 +170,7 @@ export default function OrbVoices() {
     audiosRef.current = audios;
 
     const attachSources = async () => {
-      await warmVoiceAudio();
+      void warmVoiceAudio();
       if (cancelled) return;
 
       await Promise.all(
@@ -180,8 +180,7 @@ export default function OrbVoices() {
           if (!audio) return;
 
           try {
-            const objectUrl =
-              getVoiceObjectUrl(voice.audio) || (await resolveVoiceObjectUrl(voice.audio));
+            const objectUrl = await resolveVoiceObjectUrl(voice.audio);
             if (cancelled) return;
             audio.src = objectUrl;
             audio.load();
