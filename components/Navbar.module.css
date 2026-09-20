@@ -24,14 +24,15 @@
 
 .steelNav {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 32px;
+  gap: clamp(12px, 2vw, 32px);
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 22px 28px;
+  padding: 22px clamp(16px, 2.5vw, 28px);
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .steelLogo {
@@ -54,19 +55,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 36px;
+  flex-wrap: nowrap;
+  gap: clamp(14px, 2.2vw, 36px);
   list-style: none;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 
 .steelLink {
   font-family: var(--font-body);
   color: #ffffff;
   text-decoration: none;
-  font-size: 0.72rem;
+  font-size: clamp(0.62rem, 0.85vw, 0.72rem);
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   opacity: 0.92;
@@ -153,6 +156,22 @@
 
 .steelHeaderLight .steelToggle span {
   background: #01002a;
+}
+
+@media (max-width: 1100px) {
+  .steelNav {
+    gap: 14px;
+    padding: 18px 18px;
+  }
+
+  .steelLinks {
+    gap: 16px;
+  }
+
+  .steelLink {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 @media (max-width: 900px) {
